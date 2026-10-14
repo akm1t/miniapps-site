@@ -1,0 +1,1670 @@
+<!doctype html>
+<html lang="uk">
+<head>
+<meta name="robots" content="noindex,nofollow">
+<script>window.API_BASE="https://sterile-postcard-crazily.ngrok-free.dev/income";</script>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#000000">
+<title>Облік перепродажу</title>
+<!-- Шрифт — системний SF Pro (Apple): без зовнішніх шрифтів, швидше й рідніше. -->
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<style>
+/* ============================================================
+   Облік перепродажу — Apple dark. Чистий чорний, SF Pro
+   (системний), білий акцент; зелений/червоний лише для даних.
+   ============================================================ */
+:root{
+  --ink:#000000;                        /* фон сторінки */
+  --panel:#1c1c1e; --panel-2:#2c2c2e; --panel-3:#3a3a3c;
+  --line:rgba(84,84,88,.4);
+  --text:#ffffff;
+  --muted:rgba(235,235,245,.6);
+  --faint:rgba(235,235,245,.3);
+  --amber:#ffffff;        /* колишній акцент — тепер білий */
+  --amber-soft:#e5e5ea;
+  --mint:#30d158; --coral:#ff453a; --sky:#0a84ff;
+  --ring-track:#1c1c1e;
+  --shadow:0 12px 32px -16px rgba(0,0,0,.8);
+  --r:18px; --r-sm:14px; --nav-h:58px;
+  --font:-apple-system,BlinkMacSystemFont,"SF Pro Text","SF Pro Display",system-ui,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  --fmono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,"Roboto Mono",Consolas,monospace;
+  --spring:cubic-bezier(.32,.72,0,1);
+  --ease:cubic-bezier(.22,1,.36,1);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{
+  background:var(--ink);
+  color:var(--text); font-family:var(--font); line-height:1.45;
+  -webkit-font-smoothing:antialiased;
+  padding:calc(env(safe-area-inset-top) + 12px) 16px calc(env(safe-area-inset-bottom) + var(--nav-h) + 20px);
+  max-width:480px; margin:0 auto; overflow-x:hidden; min-height:100vh;
+  overscroll-behavior-y:none;
+}
+.mono{font-family:var(--fmono);font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+.cur{font-size:.6em;color:var(--faint);margin-right:1px;vertical-align:.08em;font-weight:600}
+.eyebrow{font-weight:600;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--faint)}
+button{font-family:inherit;color:inherit;border:none;background:none;cursor:pointer}
+:focus-visible{outline:2px solid var(--text);outline-offset:2px;border-radius:6px}
+
+/* header */
+.top{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;gap:10px}
+.top h1{font-weight:700;font-size:22px;letter-spacing:-.5px;line-height:1.15}
+.top .live{display:flex;align-items:center;gap:6px;margin-top:4px}
+.dot{width:6px;height:6px;border-radius:50%;background:var(--mint)}
+.top .live span{font-size:11px;color:var(--faint)}
+.who-btn{display:inline-flex;align-items:center;gap:6px;margin-top:8px;background:var(--panel);border-radius:100px;padding:6px 12px;font-size:12px;font-weight:600;color:var(--muted);transition:transform .1s,background .15s}
+.who-btn:active{transform:scale(.96)}
+.who-btn.on{background:var(--text);color:#000}
+.viewing .nav [data-tab="add"]{display:none}
+.u-row{display:flex;align-items:center;justify-content:space-between;gap:10px;width:100%;text-align:left;padding:12px 14px;border-radius:14px;background:rgba(255,255,255,.04);margin-top:8px;transition:background .15s}
+.u-row.on{background:rgba(255,255,255,.14)}
+.u-row .nm{font-weight:600;font-size:15px}
+.u-row .sub{font-size:12px;color:var(--faint);margin-top:2px}
+.u-row .pf{font-weight:600;font-size:14px;white-space:nowrap}
+.cur-btn{display:flex;align-items:center;gap:8px;background:var(--panel);border-radius:100px;padding:9px 14px;transition:transform .1s ease-out,background .15s}
+.cur-btn:active{transform:scale(.94);background:var(--panel-2)}
+.cur-btn .sym{font-family:var(--fmono);font-weight:700;font-size:17px;color:var(--text);line-height:1}
+.cur-btn .lb{font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);text-align:left;line-height:1.2}
+.cur-btn .lb b{display:block;color:var(--muted);font-weight:600;font-size:10px}
+
+/* chips */
+.chips{display:flex;gap:8px;overflow-x:auto;padding:2px 0 12px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex-shrink:0;background:var(--panel);border-radius:100px;padding:8px 15px;font-size:13px;font-weight:500;color:var(--muted);white-space:nowrap;transition:transform .1s,background .18s,color .18s}
+.chip:active{transform:scale(.94)}
+.chip.on{background:var(--text);color:#000;font-weight:600}
+
+/* каскадна поява */
+.reveal{opacity:0;transform:translateY(10px);animation:rise .45s var(--ease) forwards}
+.reveal:nth-of-type(2){animation-delay:.05s}
+.reveal:nth-of-type(3){animation-delay:.1s}
+.reveal:nth-of-type(4){animation-delay:.15s}
+@keyframes rise{to{opacity:1;transform:none}}
+
+/* hero gauge — біла шкала на графіті */
+.hero{position:relative;background:var(--panel);border-radius:var(--r);padding:16px 18px 18px;margin-bottom:12px;overflow:hidden}
+.gauge-wrap{position:relative;width:216px;height:216px;margin:2px auto 4px}
+.gauge{width:100%;height:100%;transform:rotate(-90deg)}
+.gauge .track{fill:none;stroke:var(--panel-2);stroke-width:13}
+.gauge .prog{fill:none;stroke:url(#g-amber);stroke-width:13;stroke-linecap:round;stroke-dasharray:var(--circ);stroke-dashoffset:var(--circ);transition:stroke-dashoffset 1.1s var(--ease);filter:drop-shadow(0 0 6px rgba(255,255,255,.22))}
+.tick{stroke:rgba(255,255,255,.06);stroke-width:2}.tick.maj{stroke:rgba(255,255,255,.16);stroke-width:2.5}
+.gauge-core{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:0 20px}
+.gauge-core .lbl{font-weight:600;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);margin-bottom:5px;max-width:150px}
+.gauge-core .val{font-family:var(--fmono);font-variant-numeric:tabular-nums;font-weight:700;font-size:38px;letter-spacing:-1.2px;line-height:1}
+.gauge-core .val.neg{color:var(--coral)}
+.gauge-core .val .cur{font-size:18px;color:var(--faint);vertical-align:.24em}
+.gauge-core .margin{margin-top:7px;font-size:12px;color:var(--muted);font-weight:600}
+.hero-sub{display:flex;border-top:1px solid var(--line);margin-top:8px;padding-top:12px}
+.hero-sub .cell{flex:1;text-align:center;position:relative}
+.hero-sub .cell+.cell::before{content:"";position:absolute;left:0;top:3px;bottom:3px;width:1px;background:var(--line)}
+.hero-sub .k{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--faint);margin-bottom:4px}
+.hero-sub .v{font-weight:600;font-size:16px;font-family:var(--fmono);font-variant-numeric:tabular-nums}
+.delta{margin-top:11px;font-size:12.5px;text-align:center;color:var(--muted)}
+.delta .up{color:var(--mint);font-weight:600}.delta .down{color:var(--coral);font-weight:600}
+
+/* field grid */
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px}
+.field{background:var(--panel);border-radius:var(--r-sm);padding:12px 11px}
+.field .fv{font-family:var(--fmono);font-variant-numeric:tabular-nums;font-weight:700;font-size:19px;line-height:1;letter-spacing:-.3px}
+.field .fv .u{font-size:11px;color:var(--faint);font-weight:500;margin-left:2px;font-family:var(--font)}
+.field .fk{font-size:9.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--faint);margin-top:6px}
+.field.hl .fv{color:var(--text)}
+
+/* section */
+.section{background:var(--panel);border-radius:var(--r);padding:16px;margin-bottom:12px}
+.sec-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.sec-head .r{font-size:11px;color:var(--faint)}
+
+/* chart — білі стовпчики, обраний = 100% білого */
+.chart{display:flex;align-items:flex-end;gap:6px;height:120px;padding-top:6px}
+.bar-col{flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;height:100%;justify-content:flex-end;cursor:pointer}
+.bar-val{font-size:9px;color:var(--faint);font-family:var(--fmono)}
+.bar-track{width:100%;flex:1;display:flex;align-items:flex-end}
+.bar{width:100%;border-radius:5px 5px 2px 2px;background:rgba(255,255,255,.3);min-height:3px;transition:height .8s var(--ease),background .2s}
+.bar.zero{background:var(--panel-2)}
+.bar.sel{background:var(--text)}
+.bar-x{font-size:10px;color:var(--faint);font-weight:500}
+.bar-x.sel{color:var(--text);font-weight:600}
+.avg-line{display:flex;gap:16px;border-top:1px solid var(--line);margin-top:14px;padding-top:12px;flex-wrap:wrap}
+.avg-line .a{font-size:11.5px;color:var(--muted)}.avg-line .a b{color:var(--text);font-weight:600;font-family:var(--fmono)}
+
+/* best */
+.best{background:var(--panel);border-radius:var(--r);padding:16px;margin-bottom:12px;position:relative;overflow:hidden}
+.best .trophy{position:absolute;top:-6px;right:6px;font-size:60px;opacity:.09;transform:rotate(8deg)}
+.best .eyebrow{color:var(--mint)}
+.best .m{font-weight:700;font-size:18px;letter-spacing:-.3px;margin:8px 0 2px}
+.best .p{font-family:var(--fmono);font-variant-numeric:tabular-nums;font-weight:700;font-size:27px;letter-spacing:-.5px;color:var(--mint)}
+.best .p .cur{color:var(--mint);opacity:.7}
+
+/* заморожені гроші — вкладено в наявні товари (sky = «інвестовано») */
+.frozen{background:var(--panel);border-radius:var(--r);padding:16px 18px;margin-bottom:12px;position:relative;overflow:hidden}
+.frozen .snow{position:absolute;top:-8px;right:6px;font-size:58px;opacity:.09;transform:rotate(-8deg)}
+.frozen .eyebrow{color:var(--sky)}
+.frozen .fz{font-family:var(--fmono);font-variant-numeric:tabular-nums;font-weight:700;font-size:28px;letter-spacing:-.6px;color:var(--sky);margin:8px 0 3px;line-height:1}
+.frozen .fz .cur{font-size:18px;color:var(--sky);opacity:.7;vertical-align:.06em}
+.frozen .fzsub{font-size:12px;color:var(--muted);font-weight:500}
+
+/* кольорові варіанти стовпчиків в Аналітиці */
+.bar.exp{background:rgba(255,69,58,.5)}
+.bar.days{background:rgba(10,132,255,.55)}
+.bar.rev{background:rgba(48,209,88,.5)}
+.a-cap{font-size:11px;color:var(--faint);margin:-4px 0 12px}
+
+/* рядки-інсайти (швидкість обороту) */
+.stat-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:11px 0;border-top:1px solid var(--line)}
+.stat-row:first-of-type{border-top:none}
+.stat-row .sl{font-size:13.5px;color:var(--muted)}
+.stat-row .sl b{color:var(--text);font-weight:500}
+.stat-row .sv{font-family:var(--fmono);font-variant-numeric:tabular-nums;font-weight:600;font-size:14px;white-space:nowrap}
+.stat-row .sv.fast{color:var(--mint)}.stat-row .sv.slow{color:var(--coral)}
+
+/* ціль місяця */
+.goal-set{display:block;width:100%;background:var(--panel);border-radius:var(--r);padding:14px;margin-bottom:12px;color:var(--muted);font-size:14px;font-weight:600;text-align:center;transition:transform .1s ease-out,background .15s}
+.goal-set:active{transform:scale(.98);background:var(--panel-2)}
+.goal{background:var(--panel);border-radius:var(--r);padding:15px 18px;margin-bottom:12px;cursor:pointer}
+.goal-top{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px}
+.goal-amt{font-family:var(--fmono);font-variant-numeric:tabular-nums;font-weight:700;font-size:15px;white-space:nowrap}
+.goal-bar{height:10px;border-radius:100px;background:var(--panel-2);overflow:hidden}
+.goal-fill{height:100%;border-radius:100px;background:linear-gradient(90deg,#0a84ff,#30d158);transition:width .9s var(--ease)}
+.goal-fill.done{background:var(--mint)}
+.goal-sub{margin-top:9px;font-size:12.5px;color:var(--muted);font-weight:500}
+
+/* прогноз місяця */
+.fc{background:var(--panel);border-radius:var(--r);padding:15px 18px 16px;margin-bottom:12px}
+.fc.tap{cursor:pointer;transition:transform .1s ease-out}
+.fc.tap:active{transform:scale(.99)}
+.fc-head{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.fc-day{font-family:var(--fmono);font-variant-numeric:tabular-nums;font-size:11px;color:var(--faint);white-space:nowrap}
+.fc-val{display:flex;align-items:baseline;gap:3px;font-family:var(--fmono);font-variant-numeric:tabular-nums;font-weight:700;font-size:30px;letter-spacing:-.02em;line-height:1;margin:10px 0 6px}
+.fc-val .ap{font-size:20px;color:var(--faint);font-weight:600;margin-right:2px}
+.fc-val .cur{font-size:19px;color:var(--muted)}
+.fc-verdict{font-size:12.5px;color:var(--muted);font-weight:500;line-height:1.45;margin-bottom:13px}
+.fc-verdict b{font-weight:700;color:var(--text)}
+.fc-verdict.ok b{color:var(--mint)}
+.fc-verdict.bad b{color:var(--coral)}
+.fc-bar{position:relative;height:10px;border-radius:100px;background:var(--panel-2);overflow:hidden;margin-bottom:9px}
+.fc-bar i{position:absolute;top:0;bottom:0;border-radius:100px;transition:width .9s var(--ease),left .9s var(--ease)}
+.fc-bar i.now{left:0;background:#fff}
+.fc-bar i.proj{background:repeating-linear-gradient(115deg,rgba(255,255,255,.30) 0 5px,rgba(255,255,255,.09) 5px 10px)}
+.fc-bar i.gm{width:2px;border-radius:2px;background:var(--sky);z-index:2}
+.fc-legend{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:11.5px;color:var(--muted)}
+.fc-legend i{display:inline-block;width:8px;height:8px;border-radius:3px;margin-right:5px;vertical-align:middle}
+.fc-legend i.k-now{background:#fff}
+.fc-legend i.k-proj{background:repeating-linear-gradient(115deg,rgba(255,255,255,.45) 0 3px,rgba(255,255,255,.12) 3px 6px)}
+.fc-legend i.k-goal{background:var(--sky)}
+.fc-rows{margin-top:6px}
+.fc-note{font-size:11.5px;color:var(--faint);line-height:1.55;margin-top:11px}
+.fc-note.warn{color:var(--muted)}
+
+/* майстер додавання */
+.opt{font-weight:500;text-transform:none;letter-spacing:0;color:var(--faint);font-size:10px}
+.name-preview{background:var(--panel-2);border-radius:12px;padding:11px 13px;margin-top:8px;font-size:14px;color:var(--muted)}
+.name-preview b{color:var(--text);font-weight:600}
+
+/* залежані товари */
+.stale-seg{display:flex;gap:4px;background:var(--panel-2);border-radius:10px;padding:3px}
+.stale-seg button{padding:6px 12px;border-radius:8px;font-size:12px;font-weight:600;color:var(--muted);transition:background .15s,color .15s}
+.stale-seg button.on{background:var(--panel-3);color:var(--text)}
+.stale-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:11px 0;border-top:1px solid var(--line);cursor:pointer}
+.stale-row:first-of-type{border-top:none}
+.stale-row .sn{font-size:14px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.stale-row .sd{font-size:11.5px;color:var(--coral);margin-top:2px;font-weight:600}
+.stale-row .sm{font-family:var(--fmono);font-weight:600;font-size:14px;color:var(--sky);white-space:nowrap}
+
+/* кнопка експорту */
+.export-btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:14px;border-radius:14px;font-weight:600;font-size:15px;background:var(--panel);color:var(--text);margin-bottom:12px;transition:transform .1s ease-out,background .15s}
+.export-btn:active{transform:scale(.98);background:var(--panel-2)}
+
+/* items list */
+.item{display:flex;align-items:center;gap:12px;padding:12px 0;border-top:1px solid var(--line);cursor:pointer;transition:transform .1s ease-out}
+.item:first-of-type{border-top:none}
+.item:active{transform:scale(.985)}
+.item .ic{width:40px;height:40px;flex-shrink:0;border-radius:12px;background:var(--panel-2);display:flex;align-items:center;justify-content:center;font-size:18px}
+.item .info{flex:1;min-width:0}
+.item .nm{font-weight:500;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.item .meta{font-size:11.5px;color:var(--faint);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.item .amt{text-align:right;flex-shrink:0}
+.item .amt .n{font-weight:600;font-size:15px;font-family:var(--fmono);font-variant-numeric:tabular-nums}
+.item .amt .n.pos{color:var(--mint)}.item .amt .n.inv{color:var(--sky)}
+.item .amt .t{font-size:9.5px;color:var(--faint);margin-top:1px;text-transform:uppercase;letter-spacing:.06em}
+.badge{display:inline-block;font-size:9.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:3px 8px;border-radius:100px}
+.badge.sold{background:rgba(48,209,88,.16);color:var(--mint)}
+.badge.active{background:rgba(255,255,255,.12);color:var(--text)}
+.empty{text-align:center;color:var(--faint);font-size:13.5px;padding:34px 10px;line-height:1.6}
+
+/* пошук у товарах */
+.search{position:relative;margin-bottom:10px}
+.search input{width:100%;background:var(--panel);border:1px solid transparent;border-radius:12px;padding:12px 40px;color:var(--text);font-family:var(--font);font-size:16px;transition:border-color .15s}
+.search input:focus{outline:none;border-color:rgba(255,255,255,.28)}
+.search input::placeholder{color:var(--faint)}
+.search .si{position:absolute;left:13px;top:50%;transform:translateY(-50%);width:17px;height:17px;fill:var(--faint);pointer-events:none}
+.search .sx{position:absolute;right:9px;top:50%;transform:translateY(-50%);width:24px;height:24px;border-radius:50%;background:var(--panel-3);color:var(--muted);font-size:14px;line-height:24px;text-align:center;display:none}
+.search.has .sx{display:block}
+.hit{background:rgba(255,255,255,.22);border-radius:4px;padding:0 1px}
+.found{font-size:11.5px;color:var(--faint);padding:0 2px 8px;font-weight:500}
+
+/* капітал: наскільки ефективно працюють гроші */
+.cap-seg{display:flex;gap:4px;background:var(--panel-2);border-radius:10px;padding:3px}
+.cap-seg button{padding:6px 10px;border-radius:8px;font-size:12px;font-weight:600;color:var(--muted);transition:background .15s,color .15s}
+.cap-seg button.on{background:var(--panel-3);color:var(--text)}
+.cap-note{font-size:11.5px;color:var(--faint);line-height:1.55;margin-top:12px}
+.hold-row{padding:11px 0;border-top:1px solid var(--line);cursor:pointer}
+.hold-row:first-of-type{border-top:none}
+.hold-top{display:flex;align-items:baseline;justify-content:space-between;gap:10px}
+.hold-row .hn{font-size:13.5px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hold-row .hv{font-family:var(--fmono);font-variant-numeric:tabular-nums;font-weight:600;font-size:13.5px;color:var(--sky);white-space:nowrap}
+.hold-row .hd{font-size:11.5px;color:var(--faint);margin-top:3px}
+.hold-bar{height:4px;border-radius:100px;background:var(--panel-2);margin-top:7px;overflow:hidden}
+.hold-bar>i{display:block;height:100%;background:var(--sky);border-radius:100px;transition:width .8s var(--ease)}
+
+/* forms */
+.form label{display:block;font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:var(--faint);margin:14px 0 7px;font-weight:600}
+.form input,.form select{width:100%;background:var(--panel-2);border:1px solid transparent;border-radius:12px;padding:13px 14px;color:var(--text);font-family:var(--font);font-size:16px;transition:border-color .15s}
+.form input:focus,.form select:focus{outline:none;border-color:rgba(255,255,255,.35)}
+.form input::placeholder{color:var(--faint)}
+.form .row{display:flex;gap:9px}.form .row>*{flex:1}
+.plat{display:flex;gap:8px;margin-top:6px}
+.btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:15px;border-radius:14px;font-weight:600;font-size:16px;transition:transform .1s ease-out,opacity .15s}
+.btn:active{transform:scale(.97);opacity:.85}
+.btn.primary{background:var(--text);color:#000}
+.btn.ghost{background:var(--panel-2);color:var(--text)}
+.btn.danger{background:rgba(255,69,58,.15);color:var(--coral)}
+.btn.mint{background:var(--mint);color:#003117}
+.btn-row{display:flex;gap:9px;margin-top:16px}.btn-row>*{flex:1}
+
+/* detail sheet — iOS-пружина */
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:50;opacity:0;transition:opacity .3s;display:flex;align-items:flex-end;justify-content:center}
+.overlay.on{opacity:1}
+.sheet{width:100%;max-width:480px;max-height:90vh;overflow-y:auto;background:var(--panel);border-radius:20px 20px 0 0;padding:6px 20px calc(env(safe-area-inset-bottom) + 22px);transform:translateY(105%);transition:transform .42s var(--spring)}
+.overlay.on .sheet{transform:none}
+.grab{width:36px;height:5px;border-radius:100px;background:var(--panel-3);margin:8px auto 16px}
+.sheet h2{font-weight:700;font-size:20px;letter-spacing:-.4px;margin-bottom:4px}
+.d-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin:16px 0}
+.d-cell{background:var(--panel-2);border-radius:12px;padding:12px}
+.d-cell .k{font-size:9.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--faint);margin-bottom:5px}
+.d-cell .v{font-family:var(--fmono);font-variant-numeric:tabular-nums;font-weight:700;font-size:16px}
+.d-cell .v.pos{color:var(--mint)}.d-cell .v.sub{font-size:12px;color:var(--muted);font-family:var(--font);font-weight:400;margin-top:2px}
+.d-cell.wide{grid-column:1/-1}
+.exp-head{display:flex;align-items:center;justify-content:space-between;margin:18px 0 8px}
+.exp-row{display:flex;align-items:center;gap:10px;padding:9px 0;border-top:1px solid var(--line);font-size:13.5px}
+.exp-row:first-of-type{border-top:none}
+.exp-row .er{flex:1;color:var(--text)}
+.exp-row .ea{font-family:var(--fmono);font-variant-numeric:tabular-nums;font-weight:600;color:var(--coral)}
+.exp-row .ex{width:28px;height:28px;border-radius:8px;background:var(--panel-2);display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:14px;transition:transform .1s ease-out}
+.exp-row .ex:active{transform:scale(.88)}
+.exp-none{font-size:12.5px;color:var(--faint);padding:4px 0}
+.part{display:flex;gap:8px;align-items:flex-end;margin-top:8px}
+.part .pn{flex:1.55}.part .pp{flex:1;min-width:0}
+.part .px{width:36px;height:46px;border-radius:12px;background:var(--panel-2);color:var(--muted);font-size:16px;flex-shrink:0}
+.kit-hint{font-size:12.5px;color:var(--muted);margin-top:8px;line-height:1.45}
+.tog{display:flex;align-items:center;gap:10px;padding:10px 0;border-top:1px solid var(--line);font-size:13.5px}
+.tog:first-of-type{border-top:none}
+.tog input[type=checkbox]{width:18px;height:18px;flex-shrink:0;accent-color:#fff}
+.tog .tn{flex:1;min-width:0}
+.tog .tn .tm{font-size:11.5px;color:var(--faint);margin-top:2px}
+.tog .tq{width:64px;padding:8px 8px;background:var(--panel);border:1px solid transparent;border-radius:10px;color:var(--text);font-family:var(--font);font-size:14px}
+.linkish{font-size:13px;color:var(--sky);font-weight:500;padding:4px 0}
+.kit-chip{display:inline-block;font-size:11px;color:var(--muted);background:var(--panel-2);border-radius:8px;padding:2px 8px;font-weight:500;margin-left:6px;vertical-align:1px}
+
+/* bottom nav — матове скло */
+.nav{position:fixed;left:0;right:0;bottom:0;height:calc(var(--nav-h) + env(safe-area-inset-bottom));padding-bottom:env(safe-area-inset-bottom);
+  background:rgba(18,18,20,.8);-webkit-backdrop-filter:blur(20px) saturate(1.8);backdrop-filter:blur(20px) saturate(1.8);border-top:1px solid rgba(84,84,88,.35);
+  display:flex;z-index:40;max-width:480px;margin:0 auto}
+.nav button{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;color:var(--faint);font-size:10.5px;font-weight:500;transition:color .15s,transform .1s ease-out}
+.nav button:active{transform:scale(.94)}
+.nav button .ni{width:23px;height:23px;fill:currentColor;transition:transform .15s}
+.nav button.on{color:var(--text)}
+
+/* toast */
+.toast{position:fixed;left:50%;bottom:calc(var(--nav-h) + env(safe-area-inset-bottom) + 16px);transform:translateX(-50%) translateY(16px) scale(.95);
+  background:var(--panel-2);-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);border-radius:100px;padding:11px 18px;font-size:14px;font-weight:500;
+  z-index:60;opacity:0;transition:opacity .3s,transform .3s var(--ease);box-shadow:var(--shadow);max-width:88%;text-align:center}
+.toast.on{opacity:1;transform:translateX(-50%)}
+.toast.ok{color:var(--mint)}.toast.err{color:var(--coral)}
+
+/* порівняння періодів */
+.cmp-seg{display:flex;gap:4px;background:var(--panel-2);border-radius:12px;padding:3px;margin:12px 0}
+.cmp-seg button{flex:1;padding:9px;border-radius:9px;font-size:13.5px;font-weight:600;color:var(--muted);transition:background .15s,color .15s}
+.cmp-seg button.on{background:var(--panel-3);color:var(--text)}
+.cmp-sel{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.cmp-sel select{flex:1;appearance:none;-webkit-appearance:none;text-align:center;background:var(--panel-2);border:1px solid transparent;border-radius:12px;padding:12px;color:var(--text);font-family:var(--font);font-size:14px}
+.cmp-sel select:focus{outline:none;border-color:rgba(255,255,255,.35)}
+.cmp-sel span{font-size:10px;font-weight:700;color:var(--faint);text-transform:uppercase;flex-shrink:0}
+.cmp-head,.cmp-line{display:grid;grid-template-columns:1.15fr 1fr 1fr .85fr;gap:6px;align-items:center;padding:9px 0;font-size:13px}
+.cmp-head{color:var(--faint);font-size:9.5px;text-transform:uppercase;letter-spacing:.06em;border-bottom:1px solid var(--line);margin-top:8px;padding-bottom:6px}
+.cmp-line + .cmp-line{border-top:1px solid var(--line)}
+.cmp-line .n{color:var(--muted)}
+.cmp-line .v,.cmp-line .d{font-family:var(--fmono);font-variant-numeric:tabular-nums;font-weight:600;text-align:right;white-space:nowrap}
+.cmp-line .v.b{color:var(--muted)}
+.cmp-head .v,.cmp-head .d{text-align:right;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cmp-line .d{color:var(--faint)}
+.cmp-line .d.good{color:var(--mint)}.cmp-line .d.bad{color:var(--coral)}
+
+.skeleton{color:var(--faint);text-align:center;padding:70px 0;font-size:13.5px;line-height:1.6}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute"><defs>
+  <linearGradient id="g-amber" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0%" stop-color="#ffffff"/><stop offset="60%" stop-color="#ebebf0"/><stop offset="100%" stop-color="#c7c7cc"/>
+  </linearGradient>
+</defs></svg>
+
+<div id="root"><div class="skeleton">Синхронізація…</div></div>
+<nav class="nav" id="nav" style="display:none">
+  <button data-tab="overview" onclick="setTab('overview')"><svg class="ni" viewBox="0 0 24 24"><path d="M4 13h4v7H4v-7Zm6-9h4v16h-4V4Zm6 5h4v11h-4V9Z"/></svg>Огляд</button>
+  <button data-tab="analytics" onclick="setTab('analytics')"><svg class="ni" viewBox="0 0 24 24"><path d="M3 3h2v16h16v2H3V3Zm4 10 4-4 3 3 5-6 1.5 1.3L14 15l-3-3-3.5 3.5L7 13Z"/></svg>Аналітика</button>
+  <button data-tab="items" onclick="setTab('items')"><svg class="ni" viewBox="0 0 24 24"><path d="M12 2 3 6.5v11L12 22l9-4.5v-11L12 2Zm0 2.2 6.3 3.1L12 10.6 5.7 7.3 12 4.2ZM5 9l6 3v7.4l-6-3V9Zm14 0v7.4l-6 3V12l6-3Z"/></svg>Товари</button>
+  <button data-tab="add" onclick="setTab('add')"><svg class="ni" viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm1 5h-2v4H7v2h4v4h2v-4h4v-2h-4V7Z"/></svg>Додати</button>
+</nav>
+<div id="sheet-host"></div>
+<div id="toast" class="toast"></div>
+
+<script>
+const TG = window.Telegram && window.Telegram.WebApp ? window.Telegram.WebApp : null;
+const RM = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+// Авторизація: у Telegram — initData (визначає користувача), у браузері — demo-пісочниця
+const INIT = (TG && TG.initData) ? TG.initData : '';
+// Чию статистику дивимось: null — свою. Чужу сервер віддає лише власнику бота
+// (для інших параметр ігнорується). Можна відкрити одразу з бота: ?view=<id>.
+let VIEW = new URLSearchParams(location.search).get('view') || null;
+function authQS(){ return (INIT ? ('initData=' + encodeURIComponent(INIT)) : 'demo=1') + (VIEW ? '&view='+encodeURIComponent(VIEW) : ''); }
+function authBody(o){ const b = INIT ? {...o, initData: INIT} : {...o, demo: 1}; if(VIEW) b.view = VIEW; return b; }
+// Базовий префікс, коли роздається за проксі (напр. "/income"). У корені — порожній.
+// Якщо сторінку віддає статичний хост (GitHub Pages), деплой вшиває window.API_BASE —
+// повну адресу API на ПК (https://<домен>/income). Інакше беремо шлях поточної сторінки.
+const BASE = (window.API_BASE ? String(window.API_BASE).replace(/\/+$/, '') : '')
+  || location.pathname.replace(/\/(index\.html)?$/, '');
+// Обхід ngrok-попередження на XHR/fetch (безкоштовний тариф показує interstitial).
+const NGROK_HDR = {'ngrok-skip-browser-warning':'1'};
+const CUR = {UAH:'₴', USD:'$', EUR:'€'};
+const CUR_ORDER = ['UAH','USD','EUR'];
+const CUR_LB = {UAH:'грн', USD:'USD', EUR:'EUR'};
+const MON = {1:'Січень',2:'Лютий',3:'Березень',4:'Квітень',5:'Травень',6:'Червень',7:'Липень',8:'Серпень',9:'Вересень',10:'Жовтень',11:'Листопад',12:'Грудень'};
+const MON3 = {1:'Січ',2:'Лют',3:'Бер',4:'Кві',5:'Тра',6:'Чер',7:'Лип',8:'Сер',9:'Вер',10:'Жов',11:'Лис',12:'Гру'};
+
+const S = {data:null, cur:'UAH', period:null, tab:'overview', filter:'all', openId:null, animKey:null,
+  add:{brand:null, newBrand:false, model:'', kit:null, price:'', date:'', plat:'OLX', exp:'', qty:'', parts:[]}, staleDays:30,
+  q:'', capWin:'d90', itemsPeriod:'all', itemsMode:'m', itemsPlatform:'all', itemsSort:'date'};
+
+function haptic(k){ try{ if(TG&&TG.HapticFeedback) TG.HapticFeedback.impactOccurred(k||'light'); }catch(e){} }
+function hnotify(t){ try{ if(TG&&TG.HapticFeedback) TG.HapticFeedback.notificationOccurred(t); }catch(e){} }
+
+function fmtNum(n){ const r=Math.round(n); return r.toLocaleString('uk-UA').replace(/[  ,]/g,' '); }
+function conv(uah){ return S.cur==='UAH' ? uah : uah/((S.data.rates||{})[S.cur]||1); }
+function money(uah){ return `<span class="cur">${CUR[S.cur]}</span>${fmtNum(conv(uah))}`; }
+function isoUA(iso){ if(!iso) return '—'; const [y,m,d]=iso.split('-'); return `${d}.${m}.${y}`; }
+function mkey(iso){ return iso ? iso.slice(0,7) : null; }
+function mlabel(key){ const [y,m]=key.split('-'); return `${MON[+m]} ${y}`; }
+
+// ---------- data helpers ----------
+function monthsAll(){ // всі місяці з активністю, зростанням
+  const s=new Set();
+  S.data.items.forEach(i=>{ if(i.buy_date)s.add(mkey(i.buy_date)); if(i.sell_date)s.add(mkey(i.sell_date)); });
+  s.add(mkey(S.data.today));
+  return [...s].sort();
+}
+// Агрегація по ПРОДАЖАХ (не по товарах) — партія може продаватись частинами
+// й у різні місяці. Виручка/прибуток рахуються за кожен продаж окремо.
+function monthAgg(key){
+  const items=S.data.items;
+  const isAll = key==='all';
+  let profit=0, revenue=0, expenses=0, invested=0, soldUnits=0;
+  const daysArr=[];
+  items.forEach(it=>{
+    const q=it.qty||1;
+    (it.sales||[]).forEach(s=>{
+      if(isAll || mkey(s.date)===key){
+        revenue+=s.price; profit+=s.profit; soldUnits+=s.qty;
+        invested += (it.unit_cost||0)*s.qty;
+        expenses += (it.expenses_total||0)*(q? s.qty/q : 0);
+        if(s.days!=null) daysArr.push(s.days);
+      }
+    });
+  });
+  const bought = items.filter(i=> isAll || mkey(i.buy_date)===key);
+  return {
+    key, sold:soldUnits, bought:bought.length, profit, revenue, invested, expenses,
+    avgDays: daysArr.length? daysArr.reduce((a,b)=>a+b,0)/daysArr.length : 0,
+    margin: invested>0? profit/invested*100 : 0,
+    active: items.filter(i=>(i.remaining||0)>0).length,
+    daysArr,
+  };
+}
+function deltaFor(key){
+  if(key==='all') return null;
+  const all=monthsAll(); const idx=all.indexOf(key);
+  if(idx<=0) return null;
+  const cur=monthAgg(key), prev=monthAgg(all[idx-1]);
+  if(!cur.sold || prev.profit<=0) return null;
+  const diff=cur.profit-prev.profit;
+  return {diff, pct:diff/prev.profit*100, prevLabel:mlabel(all[idx-1])};
+}
+function bestMonth(){
+  const ms=monthsAll().map(monthAgg).filter(m=>m.sold>0);
+  if(!ms.length) return null;
+  return ms.reduce((a,b)=>b.profit>a.profit?b:a);
+}
+
+// ---------- render ----------
+function render(){
+  document.getElementById('nav').style.display='flex';
+  document.querySelectorAll('.nav button').forEach(b=>b.classList.toggle('on', b.dataset.tab===S.tab));
+  const root=document.getElementById('root');
+  if(S.tab==='overview') root.innerHTML=overview();
+  else if(S.tab==='analytics') root.innerHTML=analyticsView();
+  else if(S.tab==='items') root.innerHTML=itemsView();
+  else root.innerHTML=addView();
+  if(S.tab==='overview') animateOverview();
+  renderSheet();
+}
+
+function header(){
+  return `<header class="top">
+    <div>
+      <div class="eyebrow">Облік перепродажу</div>
+      <h1>Трекер прибутку</h1>
+      <div class="live"><span class="dot"></span><span>оновлено ${S.data.generated}</span></div>
+      ${S.data.admin ? `<button class="who-btn ${S.data.viewing?'on':''}" onclick="openUsers()">${S.data.viewing ? '👁 '+esc(whoName(S.data.viewing))+' · лише перегляд' : '👤 Моя статистика'} ▾</button>` : ''}
+    </div>
+    <button class="cur-btn" onclick="cycleCur()">
+      <span class="sym">${CUR[S.cur]}</span>
+      <span class="lb">валюта<b>${CUR_LB[S.cur]}</b></span>
+    </button>
+  </header>`;
+}
+
+function overview(){
+  const key=S.period;
+  const a=monthAgg(key);
+  const label = key==='all' ? 'Загальний прибуток' : mlabel(key);
+  const neg = a.profit<0;
+  const marginPct=Math.max(0,Math.min(a.margin,100));
+  const R=78, CIRC=2*Math.PI*R;
+
+  // chips
+  const cm=mkey(S.data.today);
+  let chips=`<button class="chip ${key===cm?'on':''}" onclick="setPeriod('${cm}')">Цей місяць</button>`;
+  monthsAll().reverse().forEach(k=>{ if(k!==cm) chips+=`<button class="chip ${key===k?'on':''}" onclick="setPeriod('${k}')">${mlabel(k).split(' ')[0]}</button>`; });
+  chips+=`<button class="chip ${key==='all'?'on':''}" onclick="setPeriod('all')">Вся статистика</button>`;
+  chips+=`<button class="chip" onclick="openCompare()">⇄ Порівняти</button>`;
+
+  const d=deltaFor(key);
+  let deltaHtml='';
+  if(d){ const up=d.diff>=0; deltaHtml=`<div class="delta">проти <b>${d.prevLabel}</b> · <span class="${up?'up':'down'}">${up?'+':'−'}${fmtNum(Math.abs(conv(d.diff)))} ${CUR[S.cur]} (${up?'+':'−'}${Math.abs(Math.round(d.pct))}%) ${up?'📈':'📉'}</span></div>`; }
+  else if(key!=='all' && a.sold===0){ deltaHtml=`<div class="delta">📭 цього місяця ще без продажів</div>`; }
+
+  const per = ip(key);
+  const fields = key==='all'
+    ? [f(a.sold,'Продано','','',`gotoItems('all','sold')`),
+       f(a.bought,'Куплено','','',`gotoItems('all','all')`),
+       f(a.active,'В наявності','hl','',`gotoItems('all','active')`),
+       fm(a.revenue,'Виручка',`gotoItems('all','sold')`),
+       fm(a.invested,'Вкладено',`gotoItems('all','active')`),
+       f(Math.round(a.margin),'Маржа','','%',`gotoItems('all','sold')`)]
+    : [f(a.sold,'Продано','','',`gotoItems('${per}','sold')`),
+       f(a.bought,'Куплено','','',`gotoItems('${per}','all')`),
+       fm(a.revenue,'Виручка',`gotoItems('${per}','sold')`),
+       fm(a.expenses,'Витрати',`gotoItems('${per}','all')`),
+       f(Math.round(a.avgDays),'Сер. час','','дн',`gotoItems('${per}','sold')`),
+       f(Math.round(a.margin),'Маржа','','%',`gotoItems('${per}','sold')`)];
+
+  return header()+`
+  <div class="chips">${chips}</div>
+  <section class="hero reveal">
+    <div class="gauge-wrap">
+      <svg class="gauge" viewBox="0 0 214 214">${gaugeTicks()}
+        <circle class="track" cx="107" cy="107" r="${R}"/>
+        <circle class="prog" cx="107" cy="107" r="${R}" style="--circ:${CIRC.toFixed(1)}"/>
+      </svg>
+      <div class="gauge-core">
+        <div class="lbl">${label}</div>
+        <div class="val ${neg?'neg':''}"><span class="cur">${CUR[S.cur]}</span><span id="hero-num">0</span></div>
+        <div class="margin">маржа <span class="mono">${Math.round(a.margin)}</span>%</div>
+      </div>
+    </div>
+    <div class="hero-sub">
+      <div class="cell" onclick="gotoItems('${ip(key)}','sold')" style="cursor:pointer"><div class="k">Виручка</div><div class="v">${money(a.revenue)}</div></div>
+      <div class="cell" onclick="gotoItems('${ip(key)}','all')" style="cursor:pointer"><div class="k">Витрати</div><div class="v">${money(a.expenses)}</div></div>
+    </div>
+    ${deltaHtml}
+  </section>
+  ${goalCard(key)}
+  ${forecastCard(key)}
+  ${frozenCard()}
+  <div class="grid reveal">${fields.join('')}</div>
+  ${momentum(key)}
+  ${bestCard()}
+  ${key!=='all'?`<button class="export-btn" onclick="exportMonth('${key}')">⬇️ Надіслати CSV-звіт за ${mlabel(key).split(' ')[0]} у чат</button>`:''}`;
+}
+
+// ---------- ціль місяця ----------
+function goalCard(key){
+  if(key==='all') return '';
+  const goal=(S.data.goals||{})[key]||0;
+  if(!goal){
+    return `<button class="goal-set" onclick="openGoal('${key}')">🎯 Постав ціль прибутку на ${mlabel(key).split(' ')[0]}</button>`;
+  }
+  const prof=monthAgg(key).profit;
+  const pct=goal>0?Math.max(0,Math.min(100,prof/goal*100)):0;
+  const done=prof>=goal, left=goal-prof;
+  return `<section class="goal reveal" onclick="openGoal('${key}')">
+    <div class="goal-top"><div class="eyebrow">🎯 Ціль на ${mlabel(key).split(' ')[0]}</div>
+      <div class="goal-amt">${money(prof)} / ${money(goal)}</div></div>
+    <div class="goal-bar"><div class="goal-fill ${done?'done':''}" style="width:${pct}%"></div></div>
+    <div class="goal-sub">${done?'✅ Ціль досягнута — так тримати!':`ще ${money(left)} до цілі · ${Math.round(pct)}%`}</div>
+  </section>`;
+}
+function openGoal(key){
+  haptic();
+  const cur=(S.data.goals||{})[key]||'';
+  const host=document.getElementById('sheet-host');
+  host.innerHTML=`<div class="overlay" id="goal-ovl" onclick="if(event.target===this)closeGoal()">
+    <div class="sheet">
+      <div class="grab"></div>
+      <h2>Ціль на ${mlabel(key)}</h2>
+      <div style="font-size:12px;color:var(--muted);margin:2px 0 4px">Скільки прибутку хочеш зробити цього місяця. Необов'язково — лишиш порожнім, і ціль зникне.</div>
+      <div class="form">
+        <label>Ціль прибутку, ₴</label>
+        <input id="goal-amt" type="number" inputmode="decimal" placeholder="напр. 10000" value="${cur}">
+        <div class="btn-row">
+          <button class="btn primary" onclick="saveGoal('${key}')">Зберегти</button>
+          ${cur?`<button class="btn ghost" onclick="saveGoal('${key}',true)">Прибрати ціль</button>`:''}
+        </div>
+      </div>
+    </div>
+  </div>`;
+  requestAnimationFrame(()=>{const o=document.getElementById('goal-ovl'); if(o)o.classList.add('on');});
+  setTimeout(()=>{const o=document.getElementById('goal-ovl'); if(o&&!o.classList.contains('on'))o.classList.add('on');},60);
+  setTimeout(()=>{const i=document.getElementById('goal-amt'); if(i)i.focus();},200);
+}
+function closeGoal(){ const o=document.getElementById('goal-ovl'); if(o){o.classList.remove('on'); setTimeout(()=>{document.getElementById('sheet-host').innerHTML='';},260);} }
+async function saveGoal(key, clear){
+  const amt=clear?0:parseFloat(val('goal-amt'))||0;
+  if(!INIT){ toast('Ціль зберігається лише в Telegram','err'); return; }
+  try{ await api('/api/goal/set',{month:key, amount:amt}); hnotify('success');
+    toast(amt>0?'Ціль збережено 🎯':'Ціль прибрано','ok'); closeGoal(); await load(); }
+  catch(e){ toast(e.message,'err'); }
+}
+
+// ---------- прогноз місяця ----------
+// Куди вийде місяць, якщо темп збережеться. Числа рахує СЕРВЕР
+// (db.forecast_stats) — щоб картка й недільний дайджест бота називали одне й
+// те саме. Денна ставка — суміш фактичного темпу цього місяця й звичного за
+// 90 днів, інакше одна вдала угода 3-го числа малює фантастичний прогноз.
+function avgPrevMonths(n=3){
+  const cm=mkey(S.data.today);
+  const ms=monthsAll().filter(k=>k<cm).slice(-n).map(monthAgg).filter(m=>m.sold>0);
+  if(!ms.length) return null;
+  return {avg: ms.reduce((a,m)=>a+m.profit,0)/ms.length, n: ms.length};
+}
+function forecastCard(key){
+  const fc=S.data.forecast;
+  if(!fc || key!==fc.month) return '';            // має сенс лише для поточного місяця
+  if(fc.profit<=0 && fc.projected<=0) return '';  // ні продажів, ні історії — нічого казати
+
+  const scale=Math.max(fc.projected, fc.goal, fc.profit, 1);
+  const pNow=Math.max(0,Math.min(100, fc.profit/scale*100));
+  const pProj=Math.max(0,Math.min(100-pNow, (fc.projected-fc.profit)/scale*100));
+  const pGoal=fc.goal>0 ? Math.max(0,Math.min(99.4, fc.goal/scale*100)) : null;
+  const pctGoal=fc.goal>0 ? Math.round(fc.projected/fc.goal*100) : 0;
+
+  let cls='', verdict='';
+  if(fc.status==='done')
+    verdict=`✅ Ціль закрита — вже <b>${money(fc.profit-fc.goal)}</b> зверху`, cls='ok';
+  else if(fc.status==='ahead')
+    verdict=`Ідеш із випередженням: за темпом це <b>${pctGoal}% цілі</b>`, cls='ok';
+  else if(fc.status==='behind')
+    verdict=`За темпом вийде <b>${pctGoal}% цілі</b> — бракує ${money(fc.left)}`+
+            (fc.deals_left?` (~${fc.deals_left} ${plural(fc.deals_left,'угода','угоди','угод')})`:''), cls='bad';
+  else
+    verdict=`Ціль на місяць не поставлена — <b>постав</b>, і буде видно, чи встигаєш`;
+
+  const ap=avgPrevMonths(3);
+  const rows=[
+    `<div class="stat-row"><div class="sl">Зароблено за ${fc.day} ${plural(fc.day,'день','дні','днів')}</div>
+      <div class="sv">${money(fc.profit)}</div></div>`,
+    `<div class="stat-row"><div class="sl">Темп цього місяця</div>
+      <div class="sv">${money(fc.pace_day)}<span style="color:var(--faint)">/день</span></div></div>`,
+  ];
+  if(fc.need_day!=null && fc.status!=='done'){
+    const ok=fc.need_day<=fc.rate;
+    rows.push(`<div class="stat-row"><div class="sl">Треба до цілі</div>
+      <div class="sv ${ok?'fast':'slow'}">${money(fc.need_day)}<span style="color:var(--faint)">/день</span></div></div>`);
+  }
+  if(ap) rows.push(`<div class="stat-row"><div class="sl">Сер. за ${ap.n} ${plural(ap.n,'попередній місяць','попередні місяці','попередніх місяців')}</div>
+      <div class="sv">${money(ap.avg)}</div></div>`);
+
+  const legend=`<div class="fc-legend">
+    <span><i class="k-now"></i>факт ${money(fc.profit)}</span>
+    <span><i class="k-proj"></i>прогноз ${money(fc.projected)}</span>
+    ${fc.goal>0?`<span><i class="k-goal"></i>ціль ${money(fc.goal)}</span>`:''}
+  </div>`;
+
+  const note=fc.reliable
+    ? `Прогноз = зароблене + звичний темп на ${fc.days_left} ${plural(fc.days_left,'день','дні','днів')}, що лишились.`
+    : `Цього місяця ще мало угод, тож більше спираємось на твій звичний темп — цифра орієнтовна.`;
+
+  const tap=fc.goal>0?'':' tap';
+  const click=fc.goal>0?'':` onclick="openGoal('${fc.month}')"`;
+  return `<section class="fc reveal${tap}"${click}>
+    <div class="fc-head">
+      <div class="eyebrow">📈 Прогноз на ${mlabel(fc.month).split(' ')[0]}</div>
+      <div class="fc-day">${fc.day} / ${fc.days_total} дн</div>
+    </div>
+    <div class="fc-val"><span class="ap">≈</span>${money(fc.projected)}</div>
+    <div class="fc-verdict ${cls}">${verdict}</div>
+    <div class="fc-bar">
+      <i class="now" style="width:${pNow}%"></i>
+      <i class="proj" style="left:${pNow}%;width:${pProj}%"></i>
+      ${pGoal!=null?`<i class="gm" style="left:${pGoal}%"></i>`:''}
+    </div>
+    ${legend}
+    <div class="fc-rows">${rows.join('')}</div>
+    <div class="fc-note ${fc.reliable?'':'warn'}">${note}</div>
+  </section>`;
+}
+
+// ---------- експорт місяця у чат ----------
+async function exportMonth(key){
+  if(key==='all'){ toast('Обери конкретний місяць','err'); return; }
+  if(!INIT){ toast('Експорт доступний лише в Telegram','err'); return; }
+  haptic(); toast('Готую звіт…');
+  try{
+    const r=await api('/api/export/month',{month:key});
+    if(r&&r.ok){ hnotify('success'); toast('Звіт CSV надіслано в чат ✅','ok'); }
+    else if(r&&r.empty){ toast('За цей місяць немає даних','err'); }
+  }catch(e){ toast(e.message||'Не вдалося надіслати','err'); }
+}
+
+// Скільки грошей зараз «заморожено» в непроданому залишку партій.
+function frozenStats(){
+  const act=S.data.items.filter(i=>(i.remaining||0)>0);
+  let total=0, units=0;
+  act.forEach(i=>{ total += (i.unit_cost||0)*i.remaining; units += i.remaining; });
+  const held=act.filter(i=>i.days_held!=null).map(i=>i.days_held);
+  const avgHeld=held.length? held.reduce((a,b)=>a+b,0)/held.length : 0;
+  return {lines:act.length, count:units, units, total, avgHeld, avg: units? total/units : 0};
+}
+function plural(n,one,few,many){ const a=n%10,b=n%100; if(a===1&&b!==11)return one; if(a>=2&&a<=4&&(b<10||b>=20))return few; return many; }
+function frozenCard(){
+  const z=frozenStats();
+  if(!z.units) return '';
+  return `<section class="frozen reveal">
+    <div class="snow">🧊</div>
+    <div class="eyebrow">Заморожено в товарах</div>
+    <div class="fz"><span class="cur">${CUR[S.cur]}</span>${fmtNum(conv(z.total))}</div>
+    <div class="fzsub">${z.units} ${plural(z.units,'одиниця','одиниці','одиниць')} у наявності · сер. ${fmtNum(conv(z.avg))} ${CUR[S.cur]} · ${Math.round(z.avgHeld)} дн</div>
+  </section>`;
+}
+
+function f(v,k,cls='',u='',onclick=''){ return `<div class="field ${cls}"${onclick?` onclick="${onclick}" style="cursor:pointer"`:''}><div class="fv">${v}${u?`<span class="u">${u}</span>`:''}</div><div class="fk">${k}</div></div>`; }
+function fm(v,k,onclick=''){ return `<div class="field"${onclick?` onclick="${onclick}" style="cursor:pointer"`:''}><div class="fv" style="font-size:15px">${money(v)}</div><div class="fk">${k}</div></div>`; }
+
+// період огляду ('all' або 'YYYY-MM') → ключ періоду товарів ('all' або 'm:YYYY-MM')
+function ip(key){ return key==='all' ? 'all' : 'm:'+key; }
+// тап по плашці показника — відкриває «Товари» з фільтром і тим самим періодом
+function gotoItems(period, filter){
+  haptic();
+  S.itemsPeriod = period;
+  S.itemsMode = period.startsWith('w:') ? 'w' : 'm';
+  S.filter = filter;
+  S.tab = 'items';
+  S.q = '';
+  render();
+  const r=document.getElementById('root'); if(r) r.scrollIntoView({block:'start'});
+}
+
+function momentum(selKey){
+  const ms=monthsAll().map(monthAgg);
+  const maxP=Math.max(1,...ms.map(m=>m.profit));
+  const sellMonths=ms.filter(m=>m.sold>0), buyMonths=ms.filter(m=>m.bought>0);
+  const avgP=sellMonths.length?sellMonths.reduce((a,m)=>a+m.profit,0)/sellMonths.length:0;
+  const avgB=buyMonths.length?buyMonths.reduce((a,m)=>a+m.bought,0)/buyMonths.length:0;
+  const bars=ms.map(m=>{
+    const h=m.profit>0?Math.max(6,m.profit/maxP*100):2;
+    const sel=m.key===selKey;
+    return `<div class="bar-col" onclick="setPeriod('${m.key}')">
+      <div class="bar-val">${m.profit>0?(conv(m.profit)>=1000?fmtNum(conv(m.profit)/1000).replace(/\s/g,'')+'k':fmtNum(conv(m.profit))):'—'}</div>
+      <div class="bar-track"><div class="bar ${m.profit<=0?'zero':''} ${sel&&m.profit>0?'sel':''}" style="height:${h}%"></div></div>
+      <div class="bar-x ${sel?'sel':''}">${MON3[+m.key.split('-')[1]]}</div>
+    </div>`;
+  }).join('');
+  return `<section class="section reveal">
+    <div class="sec-head"><div class="eyebrow">Моментум · прибуток / міс</div></div>
+    <div class="chart">${bars}</div>
+    <div class="avg-line">
+      <div class="a">сер. прибуток <b>${money(avgP)}</b>/міс</div>
+      <div class="a">закупівель <b>${avgB.toFixed(1)}</b>/міс</div>
+    </div>
+  </section>`;
+}
+
+function bestCard(){
+  const b=bestMonth(); if(!b) return '';
+  return `<section class="best reveal">
+    <div class="trophy">🏆</div>
+    <div class="eyebrow">Кращий місяць</div>
+    <div class="m">${mlabel(b.key)}</div>
+    <div class="p">${money(b.profit)}</div>
+  </section>`;
+}
+
+// ---------- Аналітика ----------
+function kAmt(uah){ const v=conv(uah); return v>=1000 ? fmtNum(v/1000).replace(/\s/g,'')+'k' : fmtNum(v); }
+function jumpMonth(k){ setPeriod(k); }  // тап по стовпчику → огляд того місяця
+function median(arr){ if(!arr.length) return 0; const s=[...arr].sort((a,b)=>a-b); const m=s.length>>1; return s.length%2? s[m] : (s[m-1]+s[m])/2; }
+
+// залежані: активні товари, що лежать довше за поріг (S.staleDays)
+function staleItems(days){
+  return S.data.items.filter(i=>(i.remaining||0)>0 && i.days_held!=null && i.days_held>=days)
+    .sort((a,b)=>b.days_held-a.days_held);
+}
+function setStale(d){ S.staleDays=d; haptic(); render(); }
+function staleSection(){
+  const opts=[14,30,60];
+  const list=staleItems(S.staleDays);
+  const seg=`<div class="stale-seg">${opts.map(d=>`<button class="${S.staleDays===d?'on':''}" onclick="setStale(${d})">${d} дн</button>`).join('')}</div>`;
+  let body;
+  if(!list.length){ body=`<div class="empty" style="padding:20px 8px">Немає товарів, що лежать довше за ${S.staleDays} дн 👍</div>`; }
+  else body=list.map(i=>`<div class="stale-row" onclick="openItem(${i.id})">
+      <div style="min-width:0"><div class="sn">${esc(i.name)}</div><div class="sd">🕔 ${i.days_held} дн у наявності${i.qty>1?` · лишилось ${i.remaining} з ${i.qty}`:''}</div></div>
+      <div class="sm">${money((i.unit_cost||0)*i.remaining)}</div></div>`).join('');
+  return `<section class="section reveal">
+    <div class="sec-head"><div class="eyebrow">🧊 Залежані товари</div>${seg}</div>
+    ${body}</section>`;
+}
+
+function miniChart(label, ms, valFn, fmtFn, barCls){
+  const vals=ms.map(valFn);
+  const max=Math.max(1,...vals);
+  const bars=ms.map((m,idx)=>{
+    const v=vals[idx];
+    const h=v>0?Math.max(6,v/max*100):2;
+    return `<div class="bar-col" onclick="jumpMonth('${m.key}')">
+      <div class="bar-val">${v>0?fmtFn(v):'—'}</div>
+      <div class="bar-track"><div class="bar ${v>0?barCls:'zero'}" style="height:${h}%"></div></div>
+      <div class="bar-x">${MON3[+m.key.split('-')[1]]}</div>
+    </div>`;
+  }).join('');
+  return `<section class="section reveal">
+    <div class="sec-head"><div class="eyebrow">${label}</div></div>
+    <div class="chart">${bars}</div>
+  </section>`;
+}
+
+// ---------- Капітал: чи працюють гроші ----------
+// Числа рахує сервер (db.capital_stats), щоб дайджест бота і застосунок
+// показували одне й те саме. Ключова ідея — «капітало-дні»: кожна одиниця
+// товару тримає свою собівартість зайнятою від купівлі до продажу.
+const CAP_WINS=[['d90','90 днів'],['d365','рік'],['all','весь час']];
+function setCapWin(w){ S.capWin=w; haptic(); render(); }
+function capitalSection(){
+  const all=S.data.capital;
+  if(!all) return '';
+  const c=all[S.capWin];
+  const seg=`<div class="cap-seg">${CAP_WINS.map(([k,l])=>
+    `<button class="${S.capWin===k?'on':''}" onclick="setCapWin('${k}')">${l}</button>`).join('')}</div>`;
+  if(!c || !c.avg_capital){
+    return `<section class="section reveal">
+      <div class="sec-head"><div class="eyebrow">💼 Капітал</div>${seg}</div>
+      <div class="empty" style="padding:20px 8px">За цей період гроші не були задіяні.</div></section>`;
+  }
+  const turns=c.turns||0, roiY=c.roi_annual||0, roiP=c.roi_period||0;
+  const maxCd=Math.max(1,...(c.holders||[]).map(h=>h.capital_days));
+  const holders=(c.holders||[]).map(h=>`<div class="hold-row" onclick="openItem(${h.id})">
+    <div class="hold-top"><div class="hn">${esc(h.name)}</div><div class="hv">${money(h.amount)}</div></div>
+    <div class="hd">${h.days} дн у наявності · тримає ${fmtNum(Math.round(h.capital_days/1000))}k ₴×дн</div>
+    <div class="hold-bar"><i style="width:${Math.max(4,h.capital_days/maxCd*100)}%"></i></div>
+  </div>`).join('');
+  return `<section class="section reveal">
+    <div class="sec-head"><div class="eyebrow">💼 Капітал</div>${seg}</div>
+    <div class="grid" style="margin-bottom:14px">
+      ${f(turns.toFixed(1),'Обороти','hl','×/рік')}
+      ${f(Math.round(roiY),'ROI річних','','%')}
+      ${fm(c.avg_capital,'Сер. задіяно')}
+      ${fm(c.frozen,'Заморожено')}
+    </div>
+    <div class="stat-row"><div class="sl">Прибуток за період</div><div class="sv" style="color:var(--mint)">${money(c.profit)}</div></div>
+    <div class="stat-row"><div class="sl">Собівартість проданого</div><div class="sv">${money(c.cogs)}</div></div>
+    <div class="stat-row"><div class="sl">ROI за період <b>(${c.window_days} дн)</b></div><div class="sv">${Math.round(roiP)}%</div></div>
+    ${holders?`<div class="cap-note" style="margin-bottom:2px">Хто тримає гроші зараз:</div>${holders}`:''}
+    <div class="cap-note">«Обороти» — скільки разів за рік прокручується задіяний капітал.
+    ROI річних приводить прибуток до року, тож 20% за 3 тижні й 20% за 4 місяці
+    більше не виглядають однаково.</div>
+  </section>`;
+}
+
+// ---------- топ моделі за прибутком ----------
+function topModels(n=5){
+  const map=new Map();
+  S.data.items.forEach(it=>{
+    const key=it.name||'Без назви';
+    (it.sales||[]).forEach(s=>{
+      const cur=map.get(key)||{name:key, profit:0, units:0};
+      cur.profit+=s.profit||0; cur.units+=s.qty||0;
+      map.set(key,cur);
+    });
+  });
+  return [...map.values()].filter(m=>m.units>0).sort((a,b)=>b.profit-a.profit).slice(0,n);
+}
+function viewModel(name){
+  haptic();
+  S.tab='items'; S.q=name; S.filter='all'; S.itemsPeriod='all'; S.itemsPlatform='all';
+  render();
+  const r=document.getElementById('root'); if(r) r.scrollIntoView({block:'start'});
+}
+function topModelsCard(){
+  const top=topModels(5);
+  if(!top.length) return '';
+  const rows=top.map((m,idx)=>`<div class="stat-row" onclick="viewModel('${q(m.name)}')" style="cursor:pointer">
+    <div class="sl">${idx+1}. <b>${esc(m.name)}</b><br><span style="color:var(--faint)">${m.units} ${plural(m.units,'продаж','продажі','продажів')}</span></div>
+    <div class="sv" style="color:var(--mint)">${money(m.profit)}</div>
+  </div>`).join('');
+  return `<section class="section reveal">
+    <div class="sec-head"><div class="eyebrow">🏅 Топ моделі за прибутком</div></div>
+    ${rows}
+  </section>`;
+}
+
+function analyticsView(){
+  const allMs=monthsAll().map(monthAgg);
+  const ms=allMs.slice(-8);                       // останні 8 міс — щоб стовпчики читались
+  const allSales=[];
+  S.data.items.forEach(it=>(it.sales||[]).forEach(s=>allSales.push({price:s.price, qty:s.qty, profit:s.profit, days:s.days, name:it.name})));
+  const withDays=allSales.filter(s=>s.days!=null);
+  const daysArr=withDays.map(s=>s.days);
+  const avgDays=daysArr.length? daysArr.reduce((a,b)=>a+b,0)/daysArr.length : 0;
+  const medDays=median(daysArr);
+  const fastest=withDays.reduce((a,s)=> !a||s.days<a.days?s:a, null);
+  const slowest=withDays.reduce((a,s)=> !a||s.days>a.days?s:a, null);
+  const totalProfit=allSales.reduce((a,s)=>a+s.profit,0);
+  const soldUnits=allSales.reduce((a,s)=>a+s.qty,0);
+  const costBasis=allSales.reduce((a,s)=>a+(s.price-s.profit),0);   // = собівартість проданого
+  const roi=costBasis>0? totalProfit/costBasis*100 : 0;
+
+  if(!S.data.items.length){
+    return header()+`<div class="empty" style="margin-top:24px">Ще немає даних для аналітики.<br>Додай перший товар на вкладці «Додати».</div>`;
+  }
+
+  const summary=`<div class="grid reveal">
+    ${f(Math.round(avgDays),'Сер. час','hl','дн')}
+    ${f(Math.round(medDays),'Медіана','','дн')}
+    ${f(soldUnits,'Продано')}
+    ${f(Math.round(roi),'ROI','','%')}
+    ${fm(totalProfit,'Прибуток ∑')}
+    ${fm(frozenStats().total,'Заморожено')}
+  </div>`;
+
+  const charts=
+    miniChart('Прибуток / місяць', ms, m=>m.profit>0?m.profit:0, kAmt, '')+
+    miniChart('Витрати / місяць', ms, m=>m.expenses, kAmt, 'exp')+
+    miniChart('Сер. час продажу / місяць', ms, m=>m.avgDays, v=>Math.round(v)+'д', 'days')+
+    miniChart('Продажів / місяць', ms, m=>m.sold, v=>v, 'rev');
+
+  let insights='';
+  if(withDays.length){
+    insights=`<section class="section reveal">
+      <div class="sec-head"><div class="eyebrow">Швидкість обороту</div></div>
+      <div class="stat-row"><div class="sl">⚡ Найшвидший продаж<br><b>${esc(fastest.name)}</b></div><div class="sv fast">${fastest.days} дн</div></div>
+      <div class="stat-row"><div class="sl">🐢 Найдовший продаж<br><b>${esc(slowest.name)}</b></div><div class="sv slow">${slowest.days} дн</div></div>
+      <div class="stat-row"><div class="sl">📦 Заморожено зараз</div><div class="sv">${money(frozenStats().total)}</div></div>
+      <div class="stat-row"><div class="sl">💰 Загальний прибуток</div><div class="sv" style="color:var(--mint)">${money(totalProfit)}</div></div>
+    </section>`;
+  }
+
+  const cm=mkey(S.data.today);
+  const exportBtn=`<button class="export-btn" onclick="exportMonth('${cm}')">⬇️ Надіслати CSV-звіт за ${mlabel(cm).split(' ')[0]} у чат</button>`;
+  return header()+summary
+    +`<div class="a-cap">Тапни стовпчик — відкриється огляд того місяця.</div>`
+    +capitalSection()+topModelsCard()+charts+insights+staleSection()+exportBtn;
+}
+
+// ---------- пошук по товарах ----------
+// Слова шукаються І-логікою по назві, бренду, моделі, комплекту й майданчику:
+// «garmin epix» знайде «Garmin Epix Gen 2», а «дрон 2026» — за приміткою продажу.
+function searchWords(){ return S.q.trim().toLowerCase().split(/\s+/).filter(Boolean); }
+function itemHaystack(i){
+  const notes=(i.sales||[]).map(s=>s.note).filter(Boolean).join(' ');
+  const exps=(i.expenses||[]).map(e=>e.reason).filter(Boolean).join(' ');
+  return [i.name,i.brand,i.model,i.kit,i.platform,i.origin_name,i.kind==='accessory'?'аксесуар комплект':'',notes,exps].filter(Boolean).join(' ').toLowerCase();
+}
+function matchQ(i,words){ if(!words.length) return true; const h=itemHaystack(i); return words.every(w=>h.includes(w)); }
+function rxEsc(s){ return s.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'); }
+// підсвітка збігів: спершу екрануємо HTML, потім вже підмінюємо у безпечному тексті
+function hlName(name){
+  const words=searchWords(), safe=esc(name);
+  if(!words.length) return safe;
+  const rx=new RegExp('('+words.map(rxEsc).join('|')+')','gi');
+  return safe.replace(rx,'<span class="hit">$1</span>');
+}
+function onSearch(v){
+  S.q=v;
+  const box=document.getElementById('search-box');
+  if(box) box.classList.toggle('has', !!v.trim());
+  paintItems();                       // перемальовуємо ЛИШЕ список — поле не втрачає фокус
+}
+function clearSearch(){
+  S.q='';
+  const inp=document.getElementById('search-inp');
+  if(inp){ inp.value=''; inp.focus(); }
+  const box=document.getElementById('search-box');
+  if(box) box.classList.remove('has');
+  haptic(); paintItems();
+}
+// ---------- фільтр товарів за періодом (місяць / тиждень) ----------
+// itemsPeriod: 'all' | 'm:YYYY-MM' | 'w:YYYY-MM-DD' (понеділок тижня)
+function itemsPeriodRange(p){
+  if(!p || p==='all') return null;
+  if(p.startsWith('m:')){ const k=p.slice(2); return [k+'-01', k+'-31']; }
+  if(p.startsWith('r:')){ const [f,t]=p.slice(2).split(':'); return [f,t]; }
+  const k=p.slice(2); const b=new Date(k+'T00:00:00'); b.setDate(b.getDate()+6);
+  return [k, isoOf(b)];
+}
+function inItemsPeriod(i, range){
+  if(!range) return true;
+  const [from,to]=range, inR=d=> d && d>=from && d<=to;
+  if(inR(i.buy_date)) return true;
+  return (i.sales||[]).some(s=>inR(s.date));
+}
+function setItemsMode(m){ if(S.itemsMode===m) return; S.itemsMode=m; S.itemsPeriod='all'; haptic(); render(); }
+function setItemsPeriod(p){ S.itemsPeriod=p; haptic(); render(); }
+function itemsPeriodChips(){
+  const seg=`<div class="stale-seg" style="margin-bottom:10px">
+    <button class="${S.itemsMode==='m'?'on':''}" onclick="setItemsMode('m')">Місяці</button>
+    <button class="${S.itemsMode==='w'?'on':''}" onclick="setItemsMode('w')">Тижні</button>
+  </div>`;
+  let chips='';
+  if(S.itemsMode==='m'){
+    const cm=mkey(S.data.today);
+    chips+=`<button class="chip ${S.itemsPeriod==='m:'+cm?'on':''}" onclick="setItemsPeriod('m:${cm}')">Цей місяць</button>`;
+    monthsAll().reverse().forEach(k=>{ if(k!==cm) chips+=`<button class="chip ${S.itemsPeriod==='m:'+k?'on':''}" onclick="setItemsPeriod('m:${k}')">${mlabel(k).split(' ')[0]}</button>`; });
+  } else {
+    weekKeysI().forEach((k,idx)=>{
+      const lbl = idx===0 ? 'Цей тиждень' : weekLblI(k);
+      chips+=`<button class="chip ${S.itemsPeriod==='w:'+k?'on':''}" onclick="setItemsPeriod('w:${k}')">${lbl}</button>`;
+    });
+  }
+  const isRange=S.itemsPeriod.startsWith('r:');
+  const rangeLbl = isRange ? (()=>{ const [f,t]=itemsPeriodRange(S.itemsPeriod); return isoUA(f)+'–'+isoUA(t); })() : '📅 Свій період';
+  chips+=`<button class="chip ${isRange?'on':''}" onclick="openItemsRange()">${rangeLbl}</button>`;
+  chips+=`<button class="chip ${S.itemsPeriod==='all'?'on':''}" onclick="setItemsPeriod('all')">Весь час</button>`;
+  return seg+`<div class="chips">${chips}</div>`;
+}
+function itemsPeriodSummary(){
+  const range=itemsPeriodRange(S.itemsPeriod);
+  if(!range) return '';
+  const [from,to]=range;
+  const a=rangeAgg(from,to);
+  const bought=S.data.items.filter(i=>i.buy_date && i.buy_date>=from && i.buy_date<=to).length;
+  return `<div class="a-cap">Продано ${a.sold} · Куплено ${bought} · Прибуток ${money(a.profit)}</div>`;
+}
+// довільний період — сторінка-шторка з двома датами
+function openItemsRange(){
+  haptic();
+  const cur = S.itemsPeriod.startsWith('r:') ? S.itemsPeriod.slice(2).split(':') : ['',S.data.today];
+  const host=document.getElementById('sheet-host');
+  host.innerHTML=`<div class="overlay" id="rng-ovl" onclick="if(event.target===this)closeItemsRange()">
+    <div class="sheet">
+      <div class="grab"></div>
+      <h2>Свій період</h2>
+      <div class="form">
+        <div class="row" style="margin-top:4px">
+          <div><label>Від</label><input id="rng-from" type="date" value="${cur[0]||''}"></div>
+          <div><label>До</label><input id="rng-to" type="date" value="${cur[1]||S.data.today}"></div>
+        </div>
+        <div class="btn-row"><button class="btn primary" onclick="applyItemsRange()">Показати</button></div>
+      </div>
+    </div>
+  </div>`;
+  requestAnimationFrame(()=>{const o=document.getElementById('rng-ovl'); if(o)o.classList.add('on');});
+  setTimeout(()=>{const o=document.getElementById('rng-ovl'); if(o&&!o.classList.contains('on'))o.classList.add('on');},60);
+}
+function closeItemsRange(){ const o=document.getElementById('rng-ovl'); if(o){o.classList.remove('on'); setTimeout(()=>{document.getElementById('sheet-host').innerHTML='';},260);} }
+function applyItemsRange(){
+  const from=val('rng-from'), to=val('rng-to');
+  if(!from || !to || from>to){ toast('Обери коректний період','err'); return; }
+  S.itemsPeriod='r:'+from+':'+to;
+  haptic(); render();
+}
+// ---------- фільтр за майданчиком ----------
+function allPlatforms(){ return [...new Set((S.data.items||[]).map(i=>i.platform).filter(Boolean))]; }
+function setItemsPlatform(p){ S.itemsPlatform=p; haptic(); render(); }
+function itemsPlatformChips(){
+  const plats=allPlatforms();
+  if(plats.length<2) return '';
+  const chips=[`<button class="chip ${S.itemsPlatform==='all'?'on':''}" onclick="setItemsPlatform('all')">Всі майданчики</button>`]
+    .concat(plats.map(p=>`<button class="chip ${S.itemsPlatform===p?'on':''}" onclick="setItemsPlatform('${q(p)}')">${esc(p)}</button>`))
+    .join('');
+  return `<div class="chips">${chips}</div>`;
+}
+// ---------- сортування товарів ----------
+const ITEM_SORTS=[['date','Дата'],['profit','Прибуток'],['days','Дні'],['amount','Сума']];
+function itemSortKey(i){
+  switch(S.itemsSort){
+    case 'profit': return i.profit||0;
+    case 'days': return i.status==='sold' ? (i.days_to_sell??-1) : (i.days_held??-1);
+    case 'amount': return i.status==='sold' ? (i.revenue||0) : (i.unit_cost||0)*(i.remaining||0);
+    default: return null;
+  }
+}
+function setItemsSort(s){ S.itemsSort=s; haptic(); render(); }
+function itemsSortChips(){
+  const chips=ITEM_SORTS.map(([k,l])=>`<button class="chip ${S.itemsSort===k?'on':''}" onclick="setItemsSort('${k}')">${l}</button>`).join('');
+  return `<div class="chips">${chips}</div>`;
+}
+function visibleItems(){
+  const words=searchWords();
+  const range=itemsPeriodRange(S.itemsPeriod);
+  const list=[...S.data.items]
+    .filter(i=>
+      S.filter==='all' ? true :
+      S.filter==='stale' ? ((i.remaining||0)>0 && i.days_held!=null && i.days_held>=S.staleDays) :
+      S.filter==='active' ? (i.remaining||0)>0 :
+      i.status===S.filter)
+    .filter(i=>S.itemsPlatform==='all' || i.platform===S.itemsPlatform)
+    .filter(i=>inItemsPeriod(i,range))
+    .filter(i=>matchQ(i,words));
+  if(S.itemsSort==='date' || !S.itemsSort)
+    list.sort((a,b)=> (b.buy_date||'').localeCompare(a.buy_date||'') || b.id-a.id);
+  else
+    list.sort((a,b)=> itemSortKey(b)-itemSortKey(a));
+  return list;
+}
+// ---------- експорт довільного періоду товарів ----------
+function itemsExportBtn(){
+  const p=S.itemsPeriod;
+  if(p==='all') return '';
+  if(p.startsWith('m:')){ const k=p.slice(2); return `<button class="export-btn" onclick="exportMonth('${k}')">⬇️ Надіслати CSV за ${mlabel(k).split(' ')[0]} у чат</button>`; }
+  const range=itemsPeriodRange(p);
+  return `<button class="export-btn" onclick="exportRange('${range[0]}','${range[1]}')">⬇️ Надіслати CSV за період у чат</button>`;
+}
+async function exportRange(from,to){
+  if(!INIT){ toast('Експорт доступний лише в Telegram','err'); return; }
+  haptic(); toast('Готую звіт…');
+  try{
+    const r=await api('/api/export/range',{from,to});
+    if(r&&r.ok){ hnotify('success'); toast('Звіт CSV надіслано в чат ✅','ok'); }
+    else if(r&&r.empty){ toast('За цей період немає даних','err'); }
+  }catch(e){ toast(e.message||'Не вдалося надіслати','err'); }
+}
+function itemsListHTML(){
+  const list=visibleItems();
+  if(!list.length){
+    return S.q.trim()
+      ? `<div class="empty">Нічого не знайдено за «${esc(S.q.trim())}».<br>Спробуй іншу назву або бренд.</div>`
+      : `<div class="empty">Порожньо.<br>Додай перший товар на вкладці «Додати».</div>`;
+  }
+  const head=S.q.trim()?`<div class="found">Знайдено: ${list.length}</div>`:'';
+  return head+list.map(itemRow).join('');
+}
+function paintItems(){
+  const host=document.getElementById('items-list');
+  if(host) host.innerHTML=itemsListHTML();
+}
+
+function itemsView(){
+  const chips=[['all','Всі'],['sold','Продані'],['active','В наявності'],['stale','🧊 Залежані']]
+    .map(([k,l])=>`<button class="chip ${S.filter===k?'on':''}" onclick="setFilter('${k}')">${l}</button>`).join('');
+  const searchBox=`<div class="search ${S.q.trim()?'has':''}" id="search-box">
+    <svg class="si" viewBox="0 0 24 24"><path d="M10 4a6 6 0 1 0 3.5 10.9l4.3 4.3 1.4-1.4-4.3-4.3A6 6 0 0 0 10 4Zm0 2a4 4 0 1 1 0 8 4 4 0 0 1 0-8Z"/></svg>
+    <input id="search-inp" type="search" inputmode="search" autocomplete="off" spellcheck="false"
+      placeholder="Пошук: назва, бренд, модель…" value="${esc(S.q)}" oninput="onSearch(this.value)">
+    <button class="sx" onclick="clearSearch()" aria-label="Очистити">✕</button>
+  </div>`;
+  return header()+searchBox+itemsPeriodChips()+itemsPeriodSummary()+itemsExportBtn()
+    +`<div class="chips">${chips}</div>`+itemsPlatformChips()+itemsSortChips()
+    +`<section class="section reveal" style="padding:6px 16px" id="items-list">${itemsListHTML()}</section>`;
+}
+
+function itemDisplayProfit(i){
+  if(!i.sales||!i.sales.length) return i.profit;
+  const seen=new Set();
+  let p=0, bundled=false;
+  i.sales.forEach(s=>{
+    const g=s.group_id||s.id;
+    if(seen.has(g)) return;
+    seen.add(g);
+    if(s.mates&&s.mates.length){ p+=s.bundle_profit; bundled=true; }
+    else p+=s.profit||0;
+  });
+  return bundled?p:i.profit;
+}
+function itemRow(i){
+  const st=i.status, multi=i.qty>1, acc=i.kind==='accessory';
+  let ic, meta, amt;
+  if(st==='sold' && i.included_only){
+    ic='🧩';
+    const wn=(i.sales[0]&&i.sales[0].with_name)||'іншим товаром';
+    meta=`разом з ${esc(wn)} · ${isoUA(i.sell_date)}`;
+    amt=`<div class="n" style="color:var(--muted)">в комплекті</div><div class="t">продано</div>`;
+  } else if(st==='sold'){
+    ic='✅';
+    meta=`${isoUA(i.buy_date)} → ${isoUA(i.sell_date)}${i.days_to_sell!=null?` · ${i.days_to_sell} дн`:''}${multi?` · ${i.qty} шт`:''}`;
+    amt=`<div class="n pos">+${fmtNum(conv(itemDisplayProfit(i)))}</div><div class="t">прибуток</div>`;
+  } else if(st==='partial'){
+    ic='🔓';
+    meta=`продано ${i.sold_qty}/${i.qty} · лишилось ${i.remaining}${i.days_held!=null?` · ${i.days_held} дн`:''}`;
+    amt=`<div class="n pos">+${fmtNum(conv(i.profit))}</div><div class="t">реалізовано</div>`;
+  } else {
+    ic=acc?'🧩':'📦';
+    meta=`${acc&&i.origin_name?`з комплекту «${esc(i.origin_name)}» · `:''}куплено ${isoUA(i.buy_date)}${multi?` · ${i.qty} шт`:''}${i.days_held!=null?` · ${i.days_held} дн`:''}`;
+    amt=`<div class="n inv">${money((i.unit_cost||0)*i.remaining)}</div><div class="t">вкладено</div>`;
+  }
+  const kitN=(i.kit_items||[]).length;
+  return `<div class="item" onclick="openItem(${i.id})">
+    <div class="ic">${ic}</div>
+    <div class="info"><div class="nm">${hlName(i.name)}${multi?` <span style="color:var(--faint);font-weight:400">×${i.qty}</span>`:''}${acc?`<span class="kit-chip">аксесуар</span>`:''}${kitN?`<span class="kit-chip">+${kitN} у комплекті</span>`:''}</div><div class="meta">${meta}</div></div>
+    <div class="amt">${amt}</div>
+  </div>`;
+}
+
+function q(s){ return (s==null?'':String(s)).replace(/\\/g,'\\\\').replace(/'/g,"\\'"); }
+// Немає пресетного каталогу — метадані бренду завжди дефолтні.
+function brandMeta(b){ return {emoji:'📦', models:[], kits:['Базовий','Повний комплект']}; }
+// Бренди, якими користувач уже користувався — спочатку порожньо, наповнюється з історії.
+function allBrands(){
+  return [...new Set((S.data.items||[]).map(i=>i.brand).filter(Boolean))];
+}
+// Моделі, які користувач уже вписував для цього бренду.
+function brandModels(b){
+  return [...new Set((S.data.items||[]).filter(i=>i.brand===b && i.model).map(i=>i.model))];
+}
+function composedName(){
+  const A=S.add, m=(A.model||'').trim();
+  const pre = A.brand ? (A.brand.trim()+' ') : '';
+  return (pre+m).trim();
+}
+function pickBrand(b){ S.add.newBrand=false; S.add.brand = S.add.brand===b?null:b; S.add.kit=null; haptic(); rerenderAdd(); }
+function toggleNewBrand(){ S.add.newBrand=!S.add.newBrand; if(S.add.newBrand)S.add.brand=''; S.add.kit=null; haptic(); rerenderAdd();
+  setTimeout(()=>{ const i=document.getElementById('a-newbrand'); if(i)i.focus(); },50); }
+function pickModel(m){ S.add.model=m; haptic(); rerenderAdd(); }
+function pickKit(k){ S.add.kit = S.add.kit===k?null:k; haptic(); rerenderAdd(); }
+function emptyAdd(){ return {brand:null, newBrand:false, model:'', kit:null, price:'', date:'', plat:'OLX', exp:'', qty:'', parts:[]}; }
+function addPart(){ if(!S.add.parts) S.add.parts=[]; S.add.parts.push({name:'', price:''}); haptic(); rerenderAdd();
+  setTimeout(()=>{ const list=document.querySelectorAll('#a-parts .pn input'); const last=list[list.length-1]; if(last) last.focus(); },40); }
+function delPart(i){ S.add.parts.splice(i,1); haptic(); rerenderAdd(); }
+function partsSum(){ return (S.add.parts||[]).reduce((a,p)=>a+(parseFloat(p.price)||0),0); }
+function rerenderAdd(){ const r=document.getElementById('root'); if(r) r.innerHTML=addView(); }
+
+function partsBlock(){
+  if(!S.add.parts) S.add.parts=[];
+  const rows=S.add.parts.map((p,i)=>`<div class="part">
+      <div class="pn"><label>${i===0?'У комплекті':'\u00a0'}</label>
+        <input placeholder="напр. Elite Strap" value="${esc(p.name)}" oninput="S.add.parts[${i}].name=this.value"></div>
+      <div class="pp"><label>Собівартість, ₴</label>
+        <input type="number" inputmode="decimal" placeholder="0" value="${esc(p.price)}" oninput="S.add.parts[${i}].price=this.value;paintKitHint()"></div>
+      <button class="px" onclick="delPart(${i})" aria-label="Прибрати">✕</button>
+    </div>`).join('');
+  return `<div id="a-parts" style="margin-top:6px">
+    ${rows}
+    <button class="linkish" onclick="addPart()">＋ Аксесуар з комплекту</button>
+    <div class="kit-hint" id="kit-hint">${kitHintText()}</div>
+  </div>`;
+}
+function kitHintText(){
+  const total=parseFloat(S.add.price)||0, acc=partsSum();
+  if(!(S.add.parts||[]).length) return 'Якщо в коробці були ремінь, кейс тощо — додай їх окремими рядками. Потім продаси окремо або з іншими окулярами.';
+  if(!total) return 'Вкажи повну ціну купівлі комплекту — залишок стане собівартістю основного товару.';
+  if(acc>total) return 'Собівартість аксесуарів більша за ціну купівлі.';
+  return `Заплатили ${fmtNum(total)} ₴ · на аксесуари ${fmtNum(acc)} ₴ · на основний товар ${fmtNum(total-acc)} ₴`;
+}
+function paintKitHint(){ const h=document.getElementById('kit-hint'); if(h) h.textContent=kitHintText(); }
+
+function addView(){
+  const A=S.add;
+  if(!A.date) A.date=S.data.today;
+  const hasBrand = !!(A.brand || A.newBrand);
+  const models = A.brand ? brandModels(A.brand) : [];
+  const brandChips = allBrands().map(b=>
+    `<button class="chip ${A.brand===b&&!A.newBrand?'on':''}" onclick="pickBrand('${q(b)}')">${brandMeta(b).emoji} ${b}</button>`).join('')
+    + `<button class="chip ${A.newBrand?'on':''}" onclick="toggleNewBrand()">＋ Свій</button>`;
+  const newBrandInput = A.newBrand
+    ? `<input id="a-newbrand" placeholder="свій бренд, напр. Casio / GoPro" value="${esc(A.brand||'')}" oninput="S.add.brand=this.value;updatePreview()" style="margin-top:6px">`
+    : '';
+  const modelChips = models.length
+    ? `<div class="chips" style="padding:6px 0 4px">${models.map(m=>`<button class="chip ${A.model===m?'on':''}" onclick="pickModel('${q(m)}')">${m}</button>`).join('')}</div>`
+    : '';
+  const kits = brandMeta(A.brand||'').kits;
+  const kitBlock = hasBrand
+    ? `<label>Комплект <span class="opt">необов'язково</span></label>
+       <div class="chips" style="padding:2px 0 4px">${kits.map(k=>`<button class="chip ${A.kit===k?'on':''}" onclick="pickKit('${q(k)}')">${k}</button>`).join('')}</div>`
+    : '';
+  const nm = composedName();
+  const preview = nm ? `<div class="name-preview">Назва: <b>${esc(nm)}</b>${A.kit?` · ${esc(A.kit)}`:''}</div>` : '';
+  const modelPh = hasBrand ? `модель, напр. ${(models[0])||'Calorie'}` : 'напр. Steam Deck / GoPro 12';
+
+  return header()+`<section class="section reveal">
+    <div class="eyebrow" style="margin-bottom:8px">Нова закупівля</div>
+    <div class="form">
+      <label>Бренд <span class="opt">необов'язково</span></label>
+      <div class="chips" style="padding:2px 0 4px">${brandChips}</div>
+      ${newBrandInput}
+
+      <label>${hasBrand ? 'Модель' : 'Назва товару'}</label>
+      <input id="a-model" placeholder="${modelPh}" value="${esc(A.model)}" oninput="S.add.model=this.value;updatePreview()">
+      ${modelChips}
+      <div id="name-preview-host">${preview}</div>
+
+      ${kitBlock}
+
+      ${partsBlock()}
+
+      <div class="row" style="margin-top:14px">
+        <div><label>Ціна купівлі, ₴</label><input id="a-price" type="number" inputmode="decimal" placeholder="0" value="${esc(A.price)}" oninput="S.add.price=this.value;paintKitHint()"></div>
+        <div><label>Дата купівлі</label><input id="a-date" type="date" value="${A.date}" oninput="S.add.date=this.value"></div>
+      </div>
+      <div class="row">
+        <div><label>Платформа</label><input id="a-plat" placeholder="OLX / Інше" value="${esc(A.plat)}" oninput="S.add.plat=this.value"></div>
+        <div><label>Кількість <span class="opt">партія</span></label><input id="a-qty" type="number" inputmode="numeric" min="1" placeholder="1" value="${esc(A.qty)}" oninput="S.add.qty=this.value"></div>
+      </div>
+      <label>Витрати на старті, ₴ <span class="opt">необов'язково</span></label>
+      <input id="a-exp" type="number" inputmode="decimal" placeholder="напр. реклама OLX" value="${esc(A.exp)}" oninput="S.add.exp=this.value">
+      <div class="btn-row"><button class="btn primary" onclick="submitAdd()">➕ Додати товар</button></div>
+    </div>
+  </section>`;
+}
+function updatePreview(){
+  const host=document.getElementById('name-preview-host'); if(!host) return;
+  const A=S.add, nm=composedName();
+  host.innerHTML = nm ? `<div class="name-preview">Назва: <b>${esc(nm)}</b>${A.kit?` · ${esc(A.kit)}`:''}</div>` : '';
+}
+
+// ---------- detail sheet ----------
+function renderSheet(){
+  const host=document.getElementById('sheet-host');
+  if(S.openId==null){ host.innerHTML=''; return; }
+  const i=S.data.items.find(x=>x.id===S.openId);
+  if(!i){ S.openId=null; host.innerHTML=''; return; }
+  const st=i.status, multi=i.qty>1, rem=i.remaining;
+  const badge = st==='sold'?['sold','продано'] : st==='partial'?['active','частково'] : ['active','в наявності'];
+  const exps = i.expenses.length
+    ? i.expenses.map(e=>`<div class="exp-row"><span class="er">${esc(e.reason||'витрати')}</span><span class="ea">−${money(e.amount)}</span><button class="ex" onclick="delExpense(${e.id})">✕</button></div>`).join('')
+    : `<div class="exp-none">поки без витрат</div>`;
+  const salesList = (i.sales&&i.sales.length)
+    ? i.sales.map(s=>{
+        const mates=(s.mates||[]).map(m=>m.name).join(', ');
+        const label=s.included?(s.with_name?`разом з ${s.with_name}`:(s.note||'у комплекті'))
+          :(mates?`${s.note?s.note+' · ':''}з ${mates}`:(s.note||'продаж'));
+        const shown=s.included?'в комплекті':('+'+money(s.price)+(mates?` · прибуток ${money(s.bundle_profit)}`:''));
+        return `<div class="exp-row"><span class="er">${s.qty>1?`<b>${s.qty}×</b> `:''}${esc(label)} <span style="color:var(--faint)">${isoUA(s.date)}</span></span><span class="ea" style="color:${s.included?'var(--muted)':'var(--mint)'}">${shown}</span><button class="ex" onclick="delSale(${s.id})">✕</button></div>`;
+      }).join('')
+    : `<div class="exp-none">ще не продано</div>`;
+
+  const buyCell = `<div class="d-cell"><div class="k">Куплено${multi?` · ${i.qty} шт`:''}</div><div class="v">${money(i.buy_price)}</div><div class="v sub">${isoUA(i.buy_date)}${multi?` · ${money(i.unit_cost)}/шт`:''}</div></div>`;
+  let stateCell, mainCell;
+  if(st==='sold' && i.included_only){
+    const wn=(i.sales[0]&&i.sales[0].with_name)||'іншим товаром';
+    stateCell=`<div class="d-cell"><div class="k">Продано</div><div class="v">в комплекті</div><div class="v sub">${isoUA(i.sell_date)}</div></div>`;
+    mainCell=`<div class="d-cell wide"><div class="k">Собівартість пішла в продаж</div><div class="v" style="font-size:18px">${esc(wn)}</div><div class="v sub">${money(i.buy_price)} ураховано в прибутку того продажу</div></div>`;
+  } else if(st==='sold'){
+    stateCell=`<div class="d-cell"><div class="k">Продано / лишок</div><div class="v">${i.sold_qty} / ${rem}</div><div class="v sub">${i.days_held} дн</div></div>`;
+    mainCell=`<div class="d-cell wide"><div class="k">Реалізовано · заморожено ще ${money(i.unit_cost*rem)}</div><div class="v pos" style="font-size:22px">${money(i.profit)}</div></div>`;
+  } else {
+    stateCell=`<div class="d-cell"><div class="k">Статус</div><div class="v" style="color:var(--amber)">В наявності</div><div class="v sub">${i.days_held} дн${multi?` · ${rem} шт`:''}</div></div>`;
+    mainCell=`<div class="d-cell wide"><div class="k">Вкладено${multi?` (${rem} шт)`:''}</div><div class="v" style="font-size:22px;color:var(--sky)">${money(i.unit_cost*rem)}</div></div>`;
+  }
+
+  const sellBtn = rem>0 ? `<button class="btn mint" onclick="startSell(${i.id})">✅ ${multi?'Продати':'Продано'}</button>` : '';
+  const actions = `${sellBtn}<button class="btn ghost" onclick="startEdit(${i.id})">✏️ Редагувати</button><button class="btn danger" onclick="askDelete(${i.id})">🗑</button>`;
+  const originLine = i.origin_name ? `<div style="font-size:12px;color:var(--muted);margin-top:6px">🧩 Прийшов у комплекті з «${esc(i.origin_name)}»</div>` : '';
+  const kitChips=(i.kit_items||[]).map(k=>`<button class="chip" onclick="openItem(${k.id})">${esc(k.name)} · ${k.remaining>0?'в наявності':'продано'}</button>`).join('');
+  const kitList = `<div style="margin-top:10px">${kitChips}${rem>0?`<button class="chip" onclick="startSplit(${i.id})">＋ Аксесуар з комплекту</button>`:''}</div>`;
+
+  host.innerHTML=`<div class="overlay" id="ovl" onclick="if(event.target===this)closeSheet()">
+    <div class="sheet">
+      <div class="grab"></div>
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px">
+        <h2>${esc(i.name)}${multi?` <span style="color:var(--faint);font-weight:500;font-size:16px">×${i.qty}</span>`:''}</h2>
+        <span class="badge ${badge[0]}">${badge[1]}</span>
+      </div>
+      <div style="font-size:11px;color:var(--muted);margin-top:2px">${i.platform?esc(i.platform)+' · ':''}куплено ${isoUA(i.buy_date)}</div>
+      ${i.kit?`<div style="font-size:12px;color:var(--muted);margin-top:6px">📦 ${esc(i.kit)}</div>`:''}
+      ${originLine}
+      ${kitList}
+      <div class="d-grid">${buyCell}${stateCell}${mainCell}</div>
+      <div class="exp-head"><div class="eyebrow">Продажі ${i.revenue>0?'· +'+fmtNum(conv(i.revenue))+' '+CUR[S.cur]:''}</div>
+        ${rem>0?`<button class="chip" style="padding:6px 12px" onclick="startSell(${i.id})">+ Продаж</button>`:''}</div>
+      ${salesList}
+      <div class="exp-head"><div class="eyebrow">Витрати ${i.expenses_total>0?'· −'+fmtNum(conv(i.expenses_total))+' '+CUR[S.cur]:''}</div>
+        <button class="chip" style="padding:6px 12px" onclick="startExpense(${i.id})">+ Витрата</button></div>
+      ${exps}
+      <div id="sheet-form"></div>
+      <div class="btn-row">${actions}</div>
+      <div style="margin-top:9px"><button class="btn ghost" onclick="closeSheet()">Закрити</button></div>
+    </div>
+  </div>`;
+  requestAnimationFrame(()=>{ const o=document.getElementById('ovl'); if(o) o.classList.add('on'); });
+  setTimeout(()=>{ const o=document.getElementById('ovl'); if(o&&!o.classList.contains('on'))o.classList.add('on'); },60);
+}
+
+function companionItems(exceptId){
+  return (S.data.items||[]).filter(x=>x.id!==exceptId && (x.remaining||0)>0)
+    .sort((a,b)=> (a.kind==='accessory'?0:1)-(b.kind==='accessory'?0:1) || String(a.name).localeCompare(b.name,'uk'));
+}
+function startSell(id){
+  const i=S.data.items.find(x=>x.id===id); if(!i) return;
+  const today=S.data.today, rem=i.remaining, multi=i.qty>1;
+  const comps=companionItems(id);
+  const withBlock=comps.length
+    ? `<label>Продати разом <span class="opt">аксесуар з цього чи іншого комплекту</span></label>
+       <div>${comps.map(c=>`<label class="tog"><input type="checkbox" class="with-item" value="${c.id}">
+         <span class="tn">${esc(c.name)}${c.qty>1?` <span style="color:var(--faint)">×${c.remaining}</span>`:''}
+           <div class="tm">${c.origin_name?`з комплекту «${esc(c.origin_name)}» · `:''}собівартість ${fmtNum(c.unit_cost||c.buy_price)} ₴</div></span>
+         ${c.remaining>1?`<input class="tq with-qty" data-id="${c.id}" type="number" inputmode="numeric" min="1" max="${c.remaining}" value="1">`:''}
+       </label>`).join('')}</div>`
+    : '';
+  document.getElementById('sheet-form').innerHTML=`<div class="form" style="background:var(--panel-2);border:1px solid var(--line);border-radius:14px;padding:14px;margin-top:8px">
+    <div class="eyebrow">Продаж${multi?` · лишилось ${rem}`:''}</div>
+    <div class="row" style="margin-top:4px">
+      <div><label>Ціна продажу, ₴</label><input id="s-price" type="number" inputmode="decimal" placeholder="0"></div>
+      <div><label>Дата</label><input id="s-date" type="date" value="${today}"></div>
+    </div>
+    ${multi
+      ? `<div class="row"><div><label>К-сть <span class="opt">макс ${rem}</span></label><input id="s-qty" type="number" inputmode="numeric" min="1" max="${rem}" value="${rem}"></div><div style="flex:1.5"><label>Примітка <span class="opt">необов'язково</span></label><input id="s-note" placeholder="напр. дрон / батарея"></div></div>`
+      : `<input id="s-qty" type="hidden" value="1"><label>Примітка <span class="opt">необов'язково</span></label><input id="s-note" placeholder="напр. з ременем">`}
+    ${withBlock}
+    <div class="btn-row"><button class="btn mint" onclick="submitSell(${id})">Зберегти продаж</button></div>
+  </div>`;
+  const p=document.getElementById('s-price'); if(p)p.focus();
+}
+function startSplit(id){
+  const i=S.data.items.find(x=>x.id===id); if(!i) return;
+  document.getElementById('sheet-form').innerHTML=`<div class="form" style="background:var(--panel-2);border:1px solid var(--line);border-radius:14px;padding:14px;margin-top:8px">
+    <div class="eyebrow">Виділити аксесуар з цієї закупки</div>
+    <div class="kit-hint">Собівартість відріжеться від «${esc(i.name)}» (${fmtNum(i.buy_price)} ₴). Далі аксесуар можна продати окремо або з іншим товаром.</div>
+    <label>Назва</label><input id="sp-name" placeholder="напр. Elite Strap">
+    <div class="row"><div><label>Собівартість, ₴</label><input id="sp-price" type="number" inputmode="decimal" placeholder="менше ${fmtNum(i.buy_price)}"></div>
+      <div><label>Кількість</label><input id="sp-qty" type="number" inputmode="numeric" min="1" value="1"></div></div>
+    <div class="btn-row"><button class="btn primary" onclick="submitSplit(${id})">Виділити</button></div>
+  </div>`;
+  document.getElementById('sp-name').focus();
+}
+
+function startEdit(id){
+  const i=S.data.items.find(x=>x.id===id); if(!i) return;
+  document.getElementById('sheet-form').innerHTML=`<div class="form" style="background:var(--panel-2);border:1px solid var(--line);border-radius:14px;padding:14px;margin-top:8px">
+    <div class="eyebrow">Редагувати товар</div>
+    <label>Назва</label><input id="ed-name" value="${esc(i.name)}">
+    <div class="row"><div><label>Ціна купівлі, ₴</label><input id="ed-price" type="number" inputmode="decimal" value="${i.buy_price}"></div>
+      <div><label>Дата купівлі</label><input id="ed-date" type="date" value="${i.buy_date||S.data.today}"></div></div>
+    <div class="row"><div><label>Платформа</label><input id="ed-plat" value="${esc(i.platform||'')}"></div>
+      <div><label>Кількість <span class="opt">мін ${i.sold_qty||1}</span></label><input id="ed-qty" type="number" inputmode="numeric" min="${i.sold_qty||1}" value="${i.qty}"></div></div>
+    <label>Комплект</label><input id="ed-kit" value="${esc(i.kit||'')}">
+    <div class="btn-row"><button class="btn primary" onclick="submitEdit(${id})">Зберегти зміни</button></div>
+  </div>`;
+  const n=document.getElementById('ed-name'); if(n)n.focus();
+}
+function startExpense(id){
+  const today=S.data.today;
+  document.getElementById('sheet-form').innerHTML=`<div class="form" style="background:var(--panel-2);border:1px solid var(--line);border-radius:14px;padding:14px;margin-top:8px">
+    <div class="eyebrow">Додаткова витрата</div>
+    <div class="row" style="margin-top:4px">
+      <div><label>Сума, ₴</label><input id="e-amt" type="number" inputmode="decimal" placeholder="0"></div>
+      <div style="flex:1.4"><label>За що</label><input id="e-reason" placeholder="реклама OLX, ремонт…"></div>
+    </div>
+    <div class="btn-row"><button class="btn primary" onclick="submitExpense(${id})">Додати витрату</button></div>
+  </div>`;
+  document.getElementById('e-amt').focus();
+}
+
+// ---------- actions / API ----------
+async function api(path, body){
+  const r=await fetch(BASE+path,{method:'POST',headers:{'Content-Type':'application/json',...NGROK_HDR},body:JSON.stringify(authBody(body))});
+  if(!r.ok) throw new Error((await r.json().catch(()=>({}))).error||'помилка');
+  return r.json();
+}
+async function load(){
+  const r=await fetch(BASE+'/api/state?'+authQS(),{cache:'no-store',headers:NGROK_HDR});
+  if(r.status===401){
+    document.getElementById('root').innerHTML=`<div class="skeleton">Відкрий застосунок через Telegram-бота, щоб побачити свою статистику.</div>`;
+    return;
+  }
+  if(!r.ok){ toast('Сервер недоступний','err'); throw new Error('api '+r.status); }
+  S.data=await r.json();
+  if(S.period===null) S.period=mkey(S.data.today);
+  const viewing=!!S.data.viewing;
+  document.body.classList.toggle('viewing', viewing);
+  if(viewing && S.tab==='add') S.tab='overview';
+  render();
+}
+
+// ---------- чужа статистика (лише власник бота) ----------
+function whoName(u){ return u.username ? '@'+u.username : (u.name||u.first_name||('id '+(u.id||u.user_id))); }
+function openUsers(){
+  const A=S.data.admin; if(!A) return;
+  haptic();
+  const cur=S.data.viewing ? S.data.viewing.user_id : A.me;
+  const rows=A.users.map(u=>{
+    const me=u.id===A.me;
+    const sub=`${u.items} тов · ${u.sold} прод${u.seen?' · був '+esc(u.seen.slice(8,10)+'.'+u.seen.slice(5,7)+u.seen.slice(10)):''}`;
+    return `<button class="u-row ${u.id===cur?'on':''}" onclick="pickUser(${me?'null':u.id})">
+      <div><div class="nm">${me?'👤 Я':esc(whoName(u))}${u.name&&u.username&&!me?` <span style="color:var(--faint);font-weight:500">${esc(u.name)}</span>`:''}</div><div class="sub">${sub}</div></div>
+      <div class="pf">${fmtNum(conv(u.profit))} ${CUR[S.cur]}</div></button>`;
+  }).join('');
+  const host=document.getElementById('sheet-host');
+  host.innerHTML=`<div class="overlay" id="usr-ovl" onclick="if(event.target===this)closeUsers()">
+    <div class="sheet">
+      <div class="grab"></div>
+      <h2>Чию статистику бачу</h2>
+      <div style="font-size:13px;color:var(--faint);margin-bottom:6px">Видно лише тобі. Чужі дані — тільки перегляд, змінити їх не можна.</div>
+      ${rows}
+      <div style="margin-top:16px"><button class="btn ghost" onclick="closeUsers()">Закрити</button></div>
+    </div>
+  </div>`;
+  requestAnimationFrame(()=>{const o=document.getElementById('usr-ovl'); if(o)o.classList.add('on');});
+  setTimeout(()=>{const o=document.getElementById('usr-ovl'); if(o&&!o.classList.contains('on'))o.classList.add('on');},60);
+}
+function closeUsers(){ const o=document.getElementById('usr-ovl'); if(o){o.classList.remove('on'); setTimeout(()=>{document.getElementById('sheet-host').innerHTML='';},260);} }
+async function pickUser(id){
+  VIEW = id===null ? null : String(id);
+  closeUsers(); haptic();
+  S.openId=null; S.period=null; S.animKey=null;
+  try{ await load(); toast(VIEW?'Перегляд: '+whoName(S.data.viewing||{id}):'Твоя статистика','ok'); }
+  catch(e){ toast('Не вдалося завантажити','err'); }
+}
+function setTab(t){ if(S.tab===t)return; S.tab=t; haptic(); if(t!=='overview')S.animKey=null; render(); }
+function setPeriod(k){ S.period=k; haptic(); if(S.tab!=='overview'){S.tab='overview';} render(); const r=document.getElementById('root'); if(r)r.scrollIntoView({block:'start'}); }
+function setFilter(f){ S.filter=f; haptic(); render(); }
+function cycleCur(){ S.cur=CUR_ORDER[(CUR_ORDER.indexOf(S.cur)+1)%3]; haptic(); render();
+  if(S.cur!=='UAH'){ const rt=S.data.rates[S.cur]; toast(`1 ${CUR_LB[S.cur]} = ${rt} ₴ (курс НБУ)`,'ok'); } }
+function openItem(id){ S.openId=id; haptic(); renderSheet(); }
+function closeSheet(){ const o=document.getElementById('ovl'); if(o){o.classList.remove('on'); setTimeout(()=>{S.openId=null;document.getElementById('sheet-host').innerHTML='';},260);} else {S.openId=null;} }
+
+async function submitAdd(){
+  const A=S.add;
+  const name=composedName();
+  const price=parseFloat(A.price), date=A.date||S.data.today;
+  const plat=(A.plat||'').trim(), exp=parseFloat(A.exp);
+  if(!name){ toast('Обери бренд або впиши назву','err'); return; }
+  if(!price||price<=0){ toast('Введи ціну купівлі','err'); return; }
+  const brand = (A.brand||'').trim() || null;
+  const model = (A.model||'').trim() || null;
+  const qty = Math.max(1, parseInt(A.qty)||1);
+  const parts=(A.parts||[]).map(p=>({name:(p.name||'').trim(), buy_price:parseFloat(p.price)||0}))
+    .filter(p=>p.name);
+  const accSum=parts.reduce((a,p)=>a+p.buy_price,0);
+  if(accSum>price){ toast('Собівартість аксесуарів більша за ціну купівлі','err'); return; }
+  if(parts.length && accSum>=price){ toast('На основний товар має лишитися частина ціни','err'); return; }
+  try{
+    await api('/api/item/add',{name, buy_price:price, buy_date:date, platform:plat||null,
+      brand, model, kit:A.kit||null, qty, parts,
+      expense_amount: exp>0?exp:0, expense_reason:'витрати на старті'});
+    hnotify('success'); toast(parts.length?`Комплект додано ✅ (${parts.length} аксесуар${parts.length===1?'':'и'})`:(qty>1?`Партію ×${qty} додано ✅`:'Товар додано ✅'),'ok');
+    S.add=emptyAdd();
+    S.filter='active'; S.tab='items'; await load();
+  }catch(e){ toast(e.message,'err'); }
+}
+async function submitSell(id){
+  const price=parseFloat(val('s-price')), date=val('s-date')||S.data.today;
+  const qty=Math.max(1, parseInt(val('s-qty'))||1), note=val('s-note');
+  if(!price||price<=0){ toast('Введи ціну продажу','err'); return; }
+  const with_items=[...document.querySelectorAll('#sheet-form input.with-item:checked')].map(cb=>{
+    const q=document.querySelector(`#sheet-form .with-qty[data-id="${cb.value}"]`);
+    return {id:+cb.value, qty:Math.max(1, parseInt(q&&q.value)||1)};
+  });
+  try{ await api('/api/item/sell',{id, sell_price:price, sell_date:date, qty, note:note||null, with_items}); hnotify('success'); toast(with_items.length?'Продаж комплектом збережено ✅':'Продаж збережено ✅','ok'); await load(); }
+  catch(e){ toast(e.message,'err'); }
+}
+async function submitSplit(id){
+  const name=val('sp-name'), price=parseFloat(val('sp-price')), qty=Math.max(1, parseInt(val('sp-qty'))||1);
+  if(!name){ toast('Впиши назву аксесуара','err'); return; }
+  if(!price||price<=0){ toast('Вкажи собівартість аксесуара','err'); return; }
+  try{ await api('/api/item/split',{id, name, buy_price:price, qty}); hnotify('success'); toast('Аксесуар виділено ✅','ok'); await load(); }
+  catch(e){ toast(e.message,'err'); }
+}
+async function submitEdit(id){
+  const name=val('ed-name');
+  if(!name){ toast('Назва не може бути порожня','err'); return; }
+  const price=parseFloat(val('ed-price'));
+  if(!price||price<=0){ toast('Некоректна ціна купівлі','err'); return; }
+  const body={id, name, buy_price:price, buy_date:val('ed-date')||S.data.today,
+    platform:val('ed-plat')||null, qty:Math.max(1,parseInt(val('ed-qty'))||1),
+    kit:val('ed-kit')||null};
+  try{ await api('/api/item/update',body); hnotify('success'); toast('Зміни збережено ✅','ok'); await load(); }
+  catch(e){ toast(e.message,'err'); }
+}
+async function delSale(sid){
+  try{ await api('/api/sale/delete',{id:sid}); haptic(); toast('Продаж видалено','ok'); await load(); }
+  catch(e){ toast(e.message,'err'); }
+}
+async function submitExpense(id){
+  const amt=parseFloat(val('e-amt')), reason=val('e-reason');
+  if(!amt||amt<=0){ toast('Введи суму','err'); return; }
+  try{ await api('/api/expense/add',{item_id:id, amount:amt, reason:reason||'витрати', date:S.data.today}); haptic(); toast('Витрату додано','ok'); await load(); }
+  catch(e){ toast(e.message,'err'); }
+}
+async function delExpense(eid){
+  try{ await api('/api/expense/delete',{id:eid}); haptic(); await load(); }
+  catch(e){ toast(e.message,'err'); }
+}
+function askDelete(id){
+  const item=S.data.items.find(x=>x.id===id);
+  const msg=`Видалити «${item?item.name:''}»? Це не можна відмінити.`;
+  const go=()=>doDelete(id);
+  if(TG&&TG.showConfirm){ TG.showConfirm(msg,(ok)=>{ if(ok)go(); }); }
+  else if(confirm(msg)) go();
+}
+async function doDelete(id){
+  try{ await api('/api/item/delete',{id}); hnotify('warning'); closeSheet(); toast('Товар видалено','ok'); await load(); }
+  catch(e){ toast(e.message,'err'); }
+}
+
+// ---------- порівняння періодів ----------
+const CMP={mode:'m', a:null, b:null};
+function mondayOf(iso){ const d=new Date(iso+'T00:00:00'); d.setDate(d.getDate()-((d.getDay()+6)%7)); return d; }
+function isoOf(d){ return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
+function weekKeysI(){ const s=new Set(); S.data.items.forEach(i=>{ if(i.buy_date)s.add(isoOf(mondayOf(i.buy_date))); if(i.sell_date)s.add(isoOf(mondayOf(i.sell_date))); }); s.add(isoOf(mondayOf(S.data.today))); return [...s].sort().reverse(); }
+function weekLblI(k){ const a=new Date(k+'T00:00:00'), b=new Date(a); b.setDate(a.getDate()+6); const f=d=>d.getDate()+' '+MON3[d.getMonth()+1].toLowerCase(); return f(a)+' – '+f(b); }
+function rangeAgg(from,to){
+  const inR=d=>d&&d>=from&&d<=to;
+  let profit=0,revenue=0,expenses=0,invested=0,soldUnits=0;
+  S.data.items.forEach(it=>{
+    const q=it.qty||1;
+    (it.sales||[]).forEach(s=>{ if(inR(s.date)){
+      revenue+=s.price; profit+=s.profit; soldUnits+=s.qty;
+      invested+=(it.unit_cost||0)*s.qty; expenses+=(it.expenses_total||0)*(q?s.qty/q:0);
+    }});
+  });
+  const bought=S.data.items.filter(i=>inR(i.buy_date));
+  return {sold:soldUnits, bought:bought.length, profit, revenue, expenses, margin:invested>0?profit/invested*100:0};
+}
+function pKeys(){ return CMP.mode==='m' ? monthsAll().slice().reverse() : weekKeysI(); }
+function pLbl(k){ return CMP.mode==='m' ? mlabel(k) : weekLblI(k); }
+function pAgg(k){ if(CMP.mode==='m') return rangeAgg(k+'-01', k+'-31'); const b=new Date(k+'T00:00:00'); b.setDate(b.getDate()+6); return rangeAgg(k, isoOf(b)); }
+function openCompare(){
+  const keys=pKeys();
+  if(keys.length<2){ toast('Замало даних для порівняння','err'); return; }
+  if(!keys.includes(CMP.a)) CMP.a=keys[0];
+  if(!keys.includes(CMP.b)||CMP.b===CMP.a) CMP.b=keys.find(k=>k!==CMP.a)||keys[1];
+  haptic();
+  const host=document.getElementById('sheet-host');
+  host.innerHTML=`<div class="overlay" id="cmp-ovl" onclick="if(event.target===this)closeCompare()">
+    <div class="sheet">
+      <div class="grab"></div>
+      <h2>Порівняння</h2>
+      <div class="cmp-seg"><button id="cmp-bm" class="${CMP.mode==='m'?'on':''}" onclick="cmpMode('m')">Місяці</button><button id="cmp-bw" class="${CMP.mode==='w'?'on':''}" onclick="cmpMode('w')">Тижні</button></div>
+      <div class="cmp-sel"><select id="cmp-a" onchange="CMP.a=this.value;cmpRender();haptic()"></select><span>до</span><select id="cmp-b" onchange="CMP.b=this.value;cmpRender();haptic()"></select></div>
+      <div id="cmp-out"></div>
+      <div style="margin-top:16px"><button class="btn ghost" onclick="closeCompare()">Закрити</button></div>
+    </div>
+  </div>`;
+  cmpFill(); cmpRender();
+  requestAnimationFrame(()=>{const o=document.getElementById('cmp-ovl'); if(o)o.classList.add('on');});
+  setTimeout(()=>{const o=document.getElementById('cmp-ovl'); if(o&&!o.classList.contains('on'))o.classList.add('on');},60);
+}
+function cmpMode(m){
+  if(CMP.mode===m)return;
+  CMP.mode=m; const keys=pKeys(); CMP.a=keys[0]; CMP.b=keys[1]||keys[0];
+  document.getElementById('cmp-bm').classList.toggle('on',m==='m');
+  document.getElementById('cmp-bw').classList.toggle('on',m==='w');
+  cmpFill(); cmpRender(); haptic();
+}
+function cmpFill(){
+  const keys=pKeys();
+  const opts=sel=>keys.map(k=>`<option value="${k}" ${k===sel?'selected':''}>${pLbl(k)}</option>`).join('');
+  document.getElementById('cmp-a').innerHTML=opts(CMP.a);
+  document.getElementById('cmp-b').innerHTML=opts(CMP.b);
+}
+function cmpRender(){
+  const A=pAgg(CMP.a), B=pAgg(CMP.b);
+  const m_=v=>`${fmtNum(conv(v))} ${CUR[S.cur]}`;
+  // dir: 1 = більше краще (зелений), -1 = більше гірше, 0 = нейтрально
+  const rows=[
+    ['Прибуток',A.profit,B.profit,m_,1],
+    ['Виручка',A.revenue,B.revenue,m_,1],
+    ['Витрати',A.expenses,B.expenses,m_,-1],
+    ['Продано',A.sold,B.sold,v=>v+' шт',1],
+    ['Куплено',A.bought,B.bought,v=>v+' шт',0],
+    ['Маржа',Math.round(A.margin),Math.round(B.margin),v=>v+'%',1],
+  ].map(([n,a,b,f,dir])=>{
+    const d=a-b;
+    const cls=(d!==0&&dir!==0)?(((d>0)===(dir>0))?'good':'bad'):'';
+    const dTxt=d===0?'=':(d>0?'+':'−')+f(Math.abs(d));
+    return `<div class="cmp-line"><span class="n">${n}</span><span class="v">${f(a)}</span><span class="v b">${f(b)}</span><span class="d ${cls}">${dTxt}</span></div>`;
+  }).join('');
+  document.getElementById('cmp-out').innerHTML=
+    `<div class="cmp-head"><span></span><span class="v">${pLbl(CMP.a)}</span><span class="v">${pLbl(CMP.b)}</span><span class="d">Δ</span></div>${rows}`;
+}
+function closeCompare(){ const o=document.getElementById('cmp-ovl'); if(o){o.classList.remove('on'); setTimeout(()=>{document.getElementById('sheet-host').innerHTML='';},260);} }
+
+// ---------- misc ----------
+function val(id){ const e=document.getElementById(id); return e?e.value.trim():''; }
+function esc(s){ return (s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+let toastT;
+function toast(msg,kind){ const t=document.getElementById('toast'); t.className='toast '+(kind||'')+' on'; t.textContent=msg;
+  clearTimeout(toastT); toastT=setTimeout(()=>t.classList.remove('on'),2600); }
+
+function gaugeTicks(){ let s='',cx=107,cy=107,rO=96,rIn=89,rMaj=85;
+  for(let i=0;i<60;i++){ const a=i/60*2*Math.PI,maj=i%5===0,r2=maj?rMaj:rIn;
+    s+=`<line class="tick${maj?' maj':''}" x1="${cx+Math.cos(a)*rO}" y1="${cy+Math.sin(a)*rO}" x2="${cx+Math.cos(a)*r2}" y2="${cy+Math.sin(a)*r2}"/>`; }
+  return s; }
+
+function animateOverview(){
+  const a=monthAgg(S.period);
+  const numEl=document.getElementById('hero-num');
+  const prog=document.querySelector('.prog');
+  const R=78, CIRC=2*Math.PI*R, marginPct=Math.max(0,Math.min(a.margin,100));
+  const target=conv(a.profit);
+  const replay = S.animKey!==S.period;
+  S.animKey=S.period;
+  if(!numEl) return;
+  if(RM || !replay){ numEl.textContent=fmtNum(target); if(prog){prog.style.transition='none';prog.style.strokeDashoffset=(CIRC*(1-marginPct/100)).toFixed(1);} return; }
+  // count up
+  let done=false; const fin=()=>{if(!done){done=true;numEl.textContent=fmtNum(target);}};
+  const st=performance.now(), dur=900;
+  (function step(t){ if(done)return; const p=Math.min((t-st)/dur,1); numEl.textContent=fmtNum(target*(1-Math.pow(1-p,3))); if(p<1)requestAnimationFrame(step); else fin(); })(performance.now());
+  setTimeout(fin,dur+500);
+  if(prog){ prog.style.strokeDashoffset=CIRC.toFixed(1); setTimeout(()=>{prog.style.strokeDashoffset=(CIRC*(1-marginPct/100)).toFixed(1);},120); }
+}
+
+// ---------- boot ----------
+if(TG){ try{ TG.ready(); TG.expand(); TG.setHeaderColor('#000000'); TG.setBackgroundColor('#000000'); }catch(e){} }
+load().catch(err=>{ document.getElementById('root').innerHTML=`<div class="skeleton">Не вдалося завантажити.<br>Запусти <b>webapp_server.py</b> і онови сторінку.</div>`; console.error(err); });
+</script>
+</body>
+</html>
