@@ -343,6 +343,85 @@ button{font-family:inherit;color:inherit;border:none;background:none;cursor:poin
 .cmp-line .d{color:var(--faint)}
 .cmp-line .d.good{color:var(--mint)}.cmp-line .d.bad{color:var(--coral)}
 
+/* категорії, поля, варіанти */
+.seg3{display:flex;gap:4px;background:var(--panel);border-radius:12px;padding:3px;margin-bottom:12px}
+.seg3 button{flex:1;padding:9px 6px;border-radius:9px;font-size:13.5px;font-weight:600;color:var(--muted);transition:background .15s,color .15s}
+.seg3 button.on{background:var(--panel-3);color:var(--text)}
+.chip.ghost{background:transparent;border:1px dashed var(--panel-3);color:var(--muted)}
+.chip.sm{padding:6px 11px;font-size:12px}
+.chip .x{margin-left:6px;color:var(--faint);font-weight:700}
+.fwrap{display:flex;flex-wrap:wrap;gap:7px;padding:2px 0 4px}
+.fwrap .chip{flex-shrink:1;max-width:100%;overflow:hidden;text-overflow:ellipsis}
+.f-sub{font-size:10px;letter-spacing:.07em;text-transform:uppercase;color:var(--faint);font-weight:600;margin:10px 0 6px}
+.inl{display:flex;gap:7px;align-items:center;margin-top:6px}
+.inl input{flex:1;min-width:0}
+.inl .btn{width:auto;padding:12px 14px;font-size:14px;flex-shrink:0}
+.unit-wrap{position:relative}
+.unit-wrap .un{position:absolute;right:13px;top:50%;transform:translateY(-50%);color:var(--faint);font-size:14px;pointer-events:none}
+.vtable{background:var(--panel-2);border-radius:14px;padding:4px 10px 10px;margin-top:6px}
+.vrow{display:flex;flex-wrap:wrap;gap:6px;align-items:center;padding:8px 0;border-top:1px solid var(--line)}
+.vrow:first-child{border-top:none}
+.form .vrow select,.form .vrow input{background:var(--panel);padding:10px 10px;font-size:15px;border-radius:10px}
+.vrow .vf{flex:1 1 92px;min-width:0}
+.vrow .vq{flex:0 0 62px}
+.vrow .vp{flex:0 0 92px}
+.vrow .px{width:34px;height:40px;border-radius:10px;background:var(--panel);color:var(--muted);font-size:15px;flex-shrink:0}
+.vrow .vsold{font-size:11px;color:var(--faint);flex-basis:100%}
+.vhint{font-size:12px;color:var(--muted);margin-top:8px;line-height:1.45}
+.cat-row{display:flex;align-items:center;gap:8px;padding:12px 0;border-top:1px solid var(--line)}
+.cat-row:first-of-type{border-top:none}
+.cat-row .cn{flex:1;min-width:0;cursor:pointer}
+.cat-row .cn b{display:block;font-weight:600;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cat-row .cn span{font-size:12px;color:var(--faint)}
+.mini{width:34px;height:34px;border-radius:10px;background:var(--panel-2);color:var(--muted);font-size:14px;flex-shrink:0;display:inline-flex;align-items:center;justify-content:center}
+.mini:active{transform:scale(.9)}
+.mini.dg{color:var(--coral)}
+.fcard{background:var(--panel-2);border-radius:14px;padding:12px;margin-top:10px}
+.fcard .fh{display:flex;gap:7px;align-items:center}
+.fcard .fh input{flex:1;min-width:0}
+.form .fcard input,.form .fcard select{background:var(--panel)}
+.tsel{display:flex;gap:4px;background:var(--panel);border-radius:10px;padding:3px;margin-top:9px}
+.tsel button{flex:1;padding:7px 4px;border-radius:8px;font-size:12px;font-weight:600;color:var(--muted)}
+.tsel button.on{background:var(--panel-3);color:var(--text)}
+.swl{display:flex;align-items:center;gap:9px;margin-top:10px;font-size:13px;color:var(--muted)}
+.swl input{width:18px;height:18px;accent-color:#fff;flex-shrink:0}
+.form label.swl{display:flex;text-transform:none;letter-spacing:0;font-size:13px;font-weight:500;margin:10px 0 0;color:var(--muted)}
+.attr-line{font-size:11.5px;color:var(--muted);margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.stock-line{font-size:11.5px;color:var(--sky);margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sold-line{font-size:12.5px;color:var(--muted);margin-top:3px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sold-line b{color:var(--mint);font-family:var(--fmono);font-weight:600}
+.sold-line b.neg{color:var(--coral)}
+.kv{display:flex;justify-content:space-between;gap:10px;padding:8px 0;border-top:1px solid var(--line);font-size:13.5px}
+.kv:first-child{border-top:none}
+.kv .k{color:var(--faint)}.kv .v{text-align:right;font-weight:500;word-break:break-word}
+.var-chip{display:flex;flex-direction:column;align-items:flex-start;gap:1px}
+.banner{display:flex;align-items:center;gap:10px;background:rgba(10,132,255,.14);border-radius:14px;padding:12px 12px 12px 14px;margin-bottom:12px}
+.banner .bt{flex:1;font-size:13.5px;line-height:1.4;cursor:pointer}
+.banner .bt b{display:block;color:var(--text)}
+.banner .bt span{color:var(--muted);font-size:12px}
+.act-row{display:flex;gap:8px;margin-bottom:12px}
+.act-row .export-btn{margin-bottom:0;flex:1;padding:12px 8px;font-size:14px}
+.range2{display:flex;gap:7px;align-items:center;margin:2px 0 8px}
+.range2 input{flex:1;min-width:0;width:100%;background:var(--panel);border:1px solid transparent;border-radius:10px;padding:9px 10px;color:var(--text);font-family:var(--font);font-size:15px}
+.range2 span{color:var(--faint);font-size:12px;flex-shrink:0}
+.flt-name{font-size:10px;letter-spacing:.07em;text-transform:uppercase;color:var(--faint);font-weight:600;margin:2px 0 6px}
+.q-row{display:block;width:100%;text-align:left;padding:13px 14px;border-radius:14px;background:var(--panel-2);margin-top:8px;font-size:14.5px;font-weight:500}
+.q-row:active{transform:scale(.98)}
+.ans-row{padding:10px 0;border-top:1px solid var(--line)}
+.ans-row:first-child{border-top:none}
+.ans-top{display:flex;justify-content:space-between;gap:10px;align-items:baseline}
+.ans-top .an{font-size:14px;font-weight:500;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ans-top .av{font-family:var(--fmono);font-variant-numeric:tabular-nums;font-weight:600;font-size:14px;white-space:nowrap}
+.ans-sub{font-size:11.5px;color:var(--faint);margin-top:2px}
+.ans-bar{height:4px;border-radius:100px;background:var(--panel-3);margin-top:6px;overflow:hidden}
+.ans-bar>i{display:block;height:100%;border-radius:100px;background:var(--text)}
+.ans-head{font-size:13px;color:var(--muted);margin:14px 0 4px;line-height:1.45}
+.ans-head b{color:var(--text)}
+.arr-item{background:var(--panel-2);border-radius:14px;padding:12px;margin-top:8px}
+.arr-item .an{font-weight:600;font-size:14.5px}
+.arr-item .am{font-size:11.5px;color:var(--faint);margin:2px 0 6px}
+.form .arr-item input{background:var(--panel)}
+
 .skeleton{color:var(--faint);text-align:center;padding:70px 0;font-size:13.5px;line-height:1.6}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
@@ -388,8 +467,11 @@ const MON = {1:'Січень',2:'Лютий',3:'Березень',4:'Квіте�
 const MON3 = {1:'Січ',2:'Лют',3:'Бер',4:'Кві',5:'Тра',6:'Чер',7:'Лип',8:'Сер',9:'Вер',10:'Жов',11:'Лис',12:'Гру'};
 
 const S = {data:null, cur:'UAH', period:null, tab:'overview', filter:'all', openId:null, animKey:null,
-  add:{brand:null, newBrand:false, model:'', kit:null, price:'', date:'', plat:'OLX', exp:'', qty:'', parts:[]}, staleDays:30,
-  q:'', capWin:'d90', itemsPeriod:'all', itemsMode:'m', itemsPlatform:'all', itemsSort:'date'};
+  add:null, staleDays:30,
+  q:'', capWin:'d90', itemsPeriod:'all', itemsMode:'m', itemsPlatform:'all', itemsSort:'date',
+  itemsCat:'all', itemsAttr:{},   // фільтр категорії ('all'|'none'|id) і полів {fid: значення | {from,to}}
+  modal:null,                     // відкрита шторка, що переживає load(): 'cats' | 'arrange' | 'ask'
+  catEd:null, optEdit:null, nfType:'list', ask:null, ed:null, sellVar:null, _fv:{}};
 
 function haptic(k){ try{ if(TG&&TG.HapticFeedback) TG.HapticFeedback.impactOccurred(k||'light'); }catch(e){} }
 function hnotify(t){ try{ if(TG&&TG.HapticFeedback) TG.HapticFeedback.notificationOccurred(t); }catch(e){} }
@@ -400,6 +482,44 @@ function money(uah){ return `<span class="cur">${CUR[S.cur]}</span>${fmtNum(conv
 function isoUA(iso){ if(!iso) return '—'; const [y,m,d]=iso.split('-'); return `${d}.${m}.${y}`; }
 function mkey(iso){ return iso ? iso.slice(0,7) : null; }
 function mlabel(key){ const [y,m]=key.split('-'); return `${MON[+m]} ${y}`; }
+
+// ---------- категорії й поля (усе — власне, у кожного користувача своє) ----------
+function cats(){ return (S.data&&S.data.categories)||[]; }
+function catById(id){ return cats().find(c=>c.id===+id)||null; }
+function fieldMeta(fid){ return ((S.data&&S.data.fields)||{})[String(fid)]||null; }
+// значення для показу: число — з одиницею («128 ГБ»)
+function fval(fid, v){ const f=fieldMeta(fid); return (f&&f.type==='number'&&f.unit) ? `${v} ${f.unit}` : String(v); }
+// поля партії для картки: «Пам'ять: 128 ГБ · IMEI: 3567» (без видалених полів)
+function attrPairs(attrs){
+  return Object.entries(attrs||{}).filter(([fid])=>{ const f=fieldMeta(fid); return f&&!f.deleted; })
+    .map(([fid,v])=>[fieldMeta(fid).name, fval(fid,v)]);
+}
+function hasVariants(i){ return !!(i.variants&&i.variants.length); }
+function liveVariants(i){ return (i.variants||[]).filter(v=>v.remaining>0); }
+// усі значення поля fid у товарі: рівень партії + варіанти (onlyStock — лише з залишком)
+function itemFieldVals(i, fid, onlyStock){
+  const k=String(fid), out=[];
+  if(i.attrs&&i.attrs[k]!=null) out.push(i.attrs[k]);
+  (i.variants||[]).forEach(v=>{ if(v.attrs[k]!=null && (!onlyStock || v.remaining>0)) out.push(v.attrs[k]); });
+  return out;
+}
+function uncategorized(){ return (S.data.items||[]).filter(i=>!i.category_id); }
+// шторка, яка не зникає після load(): перемальовуємо вміст, зберігаючи прокрутку
+function showModal(id, inner, closeFn){
+  const host=document.getElementById('sheet-host');
+  const old=document.getElementById(id);
+  if(old){ const sh=old.querySelector('.sheet'), top=sh.scrollTop; sh.innerHTML=inner; sh.scrollTop=top; return; }
+  host.innerHTML=`<div class="overlay" id="${id}" onclick="if(event.target===this)${closeFn}()"><div class="sheet">${inner}</div></div>`;
+  requestAnimationFrame(()=>{const o=document.getElementById(id); if(o)o.classList.add('on');});
+  setTimeout(()=>{const o=document.getElementById(id); if(o&&!o.classList.contains('on'))o.classList.add('on');},60);
+}
+function hideModal(id){
+  S.modal=null;
+  const o=document.getElementById(id);
+  if(o){ o.classList.remove('on'); setTimeout(()=>{ if(!S.modal && S.openId==null) document.getElementById('sheet-host').innerHTML=''; else renderSheet(); },260); }
+}
+function lsGet(k){ try{ return localStorage.getItem(k); }catch(e){ return null; } }
+function lsSet(k,v){ try{ localStorage.setItem(k,v); }catch(e){} }
 
 // ---------- data helpers ----------
 function monthsAll(){ // всі місяці з активністю, зростанням
@@ -420,7 +540,7 @@ function monthAgg(key){
     (it.sales||[]).forEach(s=>{
       if(isAll || mkey(s.date)===key){
         revenue+=s.price; profit+=s.profit; soldUnits+=s.qty;
-        invested += (it.unit_cost||0)*s.qty;
+        invested += (s.unit_cost??it.unit_cost??0)*s.qty;
         expenses += (it.expenses_total||0)*(q? s.qty/q : 0);
         if(s.days!=null) daysArr.push(s.days);
       }
@@ -685,7 +805,7 @@ async function exportMonth(key){
 function frozenStats(){
   const act=S.data.items.filter(i=>(i.remaining||0)>0);
   let total=0, units=0;
-  act.forEach(i=>{ total += (i.unit_cost||0)*i.remaining; units += i.remaining; });
+  act.forEach(i=>{ total += i.remaining_cost||0; units += i.remaining; });
   const held=act.filter(i=>i.days_held!=null).map(i=>i.days_held);
   const avgHeld=held.length? held.reduce((a,b)=>a+b,0)/held.length : 0;
   return {lines:act.length, count:units, units, total, avgHeld, avg: units? total/units : 0};
@@ -773,7 +893,7 @@ function staleSection(){
   if(!list.length){ body=`<div class="empty" style="padding:20px 8px">Немає товарів, що лежать довше за ${S.staleDays} дн 👍</div>`; }
   else body=list.map(i=>`<div class="stale-row" onclick="openItem(${i.id})">
       <div style="min-width:0"><div class="sn">${esc(i.name)}</div><div class="sd">🕔 ${i.days_held} дн у наявності${i.qty>1?` · лишилось ${i.remaining} з ${i.qty}`:''}</div></div>
-      <div class="sm">${money((i.unit_cost||0)*i.remaining)}</div></div>`).join('');
+      <div class="sm">${money(i.remaining_cost||0)}</div></div>`).join('');
   return `<section class="section reveal">
     <div class="sec-head"><div class="eyebrow">🧊 Залежані товари</div>${seg}</div>
     ${body}</section>`;
@@ -861,7 +981,8 @@ function viewModel(name){
 function topModelsCard(){
   const top=topModels(5);
   if(!top.length) return '';
-  const rows=top.map((m,idx)=>`<div class="stat-row" onclick="viewModel('${q(m.name)}')" style="cursor:pointer">
+  S._top=top;   // в onclick — лише індекс: назва довільна, в атрибут її не пхаємо
+  const rows=top.map((m,idx)=>`<div class="stat-row" onclick="viewModel(S._top[${idx}].name)" style="cursor:pointer">
     <div class="sl">${idx+1}. <b>${esc(m.name)}</b><br><span style="color:var(--faint)">${m.units} ${plural(m.units,'продаж','продажі','продажів')}</span></div>
     <div class="sv" style="color:var(--mint)">${money(m.profit)}</div>
   </div>`).join('');
@@ -921,6 +1042,7 @@ function analyticsView(){
   const exportBtn=`<button class="export-btn" onclick="exportMonth('${cm}')">⬇️ Надіслати CSV-звіт за ${mlabel(cm).split(' ')[0]} у чат</button>`;
   return header()+summary
     +`<div class="a-cap">Тапни стовпчик — відкриється огляд того місяця.</div>`
+    +`<button class="export-btn" onclick="openAsk()">❓ Питання до даних</button>`
     +capitalSection()+topModelsCard()+charts+insights+staleSection()+exportBtn;
 }
 
@@ -931,7 +1053,9 @@ function searchWords(){ return S.q.trim().toLowerCase().split(/\s+/).filter(Bool
 function itemHaystack(i){
   const notes=(i.sales||[]).map(s=>s.note).filter(Boolean).join(' ');
   const exps=(i.expenses||[]).map(e=>e.reason).filter(Boolean).join(' ');
-  return [i.name,i.brand,i.model,i.kit,i.platform,i.origin_name,i.kind==='accessory'?'аксесуар комплект':'',notes,exps].filter(Boolean).join(' ').toLowerCase();
+  const attrs=Object.entries(i.attrs||{}).map(([f,v])=>fval(f,v)).join(' ');
+  const vars=(i.variants||[]).map(v=>v.label).join(' ');
+  return [i.name,i.category_name,attrs,vars,i.brand,i.model,i.kit,i.platform,i.origin_name,i.kind==='accessory'?'аксесуар комплект':'',notes,exps].filter(Boolean).join(' ').toLowerCase();
 }
 function matchQ(i,words){ if(!words.length) return true; const h=itemHaystack(i); return words.every(w=>h.includes(w)); }
 function rxEsc(s){ return s.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'); }
@@ -1038,7 +1162,7 @@ function itemsPlatformChips(){
   const plats=allPlatforms();
   if(plats.length<2) return '';
   const chips=[`<button class="chip ${S.itemsPlatform==='all'?'on':''}" onclick="setItemsPlatform('all')">Всі майданчики</button>`]
-    .concat(plats.map(p=>`<button class="chip ${S.itemsPlatform===p?'on':''}" onclick="setItemsPlatform('${q(p)}')">${esc(p)}</button>`))
+    .concat(plats.map((p,idx)=>`<button class="chip ${S.itemsPlatform===p?'on':''}" onclick="setItemsPlatform(allPlatforms()[${idx}])">${esc(p)}</button>`))
     .join('');
   return `<div class="chips">${chips}</div>`;
 }
@@ -1048,14 +1172,99 @@ function itemSortKey(i){
   switch(S.itemsSort){
     case 'profit': return i.profit||0;
     case 'days': return i.status==='sold' ? (i.days_to_sell??-1) : (i.days_held??-1);
-    case 'amount': return i.status==='sold' ? (i.revenue||0) : (i.unit_cost||0)*(i.remaining||0);
-    default: return null;
+    case 'amount': return i.status==='sold' ? (i.revenue||0) : (i.remaining_cost||0);
+    default:
+      if(String(S.itemsSort).startsWith('f:')){
+        const nums=itemFieldVals(i,S.itemsSort.slice(2),false).map(Number).filter(n=>!isNaN(n));
+        return nums.length?Math.max(...nums):-Infinity;
+      }
+      return null;
   }
 }
 function setItemsSort(s){ S.itemsSort=s; haptic(); render(); }
 function itemsSortChips(){
-  const chips=ITEM_SORTS.map(([k,l])=>`<button class="chip ${S.itemsSort===k?'on':''}" onclick="setItemsSort('${k}')">${l}</button>`).join('');
+  const c=typeof S.itemsCat==='number'?catById(S.itemsCat):null;
+  const nf=c?c.fields.filter(f=>f.type==='number').map(f=>['f:'+f.id, '↓ '+esc(f.name)]):[];
+  const chips=ITEM_SORTS.concat(nf).map(([k,l])=>`<button class="chip ${S.itemsSort===k?'on':''}" onclick="setItemsSort('${k}')">${l}</button>`).join('');
   return `<div class="chips">${chips}</div>`;
+}
+// ---------- фільтр за категорією й полями ----------
+function matchCat(i){
+  if(S.itemsCat==='all') return true;
+  if(S.itemsCat==='none') return !i.category_id;
+  return i.category_id===S.itemsCat;
+}
+function matchAttrs(i){
+  const conds=Object.entries(S.itemsAttr);
+  if(!conds.length) return true;
+  // «M + чорна» — шукаємо ОДИН варіант, де збігаються обидва (з полями партії)
+  const onlyStock=S.filter==='active'||S.filter==='stale';
+  const base=i.attrs||{};
+  const cands=hasVariants(i)
+    ? i.variants.filter(v=>!onlyStock||v.remaining>0).map(v=>({...base, ...v.attrs}))
+    : [base];
+  return cands.some(a=>conds.every(([fid,cond])=>{
+    const v=a[String(fid)];
+    if(v==null) return false;
+    if(cond&&typeof cond==='object'){
+      const n=Number(v), lo=cond.from===''||cond.from==null?-Infinity:+cond.from, hi=cond.to===''||cond.to==null?Infinity:+cond.to;
+      return !isNaN(n)&&n>=lo&&n<=hi;
+    }
+    return v===cond;
+  }));
+}
+function setItemsCat(c){ S.itemsCat=c; S.itemsAttr={}; if(String(S.itemsSort).startsWith('f:')) S.itemsSort='date'; haptic(); render(); }
+// значення поля серед товарів обраної категорії — для чипів-фільтрів
+function fieldValuesInUse(fid){
+  const set=new Set();
+  S.data.items.filter(matchCat).forEach(i=>itemFieldVals(i,fid,false).forEach(v=>set.add(v)));
+  const f=fieldMeta(fid), arr=[...set];
+  if(f&&f.type==='number') return arr.sort((a,b)=>a-b);
+  // список — у порядку значень поля (S, M, L), решта — за алфавітом
+  const c=catById(f&&f.category_id), fo=c&&c.fields.find(x=>x.id===+fid);
+  const order=new Map((fo?fo.options:[]).map((o,idx)=>[o.value,idx]));
+  return arr.sort((a,b)=>(order.get(a)??1e6)-(order.get(b)??1e6) || String(a).localeCompare(String(b),'uk'));
+}
+function setAttrFilter(fid, idx){
+  const v=(S._fv[fid]||[])[idx];
+  if(S.itemsAttr[fid]===v || v===undefined) delete S.itemsAttr[fid]; else S.itemsAttr[fid]=v;
+  haptic(); render();
+}
+function setRangeFilter(fid, which, v){
+  const cur=(S.itemsAttr[fid]&&typeof S.itemsAttr[fid]==='object')?S.itemsAttr[fid]:{from:'',to:''};
+  cur[which]=v;
+  if(cur.from===''&&cur.to==='') delete S.itemsAttr[fid]; else S.itemsAttr[fid]=cur;
+  paintItems();
+}
+function itemsCatChips(){
+  const cs=cats();
+  if(!cs.length && S.data.viewing) return '';
+  const unc=uncategorized().length;
+  let chips=`<button class="chip ${S.itemsCat==='all'?'on':''}" onclick="setItemsCat('all')">Усі категорії</button>`;
+  chips+=cs.map(c=>`<button class="chip ${S.itemsCat===c.id?'on':''}" onclick="setItemsCat(${c.id})">${esc(c.name)}</button>`).join('');
+  if(cs.length && unc) chips+=`<button class="chip ${S.itemsCat==='none'?'on':''}" onclick="setItemsCat('none')">Без категорії</button>`;
+  if(!S.data.viewing) chips+=`<button class="chip ghost" onclick="openCats()">${cs.length?'⚙ Категорії':'＋ Категорії'}</button>`;
+  return `<div class="chips">${chips}</div>`;
+}
+function itemsFieldFilters(){
+  const c=typeof S.itemsCat==='number'?catById(S.itemsCat):null;
+  if(!c) return '';
+  S._fv={};
+  return c.fields.map(f=>{
+    const vals=fieldValuesInUse(f.id);
+    if(f.type==='number'){
+      if(!vals.length) return '';
+      const cur=(S.itemsAttr[f.id]&&typeof S.itemsAttr[f.id]==='object')?S.itemsAttr[f.id]:{from:'',to:''};
+      return `<div class="flt-name">${esc(f.name)}${f.unit?', '+esc(f.unit):''}</div><div class="range2">
+        <input type="number" inputmode="decimal" placeholder="від ${esc(vals[0])}" value="${esc(cur.from)}" oninput="setRangeFilter(${f.id},'from',this.value)">
+        <span>—</span>
+        <input type="number" inputmode="decimal" placeholder="до ${esc(vals[vals.length-1])}" value="${esc(cur.to)}" oninput="setRangeFilter(${f.id},'to',this.value)"></div>`;
+    }
+    if(!vals.length || vals.length>40) return '';
+    S._fv[f.id]=vals;
+    return `<div class="flt-name">${esc(f.name)}</div><div class="chips" style="padding-bottom:8px">${vals.map((v,idx)=>
+      `<button class="chip sm ${S.itemsAttr[f.id]===v?'on':''}" onclick="setAttrFilter(${f.id},${idx})">${esc(fval(f.id,v))}</button>`).join('')}</div>`;
+  }).join('');
 }
 function visibleItems(){
   const words=searchWords();
@@ -1067,21 +1276,23 @@ function visibleItems(){
       S.filter==='active' ? (i.remaining||0)>0 :
       i.status===S.filter)
     .filter(i=>S.itemsPlatform==='all' || i.platform===S.itemsPlatform)
+    .filter(matchCat)
+    .filter(matchAttrs)
     .filter(i=>inItemsPeriod(i,range))
     .filter(i=>matchQ(i,words));
   if(S.itemsSort==='date' || !S.itemsSort)
     list.sort((a,b)=> (b.buy_date||'').localeCompare(a.buy_date||'') || b.id-a.id);
   else
-    list.sort((a,b)=> itemSortKey(b)-itemSortKey(a));
+    list.sort((a,b)=> (itemSortKey(b)-itemSortKey(a)) || b.id-a.id);
   return list;
 }
 // ---------- експорт довільного періоду товарів ----------
 function itemsExportBtn(){
   const p=S.itemsPeriod;
   if(p==='all') return '';
-  if(p.startsWith('m:')){ const k=p.slice(2); return `<button class="export-btn" onclick="exportMonth('${k}')">⬇️ Надіслати CSV за ${mlabel(k).split(' ')[0]} у чат</button>`; }
+  if(p.startsWith('m:')){ const k=p.slice(2); return `<button class="export-btn" onclick="exportMonth('${k}')">⬇️ Звіт</button>`; }
   const range=itemsPeriodRange(p);
-  return `<button class="export-btn" onclick="exportRange('${range[0]}','${range[1]}')">⬇️ Надіслати CSV за період у чат</button>`;
+  return `<button class="export-btn" onclick="exportRange('${range[0]}','${range[1]}')">⬇️ Звіт</button>`;
 }
 async function exportRange(from,to){
   if(!INIT){ toast('Експорт доступний лише в Telegram','err'); return; }
@@ -1108,16 +1319,20 @@ function paintItems(){
 }
 
 function itemsView(){
-  const chips=[['all','Всі'],['sold','Продані'],['active','В наявності'],['stale','🧊 Залежані']]
-    .map(([k,l])=>`<button class="chip ${S.filter===k?'on':''}" onclick="setFilter('${k}')">${l}</button>`).join('');
+  const seg=`<div class="seg3">${[['all','Усі'],['active','В наявності'],['sold','Продані']].map(([k,l])=>
+    `<button class="${S.filter===k||(k==='active'&&S.filter==='stale')?'on':''}" onclick="setFilter('${k}')">${l}</button>`).join('')}</div>`;
+  const staleChip = S.filter==='stale' ? `<div class="chips"><button class="chip on" onclick="setFilter('active')">🧊 Залежані від ${S.staleDays} дн<span class="x">✕</span></button></div>` : '';
   const searchBox=`<div class="search ${S.q.trim()?'has':''}" id="search-box">
     <svg class="si" viewBox="0 0 24 24"><path d="M10 4a6 6 0 1 0 3.5 10.9l4.3 4.3 1.4-1.4-4.3-4.3A6 6 0 0 0 10 4Zm0 2a4 4 0 1 1 0 8 4 4 0 0 1 0-8Z"/></svg>
     <input id="search-inp" type="search" inputmode="search" autocomplete="off" spellcheck="false"
-      placeholder="Пошук: назва, бренд, модель…" value="${esc(S.q)}" oninput="onSearch(this.value)">
+      placeholder="Пошук: назва, поле, варіант…" value="${esc(S.q)}" oninput="onSearch(this.value)">
     <button class="sx" onclick="clearSearch()" aria-label="Очистити">✕</button>
   </div>`;
-  return header()+searchBox+itemsPeriodChips()+itemsPeriodSummary()+itemsExportBtn()
-    +`<div class="chips">${chips}</div>`+itemsPlatformChips()+itemsSortChips()
+  const acts=`<div class="act-row">${itemsExportBtn()}
+    ${S.data.viewing?'':`<button class="export-btn" onclick="exportItemsTable()">📋 Вигрузити таблицю</button>`}
+    <button class="export-btn" onclick="openAsk()">❓ Питання</button></div>`;
+  return header()+arrangeBanner()+searchBox+seg+staleChip+itemsCatChips()+itemsFieldFilters()
+    +itemsPeriodChips()+itemsPeriodSummary()+itemsPlatformChips()+itemsSortChips()+acts
     +`<section class="section reveal" style="padding:6px 16px" id="items-list">${itemsListHTML()}</section>`;
 }
 
@@ -1136,7 +1351,7 @@ function itemDisplayProfit(i){
 }
 function itemRow(i){
   const st=i.status, multi=i.qty>1, acc=i.kind==='accessory';
-  let ic, meta, amt;
+  let ic, meta, amt='';
   if(st==='sold' && i.included_only){
     ic='🧩';
     const wn=(i.sales[0]&&i.sales[0].with_name)||'іншим товаром';
@@ -1145,56 +1360,197 @@ function itemRow(i){
   } else if(st==='sold'){
     ic='✅';
     meta=`${isoUA(i.buy_date)} → ${isoUA(i.sell_date)}${i.days_to_sell!=null?` · ${i.days_to_sell} дн`:''}${multi?` · ${i.qty} шт`:''}`;
-    amt=`<div class="n pos">+${fmtNum(conv(itemDisplayProfit(i)))}</div><div class="t">прибуток</div>`;
   } else if(st==='partial'){
     ic='🔓';
     meta=`продано ${i.sold_qty}/${i.qty} · лишилось ${i.remaining}${i.days_held!=null?` · ${i.days_held} дн`:''}`;
-    amt=`<div class="n pos">+${fmtNum(conv(i.profit))}</div><div class="t">реалізовано</div>`;
+    amt=`<div class="n inv">${money(i.remaining_cost||0)}</div><div class="t">залишок</div>`;
   } else {
     ic=acc?'🧩':'📦';
     meta=`${acc&&i.origin_name?`з комплекту «${esc(i.origin_name)}» · `:''}куплено ${isoUA(i.buy_date)}${multi?` · ${i.qty} шт`:''}${i.days_held!=null?` · ${i.days_held} дн`:''}`;
-    amt=`<div class="n inv">${money((i.unit_cost||0)*i.remaining)}</div><div class="t">вкладено</div>`;
+    amt=`<div class="n inv">${money(i.remaining_cost||0)}</div><div class="t">вкладено</div>`;
+  }
+  const attrs=[i.category_name, i.brand, i.model].filter(Boolean).concat(attrPairs(i.attrs).map(p=>p[1]));
+  const attrLine=attrs.length?`<div class="attr-line">${attrs.map(esc).join(' · ')}</div>`:'';
+  const live=liveVariants(i);
+  const stockLine=(live.length && st!=='sold')?`<div class="stock-line">${live.map(v=>`${esc(v.label)} ×${v.remaining}`).join(' · ')}</div>`:'';
+  let soldLine='';
+  if(st==='sold' && !i.included_only){
+    const p=itemDisplayProfit(i);
+    soldLine=`<div class="sold-line">Продано за ${money(i.revenue)} · <b class="${p<0?'neg':''}">${p<0?'−':'+'}${fmtNum(Math.abs(conv(p)))} ${CUR[S.cur]}</b></div>`;
+  } else if(st==='partial'){
+    soldLine=`<div class="sold-line">Продано за ${money(i.revenue)} · <b class="${i.profit<0?'neg':''}">${i.profit<0?'−':'+'}${fmtNum(Math.abs(conv(i.profit)))} ${CUR[S.cur]}</b></div>`;
   }
   const kitN=(i.kit_items||[]).length;
   return `<div class="item" onclick="openItem(${i.id})">
     <div class="ic">${ic}</div>
-    <div class="info"><div class="nm">${hlName(i.name)}${multi?` <span style="color:var(--faint);font-weight:400">×${i.qty}</span>`:''}${acc?`<span class="kit-chip">аксесуар</span>`:''}${kitN?`<span class="kit-chip">+${kitN} у комплекті</span>`:''}</div><div class="meta">${meta}</div></div>
-    <div class="amt">${amt}</div>
+    <div class="info"><div class="nm">${hlName(i.name)}${multi?` <span style="color:var(--faint);font-weight:400">×${i.qty}</span>`:''}${acc?`<span class="kit-chip">аксесуар</span>`:''}${kitN?`<span class="kit-chip">+${kitN} у комплекті</span>`:''}</div>
+      <div class="meta">${meta}</div>${attrLine}${stockLine}${soldLine}</div>
+    ${amt?`<div class="amt">${amt}</div>`:''}
   </div>`;
 }
 
 function q(s){ return (s==null?'':String(s)).replace(/\\/g,'\\\\').replace(/'/g,"\\'"); }
-// Немає пресетного каталогу — метадані бренду завжди дефолтні.
-function brandMeta(b){ return {emoji:'📦', models:[], kits:['Базовий','Повний комплект']}; }
-// Бренди, якими користувач уже користувався — спочатку порожньо, наповнюється з історії.
-function allBrands(){
-  return [...new Set((S.data.items||[]).map(i=>i.brand).filter(Boolean))];
+// ---------- категорія + поля + варіанти: спільний редактор для «Додати» (k='add')
+// і «Редагувати» (k='ed'). Усі значення — довільні рядки користувача, тож в onclick
+// передаємо лише id/індекси, а в розмітку — тільки через esc().
+function blankVRow(){ return {attrs:{}, qty:'1', price:''}; }
+function emptyAdd(){ return {cat:null, name:'', attrs:{}, vrows:[], extra:{}, newOpt:null, newCat:false,
+  price:'', date:'', plat:'OLX', exp:'', qty:'', parts:[]}; }
+function MS(k){ return S[k]; }
+function metaRerender(k){ if(k==='add') rerenderAdd(); else if(k==='ed') paintEdit(); else renderArrange(); }
+function catFieldsOf(id){ const c=id!=null?catById(id):null; return c?c.fields:[]; }
+function plainFields(k){ return catFieldsOf(MS(k).cat).filter(f=>!f.is_variant || k.startsWith('arr_')); }
+function varFields(k){ return k.startsWith('arr_') ? [] : catFieldsOf(MS(k).cat).filter(f=>f.is_variant); }
+function fieldById(k,fid){ return catFieldsOf(MS(k).cat).find(f=>f.id===+fid); }
+// значення списку: збережені + щойно додані у цій формі (на сервер підуть разом із товаром)
+function fieldOpts(k,fid){
+  const f=fieldById(k,fid), base=f?f.options.map(o=>o.value):[];
+  const low=new Set(base.map(v=>v.toLowerCase()));
+  return base.concat(((MS(k).extra||{})[fid]||[]).filter(v=>!low.has(v.toLowerCase())));
 }
-// Моделі, які користувач уже вписував для цього бренду.
-function brandModels(b){
-  return [...new Set((S.data.items||[]).filter(i=>i.brand===b && i.model).map(i=>i.model))];
+function pickCat(k,id){
+  const M=MS(k);
+  M.cat = (M.cat===id) ? null : id;
+  M.attrs={}; M.newOpt=null;
+  if(k==='add') M.vrows = varFields(k).length ? [blankVRow()] : [];
+  else if(!M.vrows.some(r=>r.id) ) M.vrows=[];
+  haptic(); metaRerender(k);
 }
-function composedName(){
-  const A=S.add, m=(A.model||'').trim();
-  const pre = A.brand ? (A.brand.trim()+' ') : '';
-  return (pre+m).trim();
+function setAttr(k,fid,v){ const M=MS(k); if(v===''||v==null) delete M.attrs[fid]; else M.attrs[fid]=v; }
+function pickOpt(k,fid,idx){
+  const M=MS(k), v=fieldOpts(k,fid)[idx];
+  if(M.attrs[fid]===v) delete M.attrs[fid]; else M.attrs[fid]=v;
+  haptic(); metaRerender(k);
 }
-function pickBrand(b){ S.add.newBrand=false; S.add.brand = S.add.brand===b?null:b; S.add.kit=null; haptic(); rerenderAdd(); }
-function toggleNewBrand(){ S.add.newBrand=!S.add.newBrand; if(S.add.newBrand)S.add.brand=''; S.add.kit=null; haptic(); rerenderAdd();
-  setTimeout(()=>{ const i=document.getElementById('a-newbrand'); if(i)i.focus(); },50); }
-function pickModel(m){ S.add.model=m; haptic(); rerenderAdd(); }
-function pickKit(k){ S.add.kit = S.add.kit===k?null:k; haptic(); rerenderAdd(); }
-function emptyAdd(){ return {brand:null, newBrand:false, model:'', kit:null, price:'', date:'', plat:'OLX', exp:'', qty:'', parts:[]}; }
+// нове значення списку прямо у формі: для поля партії (row=-1) або клітинки варіанта
+function startNewOpt(k,fid,row){ MS(k).newOpt={fid, row}; metaRerender(k);
+  setTimeout(()=>{ const i=document.getElementById(`no-${k}`); if(i) i.focus(); },40); }
+function cancelNewOpt(k){ MS(k).newOpt=null; metaRerender(k); }
+function commitNewOpt(k){
+  const M=MS(k), no=M.newOpt; if(!no) return;
+  const v=val(`no-${k}`).slice(0,60);
+  if(v){
+    const have=fieldOpts(k,no.fid).find(x=>x.toLowerCase()===v.toLowerCase());
+    const value=have||v;
+    if(!have){ M.extra[no.fid]=(M.extra[no.fid]||[]).concat([v]); }
+    if(no.row<0) M.attrs[no.fid]=value; else M.vrows[no.row].attrs[no.fid]=value;
+  }
+  M.newOpt=null; haptic(); metaRerender(k);
+}
+function newOptInput(k){
+  return `<div class="inl"><input id="no-${k}" placeholder="нове значення" maxlength="60"
+      onkeydown="if(event.key==='Enter'){event.preventDefault();commitNewOpt('${k}')}">
+    <button class="btn primary" onclick="commitNewOpt('${k}')">✓</button>
+    <button class="btn ghost" onclick="cancelNewOpt('${k}')">✕</button></div>`;
+}
+function catChipsHTML(k){
+  const M=MS(k);
+  const chips=cats().map(c=>`<button class="chip ${M.cat===c.id?'on':''}" onclick="pickCat('${k}',${c.id})">${esc(c.name)}</button>`).join('');
+  const add = k==='add' ? `<button class="chip ghost" onclick="toggleNewCat()">＋ Нова</button>` : '';
+  const manage = (k==='add'||k==='ed') ? `<button class="chip ghost" onclick="openCats()">⚙</button>` : '';
+  const inp = (k==='add' && M.newCat) ? `<div class="inl"><input id="nc-add" placeholder="напр. Телефони" maxlength="60"
+      onkeydown="if(event.key==='Enter'){event.preventDefault();createCatFromAdd()}">
+      <button class="btn primary" onclick="createCatFromAdd()">Створити</button></div>` : '';
+  return `<div class="fwrap">${chips}${add}${manage}</div>${inp}`;
+}
+function plainFieldHTML(k,f){
+  const M=MS(k), cur=M.attrs[f.id];
+  const lbl=`<label>${esc(f.name)} <span class="opt">необов'язково</span></label>`;
+  if(f.type==='list'){
+    const opts=fieldOpts(k,f.id);
+    const chips=opts.map((v,idx)=>`<button class="chip sm ${cur===v?'on':''}" onclick="pickOpt('${k}',${f.id},${idx})">${esc(v)}</button>`).join('');
+    const adding=M.newOpt&&M.newOpt.fid===f.id&&M.newOpt.row<0;
+    return lbl+`<div class="fwrap">${chips}<button class="chip sm ghost" onclick="startNewOpt('${k}',${f.id},-1)">＋</button></div>${adding?newOptInput(k):''}`;
+  }
+  if(f.type==='number'){
+    return lbl+`<div class="unit-wrap"><input type="number" inputmode="decimal" placeholder="число" value="${esc(cur??'')}"
+      oninput="setAttr('${k}',${f.id},this.value)">${f.unit?`<span class="un">${esc(f.unit)}</span>`:''}</div>`;
+  }
+  return lbl+`<input maxlength="120" placeholder="текст" value="${esc(cur??'')}" oninput="setAttr('${k}',${f.id},this.value.trim())">`;
+}
+function vCellHTML(k,r,f){
+  const M=MS(k), cur=M.vrows[r].attrs[f.id];
+  if(M.newOpt&&M.newOpt.fid===f.id&&M.newOpt.row===r) return `<div class="vf" style="flex-basis:100%">${newOptInput(k)}</div>`;
+  if(f.type==='list'){
+    const opts=fieldOpts(k,f.id);
+    return `<div class="vf"><select onchange="setVCell('${k}',${r},${f.id},this)">
+      <option value="">${esc(f.name)}</option>
+      ${opts.map((v,idx)=>`<option value="${idx}" ${cur===v?'selected':''}>${esc(v)}</option>`).join('')}
+      <option value="__new">＋ нове…</option></select></div>`;
+  }
+  const num=f.type==='number';
+  return `<div class="vf"><input ${num?'type="number" inputmode="decimal"':'maxlength="120"'} placeholder="${esc(f.name)}${num&&f.unit?', '+esc(f.unit):''}"
+    value="${esc(cur??'')}" oninput="setVInput('${k}',${r},${f.id},this.value.trim())"></div>`;
+}
+function setVCell(k,r,fid,sel){
+  const M=MS(k);
+  if(sel.value==='__new'){ startNewOpt(k,fid,r); return; }
+  if(sel.value==='') delete M.vrows[r].attrs[fid];
+  else M.vrows[r].attrs[fid]=fieldOpts(k,fid)[+sel.value];
+}
+function setVInput(k,r,fid,v){ const a=MS(k).vrows[r].attrs; if(v) a[fid]=v; else delete a[fid]; }
+function addVRow(k){ const M=MS(k); const last=M.vrows[M.vrows.length-1];
+  M.vrows.push(last?{attrs:{...last.attrs}, qty:'1', price:''}:blankVRow()); haptic(); metaRerender(k); }
+function delVRow(k,r){ const M=MS(k); if(M.vrows[r].sold>0){ toast('Варіант з продажами не можна прибрати','err'); return; }
+  M.vrows.splice(r,1); haptic(); metaRerender(k); }
+function vrowsHTML(k){
+  const M=MS(k), vf=varFields(k);
+  if(!vf.length && !M.vrows.length) return '';
+  const fields=vf;   // рядки без полів категорії (стара категорія) — показуємо підпис
+  const rows=M.vrows.map((row,r)=>`<div class="vrow">
+      ${fields.map(f=>vCellHTML(k,r,f)).join('')}
+      ${!fields.length?`<div class="vf" style="color:var(--muted);font-size:13px">${esc(variantLabelLocal(row))||'Варіант '+(r+1)}</div>`:''}
+      <input class="vq" type="number" inputmode="numeric" min="${row.sold||1}" placeholder="шт" value="${esc(row.qty)}" oninput="MS('${k}').vrows[${r}].qty=this.value;paintVHint('${k}')">
+      <input class="vp" type="number" inputmode="decimal" placeholder="₴/шт" value="${esc(row.price)}" oninput="MS('${k}').vrows[${r}].price=this.value;paintVHint('${k}')">
+      <button class="px" onclick="delVRow('${k}',${r})" aria-label="Прибрати">✕</button>
+      ${row.sold?`<div class="vsold">продано ${row.sold} шт — менше не можна</div>`:''}
+    </div>`).join('');
+  return `<label>Варіанти і кількість</label>
+    <div class="vtable">${rows||'<div class="vhint" style="padding:6px 0">Без варіантів — уся партія однакова.</div>'}
+      <button class="linkish" onclick="addVRow('${k}')">＋ Варіант</button>
+      <div class="vhint" id="vhint-${k}">${vHintText(k)}</div></div>`;
+}
+function variantLabelLocal(row){ return Object.entries(row.attrs||{}).map(([fid,v])=>fval(fid,v)).join(' '); }
+// підказка: як рахується собівартість (ручні ціни, решта ділиться рівно)
+function vHintText(k){
+  const M=MS(k), rows=M.vrows;
+  if(!rows.length) return '';
+  const total=parseFloat(M.price)||0;
+  let units=0, manual=0, restU=0;
+  rows.forEach(r=>{ const q=Math.max(1,parseInt(r.qty)||1); units+=q;
+    const p=parseFloat(r.price); if(r.price!==''&&p>=0) manual+=p*q; else restU+=q; });
+  let t=`Разом ${units} шт`;
+  if(!total) return t+' · вкажи ціну партії — поділимо на штуки';
+  if(manual>total) return `Ручні ціни (${fmtNum(manual)} ₴) більші за ціну партії`;
+  if(manual>0 && restU) t+=` · ручні ${fmtNum(manual)} ₴, решта ${fmtNum(total-manual)} ₴ ÷ ${restU} = ${fmtNum((total-manual)/restU)} ₴/шт`;
+  else if(!manual) t+=` · по ${fmtNum(total/units)} ₴/шт`;
+  return t+'. Витрати ділимо на всі штуки.';
+}
+function paintVHint(k){ const h=document.getElementById('vhint-'+k); if(h) h.textContent=vHintText(k); }
+function metaFieldsHTML(k){ return plainFields(k).map(f=>plainFieldHTML(k,f)).join('') + vrowsHTML(k); }
+function cleanVRows(k){
+  return MS(k).vrows.map(r=>({id:r.id||null, attrs:{...r.attrs}, qty:Math.max(r.sold||1, parseInt(r.qty)||1),
+    unit_price: r.price!==''&&r.price!=null&&!isNaN(parseFloat(r.price)) ? parseFloat(r.price) : null}));
+}
+function toggleNewCat(){ S.add.newCat=!S.add.newCat; haptic(); rerenderAdd();
+  setTimeout(()=>{ const i=document.getElementById('nc-add'); if(i)i.focus(); },40); }
+async function createCatFromAdd(){
+  const name=val('nc-add'); if(!name){ toast('Впиши назву категорії','err'); return; }
+  try{ const r=await api('/api/cat/add',{name}); S.add.newCat=false; S.add.cat=r.id; S.add.attrs={}; S.add.vrows=[];
+    hnotify('success'); S.catEd=r.id; S.modal='cats'; await load(); toast('Категорію створено — додай їй поля','ok'); }
+  catch(e){ toast(e.message,'err'); }
+}
+
 function addPart(){ if(!S.add.parts) S.add.parts=[]; S.add.parts.push({name:'', price:''}); haptic(); rerenderAdd();
   setTimeout(()=>{ const list=document.querySelectorAll('#a-parts .pn input'); const last=list[list.length-1]; if(last) last.focus(); },40); }
 function delPart(i){ S.add.parts.splice(i,1); haptic(); rerenderAdd(); }
 function partsSum(){ return (S.add.parts||[]).reduce((a,p)=>a+(parseFloat(p.price)||0),0); }
-function rerenderAdd(){ const r=document.getElementById('root'); if(r) r.innerHTML=addView(); }
+function rerenderAdd(){ const r=document.getElementById('root'); if(r && S.tab==='add') r.innerHTML=addView(); }
 
 function partsBlock(){
   if(!S.add.parts) S.add.parts=[];
   const rows=S.add.parts.map((p,i)=>`<div class="part">
-      <div class="pn"><label>${i===0?'У комплекті':'\u00a0'}</label>
+      <div class="pn"><label>${i===0?'У комплекті':' '}</label>
         <input placeholder="напр. Elite Strap" value="${esc(p.name)}" oninput="S.add.parts[${i}].name=this.value"></div>
       <div class="pp"><label>Собівартість, ₴</label>
         <input type="number" inputmode="decimal" placeholder="0" value="${esc(p.price)}" oninput="S.add.parts[${i}].price=this.value;paintKitHint()"></div>
@@ -1208,75 +1564,57 @@ function partsBlock(){
 }
 function kitHintText(){
   const total=parseFloat(S.add.price)||0, acc=partsSum();
-  if(!(S.add.parts||[]).length) return 'Якщо в коробці були ремінь, кейс тощо — додай їх окремими рядками. Потім продаси окремо або з іншими окулярами.';
+  if(!(S.add.parts||[]).length) return 'Якщо в коробці були ремінь, кейс тощо — додай їх окремими рядками. Потім продаси окремо або з іншим товаром.';
   if(!total) return 'Вкажи повну ціну купівлі комплекту — залишок стане собівартістю основного товару.';
   if(acc>total) return 'Собівартість аксесуарів більша за ціну купівлі.';
   return `Заплатили ${fmtNum(total)} ₴ · на аксесуари ${fmtNum(acc)} ₴ · на основний товар ${fmtNum(total-acc)} ₴`;
 }
-function paintKitHint(){ const h=document.getElementById('kit-hint'); if(h) h.textContent=kitHintText(); }
+function paintKitHint(){ const h=document.getElementById('kit-hint'); if(h) h.textContent=kitHintText(); paintVHint('add'); }
 
 function addView(){
+  if(!S.add) S.add=emptyAdd();
   const A=S.add;
   if(!A.date) A.date=S.data.today;
-  const hasBrand = !!(A.brand || A.newBrand);
-  const models = A.brand ? brandModels(A.brand) : [];
-  const brandChips = allBrands().map(b=>
-    `<button class="chip ${A.brand===b&&!A.newBrand?'on':''}" onclick="pickBrand('${q(b)}')">${brandMeta(b).emoji} ${b}</button>`).join('')
-    + `<button class="chip ${A.newBrand?'on':''}" onclick="toggleNewBrand()">＋ Свій</button>`;
-  const newBrandInput = A.newBrand
-    ? `<input id="a-newbrand" placeholder="свій бренд, напр. Casio / GoPro" value="${esc(A.brand||'')}" oninput="S.add.brand=this.value;updatePreview()" style="margin-top:6px">`
-    : '';
-  const modelChips = models.length
-    ? `<div class="chips" style="padding:6px 0 4px">${models.map(m=>`<button class="chip ${A.model===m?'on':''}" onclick="pickModel('${q(m)}')">${m}</button>`).join('')}</div>`
-    : '';
-  const kits = brandMeta(A.brand||'').kits;
-  const kitBlock = hasBrand
-    ? `<label>Комплект <span class="opt">необов'язково</span></label>
-       <div class="chips" style="padding:2px 0 4px">${kits.map(k=>`<button class="chip ${A.kit===k?'on':''}" onclick="pickKit('${q(k)}')">${k}</button>`).join('')}</div>`
-    : '';
-  const nm = composedName();
-  const preview = nm ? `<div class="name-preview">Назва: <b>${esc(nm)}</b>${A.kit?` · ${esc(A.kit)}`:''}</div>` : '';
-  const modelPh = hasBrand ? `модель, напр. ${(models[0])||'Calorie'}` : 'напр. Steam Deck / GoPro 12';
-
+  if(A.cat!=null && !catById(A.cat)){ A.cat=null; A.attrs={}; A.vrows=[]; }
+  // у категорії з варіантами завжди є хоча б один рядок (поля могли з'явитися щойно)
+  if(varFields('add').length && !A.vrows.length) A.vrows=[blankVRow()];
+  if(!varFields('add').length && A.vrows.length) A.vrows=[];
+  const hasVar=varFields('add').length>0;
   return header()+`<section class="section reveal">
     <div class="eyebrow" style="margin-bottom:8px">Нова закупівля</div>
     <div class="form">
-      <label>Бренд <span class="opt">необов'язково</span></label>
-      <div class="chips" style="padding:2px 0 4px">${brandChips}</div>
-      ${newBrandInput}
+      <label>Категорія <span class="opt">необов'язково</span></label>
+      ${catChipsHTML('add')}
 
-      <label>${hasBrand ? 'Модель' : 'Назва товару'}</label>
-      <input id="a-model" placeholder="${modelPh}" value="${esc(A.model)}" oninput="S.add.model=this.value;updatePreview()">
-      ${modelChips}
-      <div id="name-preview-host">${preview}</div>
+      <label>Назва</label>
+      <input id="a-name" maxlength="120" placeholder="напр. Футболка Nike / iPhone 13" value="${esc(A.name)}" oninput="S.add.name=this.value">
 
-      ${kitBlock}
-
-      ${partsBlock()}
+      ${metaFieldsHTML('add')}
 
       <div class="row" style="margin-top:14px">
-        <div><label>Ціна купівлі, ₴</label><input id="a-price" type="number" inputmode="decimal" placeholder="0" value="${esc(A.price)}" oninput="S.add.price=this.value;paintKitHint()"></div>
+        <div><label>Ціна за всю партію, ₴</label><input id="a-price" type="number" inputmode="decimal" placeholder="0" value="${esc(A.price)}" oninput="S.add.price=this.value;paintKitHint()"></div>
         <div><label>Дата купівлі</label><input id="a-date" type="date" value="${A.date}" oninput="S.add.date=this.value"></div>
       </div>
       <div class="row">
-        <div><label>Платформа</label><input id="a-plat" placeholder="OLX / Інше" value="${esc(A.plat)}" oninput="S.add.plat=this.value"></div>
-        <div><label>Кількість <span class="opt">партія</span></label><input id="a-qty" type="number" inputmode="numeric" min="1" placeholder="1" value="${esc(A.qty)}" oninput="S.add.qty=this.value"></div>
+        <div><label>Майданчик</label><input id="a-plat" maxlength="60" placeholder="OLX / Інше" value="${esc(A.plat)}" oninput="S.add.plat=this.value"></div>
+        ${hasVar ? '' : `<div><label>Кількість <span class="opt">партія</span></label><input id="a-qty" type="number" inputmode="numeric" min="1" placeholder="1" value="${esc(A.qty)}" oninput="S.add.qty=this.value"></div>`}
       </div>
       <label>Витрати на старті, ₴ <span class="opt">необов'язково</span></label>
-      <input id="a-exp" type="number" inputmode="decimal" placeholder="напр. реклама OLX" value="${esc(A.exp)}" oninput="S.add.exp=this.value">
+      <input id="a-exp" type="number" inputmode="decimal" placeholder="напр. доставка, реклама OLX" value="${esc(A.exp)}" oninput="S.add.exp=this.value">
+
+      ${partsBlock()}
+
       <div class="btn-row"><button class="btn primary" onclick="submitAdd()">➕ Додати товар</button></div>
     </div>
   </section>`;
-}
-function updatePreview(){
-  const host=document.getElementById('name-preview-host'); if(!host) return;
-  const A=S.add, nm=composedName();
-  host.innerHTML = nm ? `<div class="name-preview">Назва: <b>${esc(nm)}</b>${A.kit?` · ${esc(A.kit)}`:''}</div>` : '';
 }
 
 // ---------- detail sheet ----------
 function renderSheet(){
   const host=document.getElementById('sheet-host');
+  if(S.modal==='cats') return renderCats();
+  if(S.modal==='arrange') return renderArrange();
+  if(S.modal==='ask') return renderAsk();
   if(S.openId==null){ host.innerHTML=''; return; }
   const i=S.data.items.find(x=>x.id===S.openId);
   if(!i){ S.openId=null; host.innerHTML=''; return; }
@@ -1291,7 +1629,7 @@ function renderSheet(){
         const label=s.included?(s.with_name?`разом з ${s.with_name}`:(s.note||'у комплекті'))
           :(mates?`${s.note?s.note+' · ':''}з ${mates}`:(s.note||'продаж'));
         const shown=s.included?'в комплекті':('+'+money(s.price)+(mates?` · прибуток ${money(s.bundle_profit)}`:''));
-        return `<div class="exp-row"><span class="er">${s.qty>1?`<b>${s.qty}×</b> `:''}${esc(label)} <span style="color:var(--faint)">${isoUA(s.date)}</span></span><span class="ea" style="color:${s.included?'var(--muted)':'var(--mint)'}">${shown}</span><button class="ex" onclick="delSale(${s.id})">✕</button></div>`;
+        return `<div class="exp-row"><span class="er">${s.qty>1?`<b>${s.qty}×</b> `:''}${s.variant_label?`<b>${esc(s.variant_label)}</b> · `:''}${esc(label)} <span style="color:var(--faint)">${isoUA(s.date)}</span></span><span class="ea" style="color:${s.included?'var(--muted)':'var(--mint)'}">${shown}</span><button class="ex" onclick="delSale(${s.id})">✕</button></div>`;
       }).join('')
     : `<div class="exp-none">ще не продано</div>`;
 
@@ -1303,10 +1641,10 @@ function renderSheet(){
     mainCell=`<div class="d-cell wide"><div class="k">Собівартість пішла в продаж</div><div class="v" style="font-size:18px">${esc(wn)}</div><div class="v sub">${money(i.buy_price)} ураховано в прибутку того продажу</div></div>`;
   } else if(st==='sold'){
     stateCell=`<div class="d-cell"><div class="k">Продано / лишок</div><div class="v">${i.sold_qty} / ${rem}</div><div class="v sub">${i.days_held} дн</div></div>`;
-    mainCell=`<div class="d-cell wide"><div class="k">Реалізовано · заморожено ще ${money(i.unit_cost*rem)}</div><div class="v pos" style="font-size:22px">${money(i.profit)}</div></div>`;
+    mainCell=`<div class="d-cell wide"><div class="k">Реалізовано · заморожено ще ${money(i.remaining_cost||0)}</div><div class="v pos" style="font-size:22px">${money(i.profit)}</div></div>`;
   } else {
     stateCell=`<div class="d-cell"><div class="k">Статус</div><div class="v" style="color:var(--amber)">В наявності</div><div class="v sub">${i.days_held} дн${multi?` · ${rem} шт`:''}</div></div>`;
-    mainCell=`<div class="d-cell wide"><div class="k">Вкладено${multi?` (${rem} шт)`:''}</div><div class="v" style="font-size:22px;color:var(--sky)">${money(i.unit_cost*rem)}</div></div>`;
+    mainCell=`<div class="d-cell wide"><div class="k">Вкладено${multi?` (${rem} шт)`:''}</div><div class="v" style="font-size:22px;color:var(--sky)">${money(i.remaining_cost||0)}</div></div>`;
   }
 
   const sellBtn = rem>0 ? `<button class="btn mint" onclick="startSell(${i.id})">✅ ${multi?'Продати':'Продано'}</button>` : '';
@@ -1322,11 +1660,13 @@ function renderSheet(){
         <h2>${esc(i.name)}${multi?` <span style="color:var(--faint);font-weight:500;font-size:16px">×${i.qty}</span>`:''}</h2>
         <span class="badge ${badge[0]}">${badge[1]}</span>
       </div>
-      <div style="font-size:11px;color:var(--muted);margin-top:2px">${i.platform?esc(i.platform)+' · ':''}куплено ${isoUA(i.buy_date)}</div>
+      <div style="font-size:11px;color:var(--muted);margin-top:2px">${i.category_name?esc(i.category_name)+' · ':''}${i.platform?esc(i.platform)+' · ':''}куплено ${isoUA(i.buy_date)}</div>
       ${i.kit?`<div style="font-size:12px;color:var(--muted);margin-top:6px">📦 ${esc(i.kit)}</div>`:''}
       ${originLine}
       ${kitList}
+      ${itemInfoHTML(i)}
       <div class="d-grid">${buyCell}${stateCell}${mainCell}</div>
+      ${variantsInfoHTML(i)}
       <div class="exp-head"><div class="eyebrow">Продажі ${i.revenue>0?'· +'+fmtNum(conv(i.revenue))+' '+CUR[S.cur]:''}</div>
         ${rem>0?`<button class="chip" style="padding:6px 12px" onclick="startSell(${i.id})">+ Продаж</button>`:''}</div>
       ${salesList}
@@ -1342,13 +1682,43 @@ function renderSheet(){
   setTimeout(()=>{ const o=document.getElementById('ovl'); if(o&&!o.classList.contains('on'))o.classList.add('on'); },60);
 }
 
+// поля партії (і старі бренд/модель — у товарів, доданих до категорій, як є)
+function itemInfoHTML(i){
+  const pairs=[];
+  if(i.brand) pairs.push(['Бренд', i.brand]);
+  if(i.model) pairs.push(['Модель', i.model]);
+  attrPairs(i.attrs).forEach(p=>pairs.push(p));
+  if(!pairs.length) return '';
+  return `<div class="section" style="background:var(--panel-2);padding:4px 14px;margin:14px 0 0">
+    ${pairs.map(([k,v])=>`<div class="kv"><span class="k">${esc(k)}</span><span class="v">${esc(v)}</span></div>`).join('')}</div>`;
+}
+function variantsInfoHTML(i){
+  if(!hasVariants(i)) return '';
+  const rows=i.variants.map(v=>`<div class="kv"><span class="k" style="color:var(--text)">${esc(v.label)}
+      <span style="color:var(--faint)">· ${money(v.unit_cost)}/шт${v.unit_price!=null?' (ручна)':''}</span></span>
+      <span class="v" style="color:${v.remaining>0?'var(--sky)':'var(--faint)'}">${v.remaining>0?`${v.remaining} з ${v.qty} шт`:'продано'}</span></div>`).join('');
+  return `<div class="eyebrow" style="margin:4px 0 6px">Варіанти · залишок</div>
+    <div class="section" style="background:var(--panel-2);padding:4px 14px">${rows}</div>`;
+}
+
 function companionItems(exceptId){
   return (S.data.items||[]).filter(x=>x.id!==exceptId && (x.remaining||0)>0)
     .sort((a,b)=> (a.kind==='accessory'?0:1)-(b.kind==='accessory'?0:1) || String(a.name).localeCompare(b.name,'uk'));
 }
-function startSell(id){
+function startSell(id, vid){
   const i=S.data.items.find(x=>x.id===id); if(!i) return;
-  const today=S.data.today, rem=i.remaining, multi=i.qty>1;
+  // перемальовуємо форму при виборі варіанта — не губимо вже введене
+  const keep={price:val('s-price'), date:val('s-date'), note:val('s-note')};
+  const live=liveVariants(i);
+  if(live.length){
+    if(vid!==undefined) S.sellVar=vid;
+    if(!live.some(v=>v.id===S.sellVar)) S.sellVar = live.length===1 ? live[0].id : null;
+  } else S.sellVar=null;
+  const curVar=live.find(v=>v.id===S.sellVar);
+  const today=keep.date||S.data.today;
+  const rem=curVar?curVar.remaining:i.remaining, multi=curVar?rem>1:i.qty>1;
+  const varBlock = live.length ? `<label>Варіант</label><div class="fwrap">${live.map(v=>
+      `<button class="chip ${S.sellVar===v.id?'on':''}" onclick="startSell(${id},${v.id})">${esc(v.label)} · ${v.remaining} шт</button>`).join('')}</div>` : '';
   const comps=companionItems(id);
   const withBlock=comps.length
     ? `<label>Продати разом <span class="opt">аксесуар з цього чи іншого комплекту</span></label>
@@ -1360,17 +1730,19 @@ function startSell(id){
     : '';
   document.getElementById('sheet-form').innerHTML=`<div class="form" style="background:var(--panel-2);border:1px solid var(--line);border-radius:14px;padding:14px;margin-top:8px">
     <div class="eyebrow">Продаж${multi?` · лишилось ${rem}`:''}</div>
+    ${varBlock}
+    ${live.length&&!curVar ? `<div class="kit-hint">Обери, який варіант продано.</div>` : `
     <div class="row" style="margin-top:4px">
-      <div><label>Ціна продажу, ₴</label><input id="s-price" type="number" inputmode="decimal" placeholder="0"></div>
-      <div><label>Дата</label><input id="s-date" type="date" value="${today}"></div>
+      <div><label>Ціна продажу, ₴</label><input id="s-price" type="number" inputmode="decimal" placeholder="0" value="${esc(keep.price)}"></div>
+      <div><label>Дата</label><input id="s-date" type="date" value="${esc(today)}"></div>
     </div>
     ${multi
-      ? `<div class="row"><div><label>К-сть <span class="opt">макс ${rem}</span></label><input id="s-qty" type="number" inputmode="numeric" min="1" max="${rem}" value="${rem}"></div><div style="flex:1.5"><label>Примітка <span class="opt">необов'язково</span></label><input id="s-note" placeholder="напр. дрон / батарея"></div></div>`
-      : `<input id="s-qty" type="hidden" value="1"><label>Примітка <span class="opt">необов'язково</span></label><input id="s-note" placeholder="напр. з ременем">`}
+      ? `<div class="row"><div><label>К-сть <span class="opt">макс ${rem}</span></label><input id="s-qty" type="number" inputmode="numeric" min="1" max="${rem}" value="${curVar?1:rem}"></div><div style="flex:1.5"><label>Примітка <span class="opt">необов'язково</span></label><input id="s-note" placeholder="напр. дрон / батарея" value="${esc(keep.note)}"></div></div>`
+      : `<input id="s-qty" type="hidden" value="1"><label>Примітка <span class="opt">необов'язково</span></label><input id="s-note" placeholder="напр. з ременем" value="${esc(keep.note)}">`}
     ${withBlock}
-    <div class="btn-row"><button class="btn mint" onclick="submitSell(${id})">Зберегти продаж</button></div>
+    <div class="btn-row"><button class="btn mint" onclick="submitSell(${id})">Зберегти продаж</button></div>`}
   </div>`;
-  const p=document.getElementById('s-price'); if(p)p.focus();
+  const p=document.getElementById('s-price'); if(p&&!keep.price)p.focus();
 }
 function startSplit(id){
   const i=S.data.items.find(x=>x.id===id); if(!i) return;
@@ -1387,17 +1759,31 @@ function startSplit(id){
 
 function startEdit(id){
   const i=S.data.items.find(x=>x.id===id); if(!i) return;
-  document.getElementById('sheet-form').innerHTML=`<div class="form" style="background:var(--panel-2);border:1px solid var(--line);border-radius:14px;padding:14px;margin-top:8px">
-    <div class="eyebrow">Редагувати товар</div>
-    <label>Назва</label><input id="ed-name" value="${esc(i.name)}">
-    <div class="row"><div><label>Ціна купівлі, ₴</label><input id="ed-price" type="number" inputmode="decimal" value="${i.buy_price}"></div>
-      <div><label>Дата купівлі</label><input id="ed-date" type="date" value="${i.buy_date||S.data.today}"></div></div>
-    <div class="row"><div><label>Платформа</label><input id="ed-plat" value="${esc(i.platform||'')}"></div>
-      <div><label>Кількість <span class="opt">мін ${i.sold_qty||1}</span></label><input id="ed-qty" type="number" inputmode="numeric" min="${i.sold_qty||1}" value="${i.qty}"></div></div>
-    <label>Комплект</label><input id="ed-kit" value="${esc(i.kit||'')}">
-    <div class="btn-row"><button class="btn primary" onclick="submitEdit(${id})">Зберегти зміни</button></div>
-  </div>`;
+  S.ed={id, cat:i.category_id, attrs:{...(i.attrs||{})}, extra:{}, newOpt:null,
+    vrows:(i.variants||[]).map(v=>({id:v.id, attrs:{...v.attrs}, qty:String(v.qty),
+      price:v.unit_price!=null?String(v.unit_price):'', sold:v.sold})),
+    hadVariants:hasVariants(i),
+    name:i.name, price:String(i.buy_price), date:i.buy_date||S.data.today, plat:i.platform||'',
+    qty:String(i.qty), kit:i.kit||'', soldQty:i.sold_qty||0};
+  paintEdit();
   const n=document.getElementById('ed-name'); if(n)n.focus();
+}
+function paintEdit(){
+  const E=S.ed, host=document.getElementById('sheet-form'); if(!E||!host) return;
+  if(E.cat!=null && !catById(E.cat)) E.cat=null;
+  host.innerHTML=`<div class="form" style="background:var(--panel-2);border:1px solid var(--line);border-radius:14px;padding:14px;margin-top:8px">
+    <div class="eyebrow">Редагувати товар</div>
+    <label>Назва</label><input id="ed-name" maxlength="120" value="${esc(E.name)}" oninput="S.ed.name=this.value">
+    <div class="row"><div><label>Ціна за партію, ₴</label><input id="ed-price" type="number" inputmode="decimal" value="${esc(E.price)}" oninput="S.ed.price=this.value;paintVHint('ed')"></div>
+      <div><label>Дата купівлі</label><input id="ed-date" type="date" value="${esc(E.date)}" oninput="S.ed.date=this.value"></div></div>
+    <div class="row"><div><label>Майданчик</label><input id="ed-plat" maxlength="60" value="${esc(E.plat)}" oninput="S.ed.plat=this.value"></div>
+      ${E.vrows.length ? '' : `<div><label>Кількість <span class="opt">мін ${E.soldQty||1}</span></label><input id="ed-qty" type="number" inputmode="numeric" min="${E.soldQty||1}" value="${esc(E.qty)}" oninput="S.ed.qty=this.value"></div>`}</div>
+    ${E.kit?`<label>Комплект</label><input id="ed-kit" value="${esc(E.kit)}" oninput="S.ed.kit=this.value">`:''}
+    <label>Категорія <span class="opt">необов'язково</span></label>
+    ${catChipsHTML('ed')}
+    ${metaFieldsHTML('ed')}
+    <div class="btn-row"><button class="btn primary" onclick="submitEdit(${E.id})">Зберегти зміни</button></div>
+  </div>`;
 }
 function startExpense(id){
   const today=S.data.today;
@@ -1472,19 +1858,20 @@ function setPeriod(k){ S.period=k; haptic(); if(S.tab!=='overview'){S.tab='overv
 function setFilter(f){ S.filter=f; haptic(); render(); }
 function cycleCur(){ S.cur=CUR_ORDER[(CUR_ORDER.indexOf(S.cur)+1)%3]; haptic(); render();
   if(S.cur!=='UAH'){ const rt=S.data.rates[S.cur]; toast(`1 ${CUR_LB[S.cur]} = ${rt} ₴ (курс НБУ)`,'ok'); } }
-function openItem(id){ S.openId=id; haptic(); renderSheet(); }
+function openItem(id){ S.openId=id; S.sellVar=null; S.ed=null; haptic(); renderSheet(); }
 function closeSheet(){ const o=document.getElementById('ovl'); if(o){o.classList.remove('on'); setTimeout(()=>{S.openId=null;document.getElementById('sheet-host').innerHTML='';},260);} else {S.openId=null;} }
 
 async function submitAdd(){
   const A=S.add;
-  const name=composedName();
+  const name=(A.name||'').trim();
   const price=parseFloat(A.price), date=A.date||S.data.today;
   const plat=(A.plat||'').trim(), exp=parseFloat(A.exp);
-  if(!name){ toast('Обери бренд або впиши назву','err'); return; }
-  if(!price||price<=0){ toast('Введи ціну купівлі','err'); return; }
-  const brand = (A.brand||'').trim() || null;
-  const model = (A.model||'').trim() || null;
-  const qty = Math.max(1, parseInt(A.qty)||1);
+  if(!name){ toast('Впиши назву товару','err'); return; }
+  if(!price||price<=0){ toast('Введи ціну закупівлі','err'); return; }
+  const variants=cleanVRows('add');
+  const manual=variants.reduce((a,v)=>a+(v.unit_price!=null?v.unit_price*v.qty:0),0);
+  if(manual>price+0.005){ toast('Ручні ціни варіантів більші за ціну партії','err'); return; }
+  const qty = variants.length ? variants.reduce((a,v)=>a+v.qty,0) : Math.max(1, parseInt(A.qty)||1);
   const parts=(A.parts||[]).map(p=>({name:(p.name||'').trim(), buy_price:parseFloat(p.price)||0}))
     .filter(p=>p.name);
   const accSum=parts.reduce((a,p)=>a+p.buy_price,0);
@@ -1492,10 +1879,12 @@ async function submitAdd(){
   if(parts.length && accSum>=price){ toast('На основний товар має лишитися частина ціни','err'); return; }
   try{
     await api('/api/item/add',{name, buy_price:price, buy_date:date, platform:plat||null,
-      brand, model, kit:A.kit||null, qty, parts,
+      qty, parts, category_id:A.cat, attrs:A.attrs, variants,
       expense_amount: exp>0?exp:0, expense_reason:'витрати на старті'});
     hnotify('success'); toast(parts.length?`Комплект додано ✅ (${parts.length} аксесуар${parts.length===1?'':'и'})`:(qty>1?`Партію ×${qty} додано ✅`:'Товар додано ✅'),'ok');
-    S.add=emptyAdd();
+    const keepCat=A.cat;
+    S.add=emptyAdd(); S.add.cat=keepCat;     // наступний товар — у ту саму категорію
+    if(varFields('add').length) S.add.vrows=[blankVRow()];
     S.filter='active'; S.tab='items'; await load();
   }catch(e){ toast(e.message,'err'); }
 }
@@ -1507,7 +1896,9 @@ async function submitSell(id){
     const q=document.querySelector(`#sheet-form .with-qty[data-id="${cb.value}"]`);
     return {id:+cb.value, qty:Math.max(1, parseInt(q&&q.value)||1)};
   });
-  try{ await api('/api/item/sell',{id, sell_price:price, sell_date:date, qty, note:note||null, with_items}); hnotify('success'); toast(with_items.length?'Продаж комплектом збережено ✅':'Продаж збережено ✅','ok'); await load(); }
+  const it=S.data.items.find(x=>x.id===id);
+  if(it&&liveVariants(it).length&&!S.sellVar){ toast('Обери варіант','err'); return; }
+  try{ await api('/api/item/sell',{id, sell_price:price, sell_date:date, qty, note:note||null, with_items, variant_id:S.sellVar}); S.sellVar=null; hnotify('success'); toast(with_items.length?'Продаж комплектом збережено ✅':'Продаж збережено ✅','ok'); await load(); }
   catch(e){ toast(e.message,'err'); }
 }
 async function submitSplit(id){
@@ -1518,14 +1909,20 @@ async function submitSplit(id){
   catch(e){ toast(e.message,'err'); }
 }
 async function submitEdit(id){
-  const name=val('ed-name');
+  const E=S.ed; if(!E) return;
+  const name=(E.name||'').trim();
   if(!name){ toast('Назва не може бути порожня','err'); return; }
-  const price=parseFloat(val('ed-price'));
+  const price=parseFloat(E.price);
   if(!price||price<=0){ toast('Некоректна ціна купівлі','err'); return; }
-  const body={id, name, buy_price:price, buy_date:val('ed-date')||S.data.today,
-    platform:val('ed-plat')||null, qty:Math.max(1,parseInt(val('ed-qty'))||1),
-    kit:val('ed-kit')||null};
-  try{ await api('/api/item/update',body); hnotify('success'); toast('Зміни збережено ✅','ok'); await load(); }
+  const variants=cleanVRows('ed');
+  const manual=variants.reduce((a,v)=>a+(v.unit_price!=null?v.unit_price*v.qty:0),0);
+  if(manual>price+0.005){ toast('Ручні ціни варіантів більші за ціну партії','err'); return; }
+  const body={id, name, buy_price:price, buy_date:E.date||S.data.today,
+    platform:(E.plat||'').trim()||null, category_id:E.cat, attrs:E.attrs};
+  if(variants.length || E.hadVariants) body.variants=variants;
+  if(!variants.length) body.qty=Math.max(1,parseInt(E.qty)||1);
+  if(E.kit!=='' || (S.data.items.find(x=>x.id===id)||{}).kit) body.kit=(E.kit||'').trim()||null;
+  try{ await api('/api/item/update',body); hnotify('success'); toast('Зміни збережено ✅','ok'); S.ed=null; await load(); }
   catch(e){ toast(e.message,'err'); }
 }
 async function delSale(sid){
@@ -1554,6 +1951,302 @@ async function doDelete(id){
   catch(e){ toast(e.message,'err'); }
 }
 
+// ---------- «Категорії»: свої категорії, поля, значення списків ----------
+const FTYPES=[['list','Список'],['number','Число'],['text','Текст']];
+function askConfirm(msg, fn){ if(TG&&TG.showConfirm){ TG.showConfirm(msg,(ok)=>{ if(ok)fn(); }); } else if(confirm(msg)) fn(); }
+async function catApi(path, body, okMsg){
+  try{ const r=await api(path, body); haptic(); if(okMsg) toast(okMsg,'ok'); await load(); return r; }
+  catch(e){ toast(e.message,'err'); return null; }
+}
+function openCats(id){ haptic(); S.modal='cats'; S.catEd=id??null; S.optEdit=null; S.nfType=S.nfType||'list'; renderCats(); }
+function closeCats(){
+  const o=document.getElementById('cats-ovl'); S.modal=null; S.catEd=null;
+  const after=()=>{ document.getElementById('sheet-host').innerHTML=''; render(); if(S.ed&&S.openId===S.ed.id) paintEdit(); };
+  if(o){ o.classList.remove('on'); setTimeout(after,260); } else after();
+}
+function editCat(id){ S.catEd=id; S.optEdit=null; haptic(); renderCats(); const sh=document.querySelector('#cats-ovl .sheet'); if(sh) sh.scrollTop=0; }
+function catItemsCount(id){ return S.data.items.filter(i=>i.category_id===id).length; }
+function renderCats(){
+  const c=S.catEd!=null?catById(S.catEd):null;
+  if(S.catEd!=null && !c) S.catEd=null;
+  showModal('cats-ovl', `<div class="grab"></div>${c?catEditorHTML(c):catListHTML()}
+    <div style="margin-top:16px"><button class="btn ghost" onclick="closeCats()">Готово</button></div>`, 'closeCats');
+}
+function catListHTML(){
+  const cs=cats(), unc=uncategorized().length;
+  const rows=cs.map((c,idx)=>`<div class="cat-row">
+      <div class="cn" onclick="editCat(${c.id})"><b>${esc(c.name)}</b>
+        <span>${c.fields.length} ${plural(c.fields.length,'поле','поля','полів')} · ${catItemsCount(c.id)} тов${c.fields.some(f=>f.is_variant)?' · є варіанти':''}</span></div>
+      <button class="mini" ${idx===0?'disabled style="opacity:.3"':''} onclick="catApi('/api/cat/move',{id:${c.id},dir:-1})" aria-label="Вгору">↑</button>
+      <button class="mini" ${idx===cs.length-1?'disabled style="opacity:.3"':''} onclick="catApi('/api/cat/move',{id:${c.id},dir:1})" aria-label="Вниз">↓</button>
+      <button class="mini" onclick="editCat(${c.id})" aria-label="Налаштувати">›</button>
+    </div>`).join('');
+  return `<h2>Категорії</h2>
+    <div style="font-size:12.5px;color:var(--muted);margin:2px 0 10px">Свої категорії й поля (розмір, колір, пам'ять…). Категорія необов'язкова — товар може бути і без неї.</div>
+    ${rows||'<div class="exp-none" style="padding:10px 0">Ще немає категорій.</div>'}
+    <div class="form"><label>Нова категорія</label>
+      <div class="inl"><input id="nc-new" maxlength="60" placeholder="напр. Футболки" onkeydown="if(event.key==='Enter'){event.preventDefault();createCat()}">
+      <button class="btn primary" onclick="createCat()">Створити</button></div></div>
+    ${cs.length&&unc?`<button class="export-btn" style="margin:14px 0 0" onclick="openArrange()">🗂 Розкласти товари без категорії (${unc})</button>`:''}`;
+}
+async function createCat(){
+  const name=val('nc-new'); if(!name){ toast('Впиши назву категорії','err'); return; }
+  const r=await catApi('/api/cat/add',{name},'Категорію створено');
+  if(r) editCat(r.id);
+}
+function catEditorHTML(c){
+  const fields=c.fields.map((f,idx)=>fieldCardHTML(c,f,idx)).join('');
+  const t=S.nfType||'list';
+  return `<button class="linkish" onclick="editCat(null)">‹ Усі категорії</button>
+    <h2 style="margin-top:6px">${esc(c.name)}</h2>
+    <div class="form">
+      <label>Назва категорії</label>
+      <div class="inl"><input id="ce-name" maxlength="60" value="${esc(c.name)}">
+        <button class="btn ghost" onclick="catApi('/api/cat/rename',{id:${c.id},name:val('ce-name')},'Збережено')">Зберегти</button></div>
+      <label>Поля</label>
+      <div style="font-size:12px;color:var(--muted);line-height:1.45">Поле з позначкою <b>«варіант»</b> означає, що штуки однієї партії відрізняються ним (розмір, колір) — тоді при додаванні задаєш рядки «M чорна × 2».</div>
+      ${fields||'<div class="exp-none" style="padding:8px 0">Полів ще немає.</div>'}
+      <div class="fcard">
+        <div class="f-sub" style="margin-top:0">Нове поле</div>
+        <input id="nf-name" maxlength="60" placeholder="напр. Розмір / Колір / Пам'ять / IMEI">
+        <div class="tsel">${FTYPES.map(([k,l])=>`<button class="${t===k?'on':''}" onclick="S.nfType='${k}';renderCats()">${l}</button>`).join('')}</div>
+        ${t==='number'?`<input id="nf-unit" maxlength="12" placeholder="одиниця, напр. ГБ (необов'язково)" style="margin-top:9px">`:''}
+        <label class="swl"><input type="checkbox" id="nf-var"> Варіант — штуки партії відрізняються цим полем</label>
+        <div class="btn-row" style="margin-top:10px"><button class="btn primary" onclick="createField(${c.id})">＋ Додати поле</button></div>
+      </div>
+      <div class="btn-row"><button class="btn danger" onclick="deleteCat(${c.id})">🗑 Видалити категорію</button></div>
+    </div>`;
+}
+function fieldCardHTML(c,f,idx){
+  const opts = f.type==='list' ? `<div class="f-sub">Значення</div><div class="fwrap">${f.options.map(o=>
+      S.optEdit===o.id ? '' : `<button class="chip sm" onclick="S.optEdit=${o.id};renderCats()">${esc(o.value)}</button>`).join('')}</div>
+    ${f.options.filter(o=>o.id===S.optEdit).map(o=>`<div class="inl"><input id="oe-${o.id}" maxlength="60" value="${esc(o.value)}">
+        <button class="btn primary" onclick="renameOpt(${o.id})">✓</button>
+        <button class="btn ghost" onclick="catApi('/api/opt/move',{id:${o.id},dir:-1})">←</button>
+        <button class="btn danger" onclick="S.optEdit=null;catApi('/api/opt/delete',{id:${o.id}})">🗑</button></div>`).join('')}
+    <div class="inl"><input id="no-f${f.id}" maxlength="60" placeholder="нове значення, напр. M" onkeydown="if(event.key==='Enter'){event.preventDefault();addOpt(${f.id})}">
+      <button class="btn ghost" onclick="addOpt(${f.id})">＋</button></div>` : '';
+  return `<div class="fcard">
+    <div class="fh"><input maxlength="60" value="${esc(f.name)}" onchange="catApi('/api/field/update',{id:${f.id},name:this.value},'Збережено')">
+      <button class="mini" ${idx===0?'disabled style="opacity:.3"':''} onclick="catApi('/api/field/move',{id:${f.id},dir:-1})" aria-label="Вгору">↑</button>
+      <button class="mini" ${idx===c.fields.length-1?'disabled style="opacity:.3"':''} onclick="catApi('/api/field/move',{id:${f.id},dir:1})" aria-label="Вниз">↓</button>
+      <button class="mini dg" onclick="deleteField(${f.id})" aria-label="Видалити поле">🗑</button></div>
+    <div class="tsel">${FTYPES.map(([k,l])=>`<button class="${f.type===k?'on':''}" onclick="catApi('/api/field/update',{id:${f.id},type:'${k}'})">${l}</button>`).join('')}</div>
+    ${f.type==='number'?`<input maxlength="12" placeholder="одиниця, напр. ГБ" value="${esc(f.unit||'')}" style="margin-top:9px" onchange="catApi('/api/field/update',{id:${f.id},unit:this.value},'Збережено')">`:''}
+    <label class="swl"><input type="checkbox" ${f.is_variant?'checked':''} onchange="catApi('/api/field/update',{id:${f.id},is_variant:this.checked})"> Варіант</label>
+    ${opts}
+  </div>`;
+}
+async function createField(catId){
+  const name=val('nf-name'); if(!name){ toast('Впиши назву поля','err'); return; }
+  const unit=val('nf-unit'), isVar=!!(document.getElementById('nf-var')||{}).checked;
+  await catApi('/api/field/add',{category_id:catId, name, type:S.nfType||'list', unit:unit||null, is_variant:isVar},'Поле додано');
+}
+function addOpt(fid){ const v=val('no-f'+fid); if(!v){ toast('Впиши значення','err'); return; } catApi('/api/opt/add',{field_id:fid, value:v}); }
+function renameOpt(oid){ const v=val('oe-'+oid); if(!v){ toast('Значення не може бути порожнім','err'); return; }
+  S.optEdit=null; catApi('/api/opt/rename',{id:oid, value:v},'Перейменовано — і в товарах теж'); }
+function deleteField(fid){
+  const f=fieldMeta(fid);
+  askConfirm(`Видалити поле «${f?f.name:''}»? Воно зникне з форм і фільтрів. Підписи варіантів у вже доданих товарах лишаться.`,
+    ()=>catApi('/api/field/delete',{id:fid},'Поле видалено'));
+}
+function deleteCat(id){
+  const c=catById(id), n=catItemsCount(id);
+  askConfirm(`Видалити категорію «${c?c.name:''}»?${n?` ${n} ${plural(n,'товар стане','товари стануть','товарів стануть')} «без категорії» — нічого не втратиться.`:''}`,
+    async ()=>{ S.catEd=null; if(S.itemsCat===id){ S.itemsCat='all'; S.itemsAttr={}; } await catApi('/api/cat/delete',{id},'Категорію видалено'); });
+}
+
+// ---------- «Розкласти товари по категоріях» (старі товари без категорії) ----------
+function arrangeBanner(){
+  if(S.data.viewing || !cats().length) return '';
+  const n=uncategorized().length;
+  if(!n || lsGet('arrHide')===String(n)) return '';
+  return `<div class="banner"><div class="bt" onclick="openArrange()"><b>🗂 Розкласти товари по категоріях</b>
+      <span>${n} ${plural(n,'товар','товари','товарів')} без категорії — тапни, щоб розкласти</span></div>
+    <button class="mini" onclick="lsSet('arrHide','${n}');render()" aria-label="Сховати">✕</button></div>`;
+}
+function openArrange(){ haptic(); S.modal='arrange'; renderArrange(); }
+function closeArrange(){
+  const o=document.getElementById('arr-ovl'); S.modal=null;
+  const after=()=>{ document.getElementById('sheet-host').innerHTML=''; render(); };
+  if(o){ o.classList.remove('on'); setTimeout(after,260); } else after();
+}
+function arrKey(id){ const k='arr_'+id; if(!S[k]) S[k]={cat:null, attrs:{}, vrows:[], extra:{}, newOpt:null}; return k; }
+function renderArrange(){
+  const list=uncategorized().sort((a,b)=>(b.buy_date||'').localeCompare(a.buy_date||'')||b.id-a.id);
+  const rows=list.map(i=>{
+    const k=arrKey(i.id), M=S[k];
+    if(M.cat!=null && !catById(M.cat)) M.cat=null;
+    const st=i.status==='sold'?'продано':(i.status==='partial'?'частково':'в наявності');
+    return `<div class="arr-item"><div class="an">${esc(i.name)}</div>
+      <div class="am">${isoUA(i.buy_date)} · ${money(i.buy_price)} · ${st}${i.brand?' · '+esc(i.brand):''}</div>
+      ${catChipsHTML(k)}
+      ${M.cat!=null?`<div class="form">${metaFieldsHTML(k)}
+        <div class="btn-row" style="margin-top:10px"><button class="btn primary" onclick="saveArrange(${i.id})">Зберегти</button></div></div>`:''}
+    </div>`;
+  }).join('');
+  showModal('arr-ovl', `<div class="grab"></div><h2>Розкласти по категоріях</h2>
+    <div style="font-size:12.5px;color:var(--muted);margin:2px 0 4px">Обери категорію для кожного товару. Поля — необов'язково. Можна закрити й продовжити пізніше.</div>
+    ${rows||'<div class="empty" style="padding:24px 8px">Усі товари вже в категоріях 👍</div>'}
+    <div style="margin-top:16px"><button class="btn ghost" onclick="closeArrange()">Закрити</button></div>`, 'closeArrange');
+}
+async function saveArrange(id){
+  const M=S[arrKey(id)];
+  const r=await catApi('/api/item/meta',{id, category_id:M.cat, attrs:M.attrs},'Готово ✅');
+  if(r) delete S['arr_'+id];
+}
+
+// ---------- «Вигрузити таблицю»: CSV з урахуванням поточних фільтрів ----------
+async function exportItemsTable(){
+  const list=visibleItems();
+  if(!list.length){ toast('Немає товарів за цими фільтрами','err'); return; }
+  if(!INIT){ toast('Вигрузка доступна лише в Telegram','err'); return; }
+  const c=typeof S.itemsCat==='number'?catById(S.itemsCat):null;
+  haptic(); toast('Готую таблицю…');
+  try{
+    const r=await api('/api/export/items',{ids:list.map(i=>i.id), category_id:c?c.id:null, title:c?c.name:null});
+    if(r&&r.ok){ hnotify('success'); toast('Таблицю надіслано в чат ✅','ok'); }
+    else if(r&&r.empty){ toast('Немає даних','err'); }
+  }catch(e){ toast(e.message||'Не вдалося надіслати','err'); }
+}
+
+// ---------- «Питання»: готові запитання, відповідь рахується з даних (без AI) ----------
+const ASK_Q=[
+  {id:'cat_profit', t:'Яка категорія дає найбільше прибутку?', p:['period']},
+  {id:'fast', t:'Що продається найшвидше?', p:['period','cat']},
+  {id:'field', t:'Який варіант / значення поля продається швидше і з якою маржею?', p:['period','cat','field']},
+  {id:'stale', t:'Що лежить найдовше і скільки грошей тримає?', p:['cat']},
+  {id:'markup', t:'Середня націнка по категоріях і значеннях поля', p:['period','cat','field']},
+  {id:'stock', t:'Скільки штук кожного варіанта зараз у наявності?', p:['cat']},
+];
+const ASK_PER=[['all','Весь час'],['month','Цей місяць'],['30','30 днів'],['90','90 днів'],['365','Рік']];
+function openAsk(){ haptic(); S.modal='ask'; if(!S.ask) S.ask={q:null, period:'all', cat:'all', field:null}; S.ask.q=null; renderAsk(); }
+function closeAsk(){ hideModal('ask-ovl'); }
+function askSet(k,v){ S.ask[k]=v; if(k==='cat') S.ask.field=null; haptic(); renderAsk(); }
+function askPick(id){ S.ask.q=id; haptic(); renderAsk(); const sh=document.querySelector('#ask-ovl .sheet'); if(sh) sh.scrollTop=0; }
+function askFrom(){
+  const p=S.ask.period, t=S.data.today;
+  if(p==='all') return null;
+  if(p==='month') return t.slice(0,7)+'-01';
+  const d=new Date(t+'T00:00:00'); d.setDate(d.getDate()-(+p)); return isoOf(d);
+}
+function askCatOk(i){ const c=S.ask.cat; return c==='all' || (c==='none'?!i.category_id:i.category_id===c); }
+// усі продажі з контекстом: значення полів беремо з варіанта, а не лише з партії
+function askSales(){
+  const from=askFrom(), out=[];
+  S.data.items.filter(askCatOk).forEach(i=>{
+    const vmap={}; (i.variants||[]).forEach(v=>vmap[v.id]=v);
+    (i.sales||[]).forEach(s=>{
+      if(from && (!s.date || s.date<from)) return;
+      const v=vmap[s.variant_id];
+      out.push({i, s, cat:i.category_name||'Без категорії', qty:s.qty, price:s.price, profit:s.profit||0,
+        cost:(s.unit_cost??i.unit_cost??0)*s.qty, days:s.days, included:s.included,
+        vals:{...(i.attrs||{}), ...(v?v.attrs:{})}});
+    });
+  });
+  return out;
+}
+function groupBy(rows, keyFn){
+  const m=new Map();
+  rows.forEach(r=>{ const k=keyFn(r); if(k==null||k==='') return;
+    const g=m.get(k)||{key:k, units:0, profit:0, revenue:0, cost:0, days:[], n:0};
+    g.units+=r.qty; g.profit+=r.profit; g.revenue+=r.price; g.cost+=r.cost; g.n++;
+    if(r.days!=null && !r.included) g.days.push(r.days);
+    m.set(k,g); });
+  return [...m.values()].map(g=>({...g, avgDays:g.days.length?g.days.reduce((a,b)=>a+b,0)/g.days.length:null,
+    markup:g.cost>0?g.profit/g.cost*100:null}));
+}
+function ansRows(list, valFn, subFn, barFn){
+  if(!list.length) return `<div class="empty" style="padding:22px 8px">Замало даних для відповіді за цими параметрами.</div>`;
+  const max=Math.max(1e-9,...list.map(x=>Math.abs(barFn(x))||0));
+  return `<div class="section" style="background:var(--panel-2);padding:4px 14px">${list.map((x,idx)=>`<div class="ans-row">
+    <div class="ans-top"><span class="an">${idx+1}. ${esc(x.label??x.key)}</span><span class="av">${valFn(x)}</span></div>
+    <div class="ans-sub">${subFn(x)}</div>
+    <div class="ans-bar"><i style="width:${Math.max(3,Math.abs(barFn(x)||0)/max*100)}%"></i></div></div>`).join('')}</div>`;
+}
+const pct=v=>v==null?'—':`${Math.round(v)}%`;
+const dd=v=>v==null?'—':`${Math.round(v)} дн`;
+function askAnswer(){
+  const A=S.ask, catSel=typeof A.cat==='number'?catById(A.cat):null;
+  const fld=A.field!=null&&catSel?catSel.fields.find(f=>f.id===A.field):null;
+  if(A.q==='cat_profit'){
+    const g=groupBy(askSales(), r=>r.cat).sort((a,b)=>b.profit-a.profit);
+    const head=g.length?`<div class="ans-head">Найприбутковіша — <b>${esc(g[0].key)}</b>: ${money(g[0].profit)} за ${g[0].units} шт.</div>`:'';
+    return head+ansRows(g, x=>money(x.profit), x=>`${x.units} шт · виручка ${money(x.revenue)} · націнка ${pct(x.markup)}`, x=>x.profit);
+  }
+  if(A.q==='fast'){
+    const by = catSel||A.cat==='none' ? (r=>r.i.name) : (r=>r.cat);
+    const g=groupBy(askSales().filter(r=>!r.included), by).filter(x=>x.avgDays!=null).sort((a,b)=>a.avgDays-b.avgDays);
+    const head=g.length?`<div class="ans-head">Найшвидше йде <b>${esc(g[0].key)}</b> — у середньому ${dd(g[0].avgDays)} від купівлі до продажу.</div>`:'';
+    return head+ansRows(g, x=>dd(x.avgDays), x=>`${x.n} ${plural(x.n,'продаж','продажі','продажів')} · медіана ${dd(median(x.days))} · націнка ${pct(x.markup)}`, x=>x.avgDays);
+  }
+  if(A.q==='field' || A.q==='markup'){
+    if(A.q==='field' && !fld) return `<div class="ans-head">Обери категорію і поле — напр. «Розмір» чи «Пам'ять».</div>`;
+    if(fld){
+      const g=groupBy(askSales().filter(r=>!r.included), r=>r.vals[String(fld.id)]).map(x=>({...x, label:fval(fld.id,x.key)}));
+      if(A.q==='field'){
+        g.sort((a,b)=>(a.avgDays??1e9)-(b.avgDays??1e9));
+        const head=g.length?`<div class="ans-head">${esc(fld.name)}: найшвидше продається <b>${esc(g[0].label)}</b> — ${dd(g[0].avgDays)}, націнка ${pct(g[0].markup)}.</div>`:'';
+        return head+ansRows(g, x=>dd(x.avgDays), x=>`${x.units} шт · націнка ${pct(x.markup)} · прибуток ${money(x.profit)}`, x=>x.avgDays||0);
+      }
+      g.sort((a,b)=>(b.markup??-1e9)-(a.markup??-1e9));
+      return `<div class="ans-head">Націнка = прибуток ÷ собівартість проданого, за значеннями поля «${esc(fld.name)}».</div>`+
+        ansRows(g, x=>pct(x.markup), x=>`${x.units} шт · прибуток ${money(x.profit)} · собівартість ${money(x.cost)}`, x=>x.markup||0);
+    }
+    const g=groupBy(askSales().filter(r=>!r.included), r=>r.cat).sort((a,b)=>(b.markup??-1e9)-(a.markup??-1e9));
+    return `<div class="ans-head">Націнка = прибуток ÷ собівартість проданого. Обери категорію й поле, щоб порівняти значення (напр. 128 ГБ проти 256 ГБ).</div>`+
+      ansRows(g, x=>pct(x.markup), x=>`${x.units} шт · прибуток ${money(x.profit)}`, x=>x.markup||0);
+  }
+  if(A.q==='stale'){
+    const list=S.data.items.filter(i=>askCatOk(i)&&(i.remaining||0)>0&&i.days_held!=null)
+      .sort((a,b)=>b.days_held-a.days_held).slice(0,20).map(i=>({key:i.name, i}));
+    const tot=S.data.items.filter(i=>askCatOk(i)&&(i.remaining||0)>0).reduce((a,i)=>a+(i.remaining_cost||0),0);
+    return `<div class="ans-head">Зараз у наявності заморожено <b>${money(tot)}</b>.</div>`+
+      ansRows(list, x=>dd(x.i.days_held), x=>`${x.i.remaining} шт · тримає ${money(x.i.remaining_cost||0)}${x.i.category_name?' · '+esc(x.i.category_name):''}`, x=>x.i.days_held);
+  }
+  if(A.q==='stock'){
+    const items=S.data.items.filter(i=>askCatOk(i)&&(i.remaining||0)>0);
+    if(!catSel){
+      const m=new Map(); items.forEach(i=>{ const k=i.category_name||'Без категорії'; const g=m.get(k)||{key:k, units:0, cost:0};
+        g.units+=i.remaining; g.cost+=i.remaining_cost||0; m.set(k,g); });
+      const g=[...m.values()].sort((a,b)=>b.units-a.units);
+      return `<div class="ans-head">Обери категорію, щоб побачити залишок по кожному варіанту.</div>`+
+        ansRows(g, x=>`${x.units} шт`, x=>`на ${money(x.cost)}`, x=>x.units);
+    }
+    const m=new Map();
+    items.forEach(i=>{ const live=liveVariants(i);
+      if(live.length) live.forEach(v=>{ const g=m.get(v.label)||{key:v.label, units:0, cost:0, names:new Set()}; g.units+=v.remaining; g.cost+=v.remaining*v.unit_cost; g.names.add(i.name); m.set(v.label,g); });
+      else { const k='без варіантів'; const g=m.get(k)||{key:k, units:0, cost:0, names:new Set()}; g.units+=i.remaining; g.cost+=i.remaining_cost||0; g.names.add(i.name); m.set(k,g); } });
+    const g=[...m.values()].sort((a,b)=>b.units-a.units);
+    const byField=catSel.fields.filter(f=>f.is_variant).map(f=>{
+      const c=new Map(); items.forEach(i=>liveVariants(i).forEach(v=>{ const val=v.attrs[String(f.id)]; if(val!=null) c.set(val,(c.get(val)||0)+v.remaining); }));
+      return c.size?`<div class="ans-head"><b>${esc(f.name)}:</b> ${[...c.entries()].sort((a,b)=>b[1]-a[1]).map(([v,n])=>`${esc(fval(f.id,v))} — ${n} шт`).join(' · ')}</div>`:'';
+    }).join('');
+    return byField+ansRows(g, x=>`${x.units} шт`, x=>`на ${money(x.cost)} · ${[...x.names].slice(0,3).map(esc).join(', ')}`, x=>x.units);
+  }
+  return '';
+}
+function renderAsk(){
+  const A=S.ask;
+  if(!A.q){
+    showModal('ask-ovl', `<div class="grab"></div><h2>Питання</h2>
+      <div style="font-size:12.5px;color:var(--muted);margin:2px 0 4px">Тапни питання — відповідь порахується з твоїх даних.</div>
+      ${ASK_Q.map(q=>`<button class="q-row" onclick="askPick('${q.id}')">${q.t}</button>`).join('')}
+      <div style="margin-top:16px"><button class="btn ghost" onclick="closeAsk()">Закрити</button></div>`, 'closeAsk');
+    return;
+  }
+  const Q=ASK_Q.find(q=>q.id===A.q);
+  if(typeof A.cat==='number' && !catById(A.cat)) A.cat='all';
+  const catSel=typeof A.cat==='number'?catById(A.cat):null;
+  let params='';
+  if(Q.p.includes('period')) params+=`<div class="chips" style="padding-bottom:6px">${ASK_PER.map(([k,l])=>`<button class="chip sm ${A.period===k?'on':''}" onclick="askSet('period','${k}')">${l}</button>`).join('')}</div>`;
+  if(Q.p.includes('cat')) params+=`<div class="chips" style="padding-bottom:6px"><button class="chip sm ${A.cat==='all'?'on':''}" onclick="askSet('cat','all')">Усі категорії</button>${cats().map(c=>`<button class="chip sm ${A.cat===c.id?'on':''}" onclick="askSet('cat',${c.id})">${esc(c.name)}</button>`).join('')}</div>`;
+  if(Q.p.includes('field') && catSel) params+=`<div class="chips" style="padding-bottom:6px">${catSel.fields.map(f=>`<button class="chip sm ${A.field===f.id?'on':''}" onclick="askSet('field',${f.id})">${esc(f.name)}</button>`).join('')||'<span class="exp-none">У категорії немає полів</span>'}</div>`;
+  showModal('ask-ovl', `<div class="grab"></div><button class="linkish" onclick="askPick(null)">‹ Усі питання</button>
+    <h2 style="margin-top:6px;font-size:18px">${Q.t}</h2>${params}${askAnswer()}
+    <div style="margin-top:16px"><button class="btn ghost" onclick="closeAsk()">Закрити</button></div>`, 'closeAsk');
+}
+
 // ---------- порівняння періодів ----------
 const CMP={mode:'m', a:null, b:null};
 function mondayOf(iso){ const d=new Date(iso+'T00:00:00'); d.setDate(d.getDate()-((d.getDay()+6)%7)); return d; }
@@ -1567,7 +2260,7 @@ function rangeAgg(from,to){
     const q=it.qty||1;
     (it.sales||[]).forEach(s=>{ if(inR(s.date)){
       revenue+=s.price; profit+=s.profit; soldUnits+=s.qty;
-      invested+=(it.unit_cost||0)*s.qty; expenses+=(it.expenses_total||0)*(q?s.qty/q:0);
+      invested+=(s.unit_cost??it.unit_cost??0)*s.qty; expenses+=(it.expenses_total||0)*(q?s.qty/q:0);
     }});
   });
   const bought=S.data.items.filter(i=>inR(i.buy_date));
@@ -1634,7 +2327,7 @@ function closeCompare(){ const o=document.getElementById('cmp-ovl'); if(o){o.cla
 
 // ---------- misc ----------
 function val(id){ const e=document.getElementById(id); return e?e.value.trim():''; }
-function esc(s){ return (s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+function esc(s){ return (s==null?'':String(s)).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
 let toastT;
 function toast(msg,kind){ const t=document.getElementById('toast'); t.className='toast '+(kind||'')+' on'; t.textContent=msg;
   clearTimeout(toastT); toastT=setTimeout(()=>t.classList.remove('on'),2600); }
